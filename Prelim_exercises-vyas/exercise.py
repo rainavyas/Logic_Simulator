@@ -14,6 +14,11 @@ def open_file(path):
 
 def get_next_character(input_file):
     """Read and return the next character in input_file."""
+    next_char = input_file.read(1)
+    if next_char == None:
+        next_char = ""
+    return next_char
+
 
 
 def get_next_non_whitespace_character(input_file):
@@ -53,6 +58,10 @@ def main():
 
         print("\nNow reading file...")
         # Print out all the characters in the file, until the end of file
+        char = get_next_character(file)
+        while(char != ""):
+            print(char, end = '')
+            char = get_next_character(file)
 
         print("\nNow skipping spaces...")
         # Print out all the characters in the file, without spaces

@@ -30,9 +30,25 @@ def get_next_non_whitespace_character(input_file):
 
 def get_next_number(input_file):
     """Seek the next number in input_file.
-
     Return the number (or None) and the next non-numeric character.
     """
+    num = 1
+    next_char = get_next_character(input_file)
+    while not next_char.isdigit():
+        next_char = get_next_character(input_file)
+        if next_char == "":
+            num = None
+            break;
+
+    next_non_digit = ""
+    if num != None:
+        num_str = next_char
+        while next_char.isdigit():
+            next_char = get_next_character(input_file)
+            num_str = num_str + next_char
+        next_non_digit = num_str[-1]
+        num = int(num_str[:-1])
+    return [num,next_non_digit]
 
 
 def get_next_name(input_file):
@@ -76,6 +92,11 @@ def main():
 
         print("\nNow reading numbers...")
         # Print out all the numbers in the file
+        position = file.seek(0,0)
+        num_char = get_next_number(file)
+        while (num_char[1]!=""):
+            print(num_char[0], end = " ")
+            num_char = get_next_number(file)
 
         print("\nNow reading names...")
         # Print out all the names in the file

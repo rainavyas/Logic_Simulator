@@ -13,13 +13,14 @@ def open_file(path):
         print("Error! file path doesn't exist.")
         sys.exit()
 
+
 def get_next_character(input_file):
     """Read and return the next character in input_file."""
+
     next_char = input_file.read(1)
-    if next_char == None:
+    if next_char is None:
         next_char = ""
     return next_char
-
 
 
 def get_next_non_whitespace_character(input_file):
@@ -28,6 +29,7 @@ def get_next_non_whitespace_character(input_file):
     while next_char.isspace():
         next_char = get_next_character(input_file)
     return next_char
+
 
 def get_next_number(input_file):
     """Seek the next number in input_file.
@@ -39,17 +41,17 @@ def get_next_number(input_file):
         next_char = get_next_character(input_file)
         if next_char == "":
             num = None
-            break;
+            break
 
     next_non_digit = ""
-    if num != None:
+    if num is not None:
         num_str = next_char
         while next_char.isdigit():
             next_char = get_next_character(input_file)
             num_str = num_str + next_char
         next_non_digit = num_str[-1]
         num = int(num_str[:-1])
-    return [num,next_non_digit]
+    return [num, next_non_digit]
 
 
 def get_next_name(input_file):
@@ -62,9 +64,9 @@ def get_next_name(input_file):
         next_char = get_next_character(input_file)
         if next_char == "":
             name = None
-            break;
+            break
     next_non_alnum = ""
-    if name != None:
+    if name is not None:
         str = next_char
         while next_char.isalnum():
             next_char = get_next_character(input_file)
@@ -72,6 +74,7 @@ def get_next_name(input_file):
         next_non_alnum = str[-1]
         name = str[:-1]
     return [name, next_non_alnum]
+
 
 def main():
     """Preliminary exercises for Part IIA Project GF2."""
@@ -94,49 +97,47 @@ def main():
         # Print out all the characters in the file, until the end of file
         char = get_next_character(file)
         while(char != ""):
-            print(char, end = '')
+            print(char, end='')
             char = get_next_character(file)
 
         print("\nNow skipping spaces...")
         # Print out all the characters in the file, without spaces
-        position = file.seek(0,0)
+        position = file.seek(0, 0)
         char = get_next_non_whitespace_character(file)
         while(char != ""):
-            print(char, end = '')
+            print(char, end='')
             char = get_next_non_whitespace_character(file)
 
         print("\nNow reading numbers...")
         # Print out all the numbers in the file
-        position = file.seek(0,0)
+        position = file.seek(0, 0)
         num_char = get_next_number(file)
-        while (num_char[1] !="" and num_char[0] != None):
-            print(num_char[0], end = " ")
+        while (num_char[1] != "" and num_char[0] is not None):
+            print(num_char[0], end=" ")
             num_char = get_next_number(file)
 
         print("\nNow reading names...")
         # Print out all the names in the file
-        position = file.seek(0,0)
+        position = file.seek(0, 0)
         name_char = get_next_name(file)
-        while (name_char[1] !="" and name_char[0] != None):
-            print(name_char[0], end = " ")
+        while (name_char[1] != "" and name_char[0] is not None):
+            print(name_char[0], end=" ")
             name_char = get_next_name(file)
 
         print("\nNow censoring bad names...")
         # Print out only the good names in the file
-        position = file.seek(0,0)
+        position = file.seek(0, 0)
         name = MyNames()
         bad_name_ids = [name.lookup("Terrible"), name.lookup("Horrid"),
-                         name.lookup("Ghastly"), name.lookup("Awful")]
+                        name.lookup("Ghastly"), name.lookup("Awful")]
 
         name_char = get_next_name(file)
         bad_names = [name.get_string(id) for id in bad_name_ids]
-        while (name_char[1] !="" and name_char[0] != None):
+        while (name_char[1] != "" and name_char[0] is not None):
 
             if not(name_char[0] in bad_names):
-                print(name_char[0], end = " ")
+                print(name_char[0], end=" ")
             name_char = get_next_name(file)
-
-
 
 
 if __name__ == "__main__":

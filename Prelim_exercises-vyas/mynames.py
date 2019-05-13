@@ -32,6 +32,9 @@ class MyNames:
 
         If the name string is not present in the names list, add it.
         """
+        if not type(name_string) is str:
+            raise TypeError("name has to be a string")
+
         if not (name_string in self.names):
             self.names.append(name_string)
         return self.names.index(name_string)
@@ -40,6 +43,12 @@ class MyNames:
         """Return the corresponding name string for the given name_id.
         If the name ID is not a valid index into the names list, return None.
         """
+        if not type(name_id) is int:
+            raise TypeError("ID has to be an integer")
+
+        if name_id < 0:
+            raise ValueError("ID has to be positive")
+
         if name_id >= len(self.names):
             return None
         else:

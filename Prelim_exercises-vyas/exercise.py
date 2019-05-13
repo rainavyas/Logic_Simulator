@@ -53,10 +53,24 @@ def get_next_number(input_file):
 
 def get_next_name(input_file):
     """Seek the next name string in input_file.
-
     Return the name string (or None) and the next non-alphanumeric character.
     """
-
+    name = ""
+    next_char = get_next_character(input_file)
+    while not next_char.isalpha():
+        next_char = get_next_character(input_file)
+        if next_char == "":
+            name = None
+            break;
+    next_non_alnum = ""
+    if name != None:
+        str = next_char
+        while next_char.isalnum():
+            next_char = get_next_character(input_file)
+            str = str + next_char
+        next_non_alnum = str[-1]
+        name = str[:-1]
+    return [name, next_non_alnum]
 
 def main():
     """Preliminary exercises for Part IIA Project GF2."""
@@ -94,12 +108,17 @@ def main():
         # Print out all the numbers in the file
         position = file.seek(0,0)
         num_char = get_next_number(file)
-        while (num_char[1]!=""):
+        while (num_char[1] !="" and num_char[0] != None):
             print(num_char[0], end = " ")
             num_char = get_next_number(file)
 
         print("\nNow reading names...")
         # Print out all the names in the file
+        position = file.seek(0,0)
+        name_char = get_next_name(file)
+        while (name_char[1] !="" and name_char[0] != None):
+            print(name_char[0], end = " ")
+            name_char = get_next_name(file)
 
         print("\nNow censoring bad names...")
         # Print out only the good names in the file

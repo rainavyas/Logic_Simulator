@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """Preliminary exercises for Part IIA Project GF2."""
 import sys
+import os
 
 
 def open_file(path):
     """Open and return the file specified by path."""
-
+    if os.path.exists(path):
+        return open(path)
+    else:
+        print("Error! file path doesn't exist.")
+        sys.exit()
 
 def get_next_character(input_file):
     """Read and return the next character in input_file."""
@@ -42,6 +47,9 @@ def main():
 
         print("\nNow opening file...")
         # Print the path provided and try to open the file for reading
+        path = arguments[0]
+        print(path)
+        file = open_file(path)
 
         print("\nNow reading file...")
         # Print out all the characters in the file, until the end of file

@@ -2,6 +2,7 @@
 """Preliminary exercises for Part IIA Project GF2."""
 import sys
 import os
+from mynames import *
 
 
 def open_file(path):
@@ -122,9 +123,21 @@ def main():
 
         print("\nNow censoring bad names...")
         # Print out only the good names in the file
-        # name = MyNames()
-        # bad_name_ids = [name.lookup("Terrible"), name.lookup("Horrid"),
-        #                 name.lookup("Ghastly"), name.lookup("Awful")]
+        position = file.seek(0,0)
+        name = MyNames()
+        bad_name_ids = [name.lookup("Terrible"), name.lookup("Horrid"),
+                         name.lookup("Ghastly"), name.lookup("Awful")]
+
+        name_char = get_next_name(file)
+        bad_names = [name.get_string(id) for id in bad_name_ids]
+        while (name_char[1] !="" and name_char[0] != None):
+
+            if not(name_char[0] in bad_names):
+                print(name_char[0], end = " ")
+            name_char = get_next_name(file)
+
+
+
 
 if __name__ == "__main__":
     main()

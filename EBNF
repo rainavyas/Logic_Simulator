@@ -1,4 +1,4 @@
-specfile = device, {device}, {connection}, monitor_point, {monitor_point}, 'END';
+specfile = device, {device}, {connection}, monitor_point, {monitor_point}, 'END;';
 
 device = name, 'is', type, ['with', 'initial', '1'|'0'], ['with', [number, 'inputs' | '1', 'input']], ['with, 'period', number], ';';
 

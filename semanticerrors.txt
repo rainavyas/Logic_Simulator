@@ -39,3 +39,23 @@ digit = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
 alphanum = alpha|with_zero_digit;
 
 with_zero_digit = digit|'0';
+
+Error Handling:
+
+Syntax Errors:
+
+Semantic Errors:
+# Could specify multiple inputs/outputs for given type. E.g. clk1 is CLOCK with initial 0, with 5 inputs.
+    If parser detects >1 'with' statements, break and report to user "ArgumentError: illegal device port assignment."
+    Could add alternation to definition but this makes handling "DTYPE" difficult.
+# Devices may take arguments not suitable to their type e.g. AND1 is AND with period 3 (AND doesn't take argument 'period').
+    Scanner reports any logic other than "CLOCK" as having illegal port assignment if "with period" provided.
+    Scanner reports "CLOCK" as having illegal port assignment if "input" or "inputs" given.
+
+# 1 input could be specified as "with 1 input" or "with 1 inputs" (both are legal).
+    Design scanner to accept either option.
+
+# 'name.pin' to the left of 'connects' must be an output; 'name.pin' to the right must be an input.
+    Scanner checks whether pin to left is of form "name.Ix" where x is a number and that the one to the right is not of this form.
+# Alternatively, at least one of the pins must be an input and the other an output (non-directional).
+    Check that there is at least one of each type. In both cases report this to user.

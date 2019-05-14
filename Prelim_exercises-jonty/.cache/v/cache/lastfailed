@@ -1,0 +1,7 @@
+{
+  "test_mynames.py::test_lookup": true,
+  "test_mynames.py::test_lookup[0-Tom]": true,
+  "test_mynames.py::test_lookup[1-Jonty]": true,
+  "test_mynames.py::test_lookup[2-Rory]": true,
+  "test_mynames.py::test_lookup[3-None]": true
+}

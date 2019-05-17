@@ -17,13 +17,19 @@ Semantic Errors:
   # 1 input could be specified as "with 1 input" or "with 1 inputs" (both are legal).
     Design scanner to accept either option.
 
-  # 'name.pin' to the left of 'connects' must be an output; 'name.pin' to the right must be an input.
-    Scanner checks whether pin to left is of form "name.Ix" where x is a number and that the one to the right is not of this form.
-
-  # Alternatively, at least one of the pins must be an input and the other an output (non-directional).
-    Check that there is at least one of each type. In both cases report this to user.
-
   # Monitor only outputs/all points.
     Decision to allow monitoring of all points. Worth mentioning for report.
 
-  #
+  # User can define a number of devices and monitoring points in "specfile" but potentially no connections. This is valid but may provide monitoring point outputs which make no sense.
+    At least one connection would not solve this (some gates require multiple inputs so may be left floating.)
+    Handle by checking that all gates have their inputs connected to something and return an error to user if not.
+
+  # Currently possible for the same name to be entered multiple time, even for different types. Semantic as no way of telling which pin connects to which despite being different devices.
+    If the same name is used more than once, break and report this to the user.
+
+  # Possible to connect pins to themselves. This makes sense for inputs but is redundant for outputs.
+    Don't need to break here; don't accept connections from outputs to outputs.
+    Scanner checks that at least one pin is of form "name.Ix" where x is a number.
+
+  # Alternatively, at least one of the pins must be an input and the other an output (non-directional).
+    Check that there is at least one of each type. In both cases report this to user.

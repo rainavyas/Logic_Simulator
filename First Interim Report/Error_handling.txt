@@ -1,0 +1,49 @@
+\section{Error Handling}
+
+\subsection{General Error Handling}
+Both syntax and semantic errors will stop the program and print a report to the user, highlighting the nature of the error.
+
+\subsection{Syntax Errors}
+Syntax errors will automatically break, providing a suitable error description and position.
+
+\subsection{Semantic Errors}
+Semantic errors will be handled individually (see below). In most cases the program will break (raise an exception) and print a suitable description.
+
+
+\begin{tabular}{|p{2cm}|p{6cm}|p{5cm}|}
+    \hline
+    \multicolumn{3}{|c|}{Semantic Errors} \\
+    \hline
+    Error & Description & Suggested Action\\
+    \hline \hline
+    Multiple inputs for a given type & Each input statement following `with' in the `devices' portion of EBNF is optional; this is required so that no inputs can be specified for the ``CLOCK'' type. Consequently, multiple types and numbers of input can be specified for one device.
+    & If parser detects $> 1$ statement after `with', break and report suitable error to user.
+    \\
+    \hline
+    Device arguments unsuitable for type & Arguments after `with' may be unsuitable for the device type e.g. ``AND1 is AND with period 3'' (period reserved for type: ``CLOCK'').
+    & If parser detects an unsuitable input argument for the given type, break and report this to the user.
+    \\
+    \hline
+    Specifying one input & One input can be specified as ``with 1 input'' or ``with 1 inputs''; both are legal. & The parser should allow for both forms.
+    \\
+    \hline
+    Monitoring inputs/outputs & Monitoring points can be specified on both inputs and outputs. There is nothing inherently wrong with this but it should be kept in mind if allowed. & Decision made to allow monitoring of both points; build this function into the parser.
+    \\
+    \hline
+    Floating pins & The EBNF syntax for ``device'' allows any number of connections to be declared. Multiple devices with floating inputs/outputs could be created. Monitoring points could then be connected to these. & The parser should check that all inputs are connected to something, or have initial values specified. Break and display a suitable error if not.
+    \\
+    \hline
+    Duplicate Device Names & Multiple device instances can be created with the same name, possibly with different properties. This may leave no way of identifying correct pins for connection/monitoring purposes. & If the parser detects duplicate names, break and report a suitable error to the user.
+    \\
+    \hline
+    Self-connects & The EBNF syntax allows connections from a pin to itself; this is useful for input pins but has no meaning for output pins. & Have the parser ignore connections from an output pins to back to itself. Alternatively, have the parser check that at least one pin in each ``connections'' declaration is an input and ignore instances where both are outputs. It is not necessary to break in this case but an error could be reported.
+    \\
+    \hline
+    Non-existent Pin Connects or Monitoring Points & `Connection' or `monitoring\_point' could reference non-existent pins. ``CLOCK1.I1 connects AND1.CLEAR'' is syntactically accurate but nether pin combination is possible. & If the parser detects invalid pin combinations, break and print a suitable error to the user.
+    \\
+    \hline
+    Duplicate Monitoring Points & Duplicate monitoring points could be specified. & This doesn't cause any catastrophic issues but duplicates should be neglected to prevent using unnecessary resources.
+    \\
+    \hline
+
+\end{tabular}

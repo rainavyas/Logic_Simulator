@@ -1,41 +1,35 @@
-specfile = device, {device}, {connection}, monitor_point, {monitor_point}, 'END';
+General Error Handling:
+Both syntax and semantic errors will stop the program and print a report to the user highlighting the nature of the error.
 
-device = name, 'is', type, ['with', 'initial', '1'|'0'], ['with', [number, 'inputs' | '1', 'input']], ['with, 'period', number], ';';
+Syntax Errors:
+  Syntax errors will automatically break and provide a suitable error description and position.
 
-## Could specify multiple inputs/outputs for given type. E.g. clk1 is CLOCK with initial 0, with 5 inputs.
+Semantic Errors:
+  Semantic errors will be handled individually as below. In each case the program will break (an exception raised) and a suitable description provided.
+  # Could specify multiple inputs/outputs for given type. E.g. clk1 is CLOCK with initial 0, with 5 inputs.
+    If parser detects >1 'with' statements, break and report to user "ArgumentError: illegal device port assignment."
+    Could add alternation to definition but this makes handling "DTYPE" difficult.
 
-## Devices may take arguments not suitable to their type e.g. AND1 is AND with period 3 (AND doesn't take argument 'period').
+  # Devices may take arguments not suitable to their type e.g. AND1 is AND with period 3 (AND doesn't take argument 'period').
+    Scanner reports any logic other than "CLOCK" as having illegal port assignment if "with period" provided.
+    Scanner reports "CLOCK" as having illegal port assignment if "input" or "inputs" given.
 
-## 1 input must be specified as "with 1 input" rather than "with 1 inputs" (both are legal). Or scanner must handle this.
+  # 1 input could be specified as "with 1 input" or "with 1 inputs" (both are legal).
+    Design scanner to accept either option.
 
-connection = name, '.', pin, 'connects', name, '.', pin, ';';
+  # Monitor only outputs/all points.
+    Decision to allow monitoring of all points. Worth mentioning for report.
 
-## 'name.pin' to the left of 'connects' must be an output; 'name.pin' to the right must be an input.
-## Alternatively, at least one of the pins must be an input and the other an output (non-directional).
+  # User can define a number of devices and monitoring points in "specfile" but potentially no connections. This is valid but may provide monitoring point outputs which make no sense.
+    At least one connection would not solve this (some gates require multiple inputs so may be left floating.)
+    Handle by checking that all gates have their inputs connected to something and return an error to user if not.
 
-monitor_point = 'monitor', name, '.', pin, ';';
+  # Currently possible for the same name to be entered multiple time, even for different types. Semantic as no way of telling which pin connects to which despite being different devices.
+    If the same name is used more than once, break and report this to the user.
 
-## Monitor accepts any pin - does it make sense to monitor inputs?
+  # Possible to connect pins to themselves. This makes sense for inputs but is redundant for outputs.
+    Don't need to break here; don't accept connections from outputs to outputs.
+    Scanner checks that at least one pin is of form "name.Ix" where x is a number.
 
-name = alpha, {alphanum};
-
-type = 'CLOCK'| 'SWITCH'| 'AND'| 'NAND'| 'OR'| 'NOR'| 'DTYPE'| 'XOR'
-
-pin = 'I1'| 'I2'| 'I3'| 'I4'| 'I5'| 'I6'| 'I7'| 'I8'| 'I9'| 'I10'| 'I11'| 'I12'| 'I13'| 'I14'| 'I15'| 'I16'| 'O'| 'DATA'| 'CLK'| 'SET'| 'CLEAR'| 'Q'| 'QBAR']
-
-number = digit, {with_zero_digit};
-
-alpha  = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
-       | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N'
-       | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U'
-       | 'V' | 'W' | 'X' | 'Y' | 'Z' | 'a' | 'b'
-       | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i'
-       | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p'
-       | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w'
-       | 'x' | 'y' | 'z' ;
-
-digit = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
-
-alphanum = alpha|with_zero_digit;
-
-with_zero_digit = digit|'0';
+  # Alternatively, at least one of the pins must be an input and the other an output (non-directional).
+    Check that there is at least one of each type. In both cases report this to user.

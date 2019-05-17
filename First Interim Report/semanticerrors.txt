@@ -33,3 +33,12 @@ Semantic Errors:
 
   # Alternatively, at least one of the pins must be an input and the other an output (non-directional).
     Check that there is at least one of each type. In both cases report this to user.
+
+  # Connection could reference non-existent pins e.g. "CLOCK1.I1 connects AND1.CLEAR".
+    Check "type" and number of assigned inputs before assigning connection. Break and print error to user if invalid pins chosen.
+
+  # Monitor point could reference non-existent pin. E.g. "monitor_point = monitor XOR1.I3" (XOR only has I1 and I2). Also possible to monitor Q or QBAR of "AND" gate etc.
+    Check "type" and number of assigned inputs before assigning monitoring points. Break and print error to user if invalid pins chosen.
+
+  # Allow identical monitoring points? Could specify more monitoring points than there are connections available.
+    Doesn't appear to be a problem but may want to prevent duplicate monitoring points.

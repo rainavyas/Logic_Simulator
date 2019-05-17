@@ -1,12 +1,12 @@
 specfile = device, {device}, {connection}, monitor_point, {monitor_point}, 'END;';
 
 
-device = name, 'is', type, ['with', 'initial', '1'|'0'], ['with', (number, 'inputs' | '1', 'input')], ['with, 'period', number], ';';
+device = name, 'is', type, ['with', 'initial', '1'|'0'], ['with', (number, 'inputs' | '1', 'input')],
+	 ['with, 'period', number], ';';
 
 connection = name, '.', output_pin, 'connects', name, '.', input_pin, ';';
 
 monitor_point = 'monitor', name, '.', output_pin | input_pin, ';';
-
 
 
 name = alpha, {alphanum};
@@ -15,7 +15,8 @@ type = 'CLOCK'| 'SWITCH'| 'AND'| 'NAND'| 'OR'| 'NOR'| 'DTYPE'| 'XOR' ;
 
 output_pin = 'O'| 'Q'| 'QBAR';
 
-input_pin = 'I1'| 'I2'| 'I3'| 'I4'| 'I5'| 'I6'| 'I7'| 'I8'| 'I9'| 'I10'| 'I11'| 'I12'| 'I13'| 'I14'| 'I15'| 'I16'| 'DATA'| 'CLK'| 'SET'| 'CLEAR';
+input_pin = 'I1'| 'I2'| 'I3'| 'I4'| 'I5'| 'I6'| 'I7'| 'I8'| 'I9'| 'I10'| 'I11'| 'I12'| 'I13'| 'I14'| 'I15'
+	  | 'I16'| 'DATA'| 'CLK'| 'SET'| 'CLEAR';
 
 number = digit, {with_zero_digit};
 

@@ -74,7 +74,7 @@ class Names:
         IDs = []
         for name_string in name_string_list:
             if not type(name_string) is str:
-                raise TypeError("name has to be a string")
+                raise TypeError("Expected name_string to be a string")
 
             if not (name_string in self.names):
                 self.names.append(name_string)
@@ -88,3 +88,14 @@ class Names:
 
         If the name_id is not an index in the names list, return None.
         """
+
+        if not type(name_id) is int:
+            raise TypeError("Expected name_id to be an integer")
+
+        if name_id < 0:
+            raise ValueError("Expected name_id to be positive")
+
+        if name_id >= len(self.names):
+            return None
+        else:
+            return self.names[name_id]

@@ -71,6 +71,18 @@ class Names:
         If the name string is not present in the names list, add it.
         """
 
+        IDs = []
+        for name_string in name_string_list:
+            if not type(name_string) is str:
+                raise TypeError("name has to be a string")
+
+            if not (name_string in self.names):
+                self.names.append(name_string)
+
+            IDs.append(self.names[name_string])
+
+        return IDs
+
     def get_name_string(self, name_id):
         """Return the corresponding name string for name_id.
 

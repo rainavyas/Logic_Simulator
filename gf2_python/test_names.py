@@ -85,5 +85,5 @@ def test_lookup(used_names, new_names, name_ids, expected_string_list):
     # all ids present
     assert used_names.lookup(expected_string_list) == name_ids
     # all ids absent
-    assert len(new_names.lookup(expected_string_list)),\
+    assert len(new_names.lookup(expected_string_list))\
         == len(expected_string_list)

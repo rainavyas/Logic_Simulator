@@ -9,10 +9,12 @@ def new_names():
     """Return a new names instance."""
     return Names()
 
+
 @pytest.fixture
 def name_string_list():
     """Return a list of example names."""
     return ["Alice", "Bob", "Eve"]
+
 
 @pytest.fixture
 def used_names(name_string_list):
@@ -20,6 +22,7 @@ def used_names(name_string_list):
     my_name = Names()
     my_name.lookup(name_string_list)
     return my_name
+
 
 def test_get_name_string_raises_exceptions(used_names):
     """Test if get_string raises expected exceptions."""
@@ -61,7 +64,7 @@ def test_query(used_names, new_names, name_id, expected_string):
     # id is present
     assert used_names.query(expected_string) == name_id
     # id is absent
-    assert new_names.query(expected_string) == None
+    assert new_names.query(expected_string) is None
 
 
 def test_lookup_raises_exceptions(used_names):
@@ -71,15 +74,16 @@ def test_lookup_raises_exceptions(used_names):
     with pytest.raises(TypeError):
         used_names.lookup(["Yo James", "hi Jonty", 3])
 
-@pytest.mark.parametrize("name_ids, expected_string_list",[
-    ([0], ["Alice"]),
-    ([1,2], ["Bob", "Eve"]),
-    ([2,0], ["Eve", "Alice"]),
-] )
 
+@pytest.mark.parametrize("name_ids, expected_string_list", [
+    ([0], ["Alice"]),
+    ([1, 2], ["Bob", "Eve"]),
+    ([2, 0], ["Eve", "Alice"]),
+])
 def test_lookup(used_names, new_names, name_ids, expected_string_list):
     """Test if look_up returns the expected name_ids"""
     # all ids present
     assert used_names.lookup(expected_string_list) == name_ids
     # all ids absent
-    assert len(new_names.lookup(expected_string_list)) == len(expected_string_list)
+    assert len(new_names.lookup(expected_string_list)),\
+        == len(expected_string_list)

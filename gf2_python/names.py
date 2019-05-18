@@ -64,7 +64,6 @@ class Names:
             return None
         return self.names.index(name_string)
 
-
     def lookup(self, name_string_list):
         """Return a list of name IDs for each name string in name_string_list.
 

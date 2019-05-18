@@ -20,3 +20,12 @@ def used_names(name_string_list):
     my_name = Names()
     my_name.lookup(name_string_list)
     return my_name
+
+def test_get_string_raises_exceptions(used_names):
+    """Test if get_string raises expected exceptions."""
+    with pytest.raises(TypeError):
+        used_names.get_string(1.4)
+    with pytest.raises(TypeError):
+        used_names.get_string("hello")
+    with pytest.raises(ValueError):
+        used_names.get_string(-1)

@@ -57,6 +57,14 @@ class Names:
         If the name string is not present in the names list, return None.
         """
 
+        if not type(name_string) is str:
+            raise TypeError("Expected name_string to be a string")
+
+        if not (name_string in self.names):
+            return None
+        return self.names.index(name_string)
+
+
     def lookup(self, name_string_list):
         """Return a list of name IDs for each name string in name_string_list.
 

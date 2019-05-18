@@ -49,3 +49,16 @@ def test_query_raises_exceptions(used_names):
     """Test if query raises expected exceptions."""
     with pytest.raises(TypeError):
         used_names.query(5)
+
+
+@pytest.mark.parametrize("name_id, expected_string", [
+    (0, "Alice"),
+    (1, "Bob"),
+    (2, "Eve")
+])
+def test_query(used_names, new_names, name_id, expected_string):
+    """Test if look_up returns the expected name_id"""
+    # id is present
+    assert used_names.query(expected_string) == name_id
+    # id is absent
+    assert new_names.query(expected_string) == None

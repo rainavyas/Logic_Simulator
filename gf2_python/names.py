@@ -72,6 +72,10 @@ class Names:
         """
 
         IDs = []
+
+        if not type(name_string_list) is list:
+            raise TypeError("Expected name_string_list to be a list")
+
         for name_string in name_string_list:
             if not type(name_string) is str:
                 raise TypeError("Expected name_string to be a string")

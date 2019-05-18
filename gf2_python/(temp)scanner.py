@@ -10,6 +10,8 @@ Symbol - encapsulates a symbol and stores its properties.
 """
 
 from names import Names
+import sys
+import os
 
 class Symbol:
 
@@ -128,8 +130,50 @@ class Scanner:
     def location():
         """Print the current input line along with a marker showing error position in the line
         """
+        current_pos = self.file.tell()
 
+        self.file.seek(0)
+        linelengths = []
+        i = 0
+        for line in self.file:
+            i += 1
+            if len(linelengths) == 0:
+                linelengths.append(len(line))
+            else:
+                linelengths.append(len(line) + linelengths[-1])
+        num_line = i
 
+        self.line = ''
+        self.position = ''
+        self.file.seek(current_pos)
+
+        for n in range(num_line):
+            if n == 0:
+                if self.file.tell() <= linelengths[n]:
+                    self.line = 1
+                    self.position = self.file.tell()
+                else:
+                    self.line = ''
+                    self.position = ''
+            elif self.file.tell() <= linelengths[n] and self.file.tell() > linelengths[n-1]:
+                self.line = n + 1
+                self.position = file_test.tell() - linelengths[n-1]
+
+        marker = 0
+
+        self.file.seek(0)
+
+        for line in self.file:
+            marker += 1
+            if marker == self.line:
+                print(line, " "*(self.position-3), "^")
+
+        self.file.seek(current_pos)
+
+    def skip_comment():
+        if self.current_character == "#":
+            while self.current_character != " ":
+                self.advance()
 
     def get_symbol(self):
         """Translate the next sequence of characters into a symbol.
@@ -139,6 +183,7 @@ class Scanner:
 
         symbol = Symbol()
         self.skip_spaces()  # current character now not whitespace
+        self.skip_comment() # current character now not comment
         if self.current_character.isalpha():  # name
             name_string = self.get_name()
             if name_string in self.keywords_list:
@@ -170,3 +215,6 @@ class Scanner:
         else:  # not a valid character
             self.advance()
         return symbol
+
+path_test = os.getcwd() + "/(temp)text_file.txt"
+object = Scanner(path_test, names)

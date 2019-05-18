@@ -79,7 +79,7 @@ class Names:
             if not (name_string in self.names):
                 self.names.append(name_string)
 
-            IDs.append(self.names[name_string])
+            IDs.append(self.query(name_string))
 
         return IDs
 

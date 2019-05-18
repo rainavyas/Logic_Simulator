@@ -70,3 +70,16 @@ def test_lookup_raises_exceptions(used_names):
         used_names.lookup("hey")
     with pytest.raises(TypeError):
         used_names.lookup(["Yo James", "hi Jonty", 3])
+
+@pytest.mark.parametrize("name_ids, expected_string_list",[
+    ([0], ["Alice"]),
+    ([1,2], ["Bob", "Eve"]),
+    ([2,0], ["Eve", "Alice"]),
+] )
+
+def test_lookup(used_names, new_names, name_ids, expected_string_list):
+    """Test if look_up returns the expected name_ids"""
+    # all ids present
+    assert used_names.lookup(expected_string_list) == name_ids
+    # all ids absent
+    assert len(new_names.lookup(expected_string_list)) == len(expected_string_list)

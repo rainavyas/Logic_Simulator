@@ -43,3 +43,9 @@ def test_get_name_string(used_names, new_names, name_id, expected_string):
     assert used_names.get_name_string(name_id) == expected_string
     # Name is absent
     assert new_names.get_name_string(name_id) is None
+
+
+def test_query_raises_exceptions(used_names):
+    """Test if query raises expected exceptions."""
+    with pytest.raises(TypeError):
+        used_names.query(5)

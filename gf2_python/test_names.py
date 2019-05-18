@@ -62,3 +62,11 @@ def test_query(used_names, new_names, name_id, expected_string):
     assert used_names.query(expected_string) == name_id
     # id is absent
     assert new_names.query(expected_string) == None
+
+
+def test_lookup_raises_exceptions(used_names):
+    """Test if query raises expected exceptions."""
+    with pytest.raises(TypeError):
+        used_names.lookup("hey")
+    with pytest.raises(TypeError):
+        used_names.lookup(["Yo James", "hi Jonty", 3])

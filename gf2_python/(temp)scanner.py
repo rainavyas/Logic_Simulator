@@ -119,6 +119,7 @@ class Scanner:
         if self.current_character == "#":
                 print("Skipping comment...")
                 self.file.readline()
+                self.skip_spaces()
                 self.current_character = self.file.read(1)
 
     def location(self):

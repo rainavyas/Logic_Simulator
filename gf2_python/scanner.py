@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """Read the circuit definition file and translate the characters into symbols.
 
 Used in the Logic Simulator project to read the characters in the definition
@@ -10,6 +12,7 @@ Symbol - encapsulates a symbol and stores its properties.
 """
 
 from names import Names
+
 
 class Symbol:
 
@@ -30,6 +33,7 @@ class Symbol:
         self.id = None
         self.line = None
         self.position = None
+
 
 class Scanner:
 
@@ -56,16 +60,19 @@ class Scanner:
         self.file = open(path)
 
         self.names = names
-        self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS, self.KEYWORD, self.NUMBER, self.NAME, self.EOF] = range(7)
+        self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS,
+                                 self.KEYWORD, self.NUMBER, self.NAME,
+                                 self.EOF] = range(7)
         self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END"]
-        [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID, self.END_ID] = self.names.lookup(self.keywords_list)
+        [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID,
+         self.END_ID] = self.names.lookup(self.keywords_list)
         self.current_character = self.file.read(1)
-
 
     def get_name(self):
         """Seek the next name string in input_file.
 
-        Return the name string (or None) and place the next non-alphanumeric character in current_character.
+        Return the name string (or None) and place the next non-alphanumeric
+        character in current_character.
         """
         name = []
         lis = []
@@ -85,7 +92,8 @@ class Scanner:
     def get_number(self):
         """Seek the next number in input_file.
 
-        Return the number (or None) and place the next non-numeric character in current_character.
+        Return the number (or None) and place the next non-numeric character
+        in current_character.
         """
         num = []
 
@@ -102,7 +110,8 @@ class Scanner:
             return None
 
     def advance(self):
-        """Read the next character from input_file and place it in current_character.
+        """Read the next character from input_file and place it
+        in current_character.
         """
         self.current_character = self.file.read(1)
 
@@ -117,10 +126,12 @@ class Scanner:
         if self.current_character == "#":
                 print("Skipping comment...")
                 self.file.readline()
+                self.skip_spaces()
                 self.current_character = self.file.read(1)
 
     def location(self):
-        """Print the current input line along with a marker showing symbol position in the line
+        """Print the current input line along with a marker showing symbol
+        position in the line
         """
         stored_position = self.file.tell()
 
@@ -147,10 +158,10 @@ class Scanner:
                 else:
                     current_line = ''
                     current_position = ''
-            elif self.file.tell() <= linelengths[n] and self.file.tell() > linelengths[n-1]:
+            elif(self.file.tell() <= linelengths[n] and self.file.tell() >
+                 linelengths[n-1]):
                 current_line = n + 1
                 current_position = self.file.tell() - linelengths[n-1]
-
 
         self.file.seek(0)
 
@@ -170,7 +181,7 @@ class Scanner:
         """
         symbol = Symbol()
         self.skip_spaces()  # current character now not whitespace
-        self.skip_comment() # current character now not comment
+        self.skip_comment()  # current character now not comment
 
         if self.current_character.isalpha():  # name
             name_string = self.get_name()
@@ -188,11 +199,11 @@ class Scanner:
             symbol.type = self.EQUALS
             self.advance()
 
-        elif self.current_character == ",": # comma
+        elif self.current_character == ",":  # comma
             symbol.type = self.COMMA
             self.advance()
 
-        elif self.current_character == ";": # semicolon
+        elif self.current_character == ";":  # semicolon
             symbol.type = self.SEMICOLON
             self.advance()
 

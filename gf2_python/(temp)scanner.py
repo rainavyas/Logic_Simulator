@@ -112,11 +112,14 @@ class Scanner:
         """Calls advance as necessary until current_character is not whitsepace
         """
         while self.current_character.isspace():
+            print("skipping space(s)")
             self.advance()
 
     def skip_comment(self):
         if self.current_character == "#":
-            self.file.readline()
+                print("Skipping comment...")
+                self.file.readline()
+                self.current_character = self.file.read(1)
 
     def location(self):
         """Print the current input line along with a marker showing symbol position in the line
@@ -170,6 +173,7 @@ class Scanner:
         symbol = Symbol()
         self.skip_spaces()  # current character now not whitespace
         self.skip_comment() # current character now not comment
+
         if self.current_character.isalpha():  # name
             name_string = self.get_name()
             print("Name_string:", name_string)
@@ -180,23 +184,27 @@ class Scanner:
             [symbol.id] = self.names.lookup([name_string])
 
         elif self.current_character.isdigit():  # number
-            print("Number is:", self.current_character)
+            print("First number is:", self.current_character)
             symbol.id = self.get_number()
             symbol.type = self.NUMBER
 
         elif self.current_character == "=":  # equals
+            print("Found an equals")
             symbol.type = self.EQUALS
             self.advance()
 
         elif self.current_character == ",": # comma
+            print("Found a comma")
             symbol.type = self.COMMA
             self.advance()
 
         elif self.current_character == ";": # semicolon
+            print("Found a semi-colon")
             symbol.type = self.SEMICOLON
             self.advance()
 
         elif self.current_character == "":  # end of file
+            print("Found EOF")
             symbol.type = self.EOF
 
         else:  # not a valid character
@@ -208,49 +216,7 @@ path_test = os.getcwd() + "/(temp)text_file.txt"
 names_test = Names()
 scanner = Scanner(path_test, names_test)
 
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
 
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-print(scanner.get_symbol().id)
-print(' ')
-
-# print("\nSymbol type code:", scanner.get_symbol().type)
-# print("Symbol ID:", scanner.get_symbol().id)
-# print("Symbol line:", scanner.get_symbol().line)
-# print("Symbol position:", scanner.get_symbol().position)
+for n in range(25):
+    print(scanner.get_symbol().id)
+    print(' ')

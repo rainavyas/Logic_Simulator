@@ -9,6 +9,7 @@ MyGLCanvas - handles all canvas drawing operations.
 Gui - configures the main window and all the widgets.
 """
 import wx
+import random
 import wx.glcanvas as wxcanvas
 from OpenGL import GL, GLUT
 
@@ -220,6 +221,9 @@ class Gui(wx.Frame):
         """Initialise widgets and layout."""
         super().__init__(parent=None, title=title, size=(800, 600))
 
+        self.number_of_mps = 0
+        self.all_mp_names = []
+
         # Configure the file menu
         fileMenu = wx.Menu()
         menuBar = wx.MenuBar()
@@ -232,32 +236,57 @@ class Gui(wx.Frame):
         self.canvas = MyGLCanvas(self, devices, monitors)
 
         # Configure the widgets
-        self.text = wx.StaticText(self, wx.ID_ANY, "Cycles")
+        self.file_picker = wx.FilePickerCtrl(self, message='Select Source File', wildcard='Text Files (*.txt)|*.txt')
+        self.text_cycles = wx.StaticText(self, wx.ID_ANY, "Cycles:")
+        self.text_mps = wx.StaticText(self, wx.ID_ANY, "Monitor Points")
         self.spin = wx.SpinCtrl(self, wx.ID_ANY, "10")
         self.run_button = wx.Button(self, wx.ID_ANY, "Run")
-        self.text_box = wx.TextCtrl(self, wx.ID_ANY, "",
+        self.continue_button = wx.Button(self, wx.ID_ANY, "Continue")
+        self.exit_button = wx.Button(self, wx.ID_ANY, "Exit")
+        self.add_button = wx.Button(self, wx.ID_ANY, "Add")
+        self.mp_names = wx.TextCtrl(self, wx.ID_ANY, "(ENTER ID)",
                                     style=wx.TE_PROCESS_ENTER)
 
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
         self.spin.Bind(wx.EVT_SPINCTRL, self.on_spin)
         self.run_button.Bind(wx.EVT_BUTTON, self.on_run_button)
-        self.text_box.Bind(wx.EVT_TEXT_ENTER, self.on_text_box)
+        self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
 
         # Configure sizers for layout
+        top_sizer = wx.BoxSizer(wx.VERTICAL)
         main_sizer = wx.BoxSizer(wx.HORIZONTAL)
         side_sizer = wx.BoxSizer(wx.VERTICAL)
+        cycle_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.mp_sizer = wx.BoxSizer(wx.VERTICAL)
+        mp_control_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        top_sizer.Add(self.file_picker, 1, wx.EXPAND | wx.ALL, 5, 10)
+        top_sizer.Add(main_sizer, 10, wx.EXPAND)
 
         main_sizer.Add(self.canvas, 5, wx.EXPAND | wx.ALL, 5)
-        main_sizer.Add(side_sizer, 1, wx.ALL, 5)
+        main_sizer.Add(side_sizer, 1, wx.RIGHT, 5)
 
-        side_sizer.Add(self.text, 1, wx.TOP, 10)
-        side_sizer.Add(self.spin, 1, wx.ALL, 5)
-        side_sizer.Add(self.run_button, 1, wx.ALL, 5)
-        side_sizer.Add(self.text_box, 1, wx.ALL, 5)
+        side_sizer.Add(cycle_sizer, 1, wx.ALL, 5)
+        side_sizer.Add(self.mp_sizer, 1, wx.ALL, 5)
+        side_sizer.Add(buttons_sizer, 1, wx.ALL, 5)
+
+        cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
+        cycle_sizer.Add(self.spin, 3, wx.LEFT | wx.RIGHT, 5)
+
+        buttons_sizer.Add(self.run_button, 1)
+        buttons_sizer.Add(self.continue_button, 1)
+        buttons_sizer.Add(self.exit_button, 1)
+
+        self.mp_sizer.Add(self.text_mps, 1, wx.RIGHT, 5)
+        self.mp_sizer.Add(mp_control_sizer, 1, wx.RIGHT, 5)
+
+        mp_control_sizer.Add(self.mp_names, 1, wx.EXPAND)
+        mp_control_sizer.Add(self.add_button, 1, wx.LEFT | wx.RIGHT, 5)
 
         self.SetSizeHints(600, 600)
-        self.SetSizer(main_sizer)
+        self.SetSizer(top_sizer)
 
     def on_menu(self, event):
         """Handle the event when the user selects a menu item."""
@@ -279,8 +308,33 @@ class Gui(wx.Frame):
         text = "Run button pressed."
         self.canvas.render(text)
 
-    def on_text_box(self, event):
-        """Handle the event when the user enters text."""
-        text_box_value = self.text_box.GetValue()
-        text = "".join(["New text box value: ", text_box_value])
-        self.canvas.render(text)
+    def onAddMP(self, event):
+        """"""
+        if self.number_of_mps < 5 and self.mp_names.GetValue() not in self.all_mp_names:
+            id = self.mp_names.GetValue()
+            self.number_of_mps += 1
+            self.all_mp_names.append(id)
+            new_button = wx.Button(self, label='Remove', name=id)
+            new_sizer = wx.BoxSizer(wx.HORIZONTAL)
+            new_sizer.Add(wx.StaticText(self, wx.ID_ANY, id), 1, wx.ALIGN_CENTRE)
+            new_sizer.Add(new_button, 1, wx.LEFT | wx.RIGHT | wx.TOP, 5)
+            new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)#, id=int(self.number_of_mps))
+            self.mp_sizer.Add(new_sizer, 0, wx.RIGHT, 5)
+            self.Layout()
+
+    def onRemoveMP(self, event):
+        """"""
+        if len(self.mp_sizer.GetChildren())>2:
+            index = self.all_mp_names.index(event.GetEventObject().GetName())
+            print(index)
+            self.mp_sizer.Hide(index+2)
+            self.mp_sizer.Remove(index+2)
+            self.number_of_mps -= 1
+            self.Layout()
+            del self.all_mp_names[index]
+
+    #def on_text_box(self, event):
+    #    """Handle the event when the user enters text."""
+    #    text_box_value = self.text_box.GetValue()
+    #    text = "".join(["New text box value: ", text_box_value])
+    #    self.canvas.render(text)

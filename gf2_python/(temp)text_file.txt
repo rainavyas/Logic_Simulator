@@ -1,6 +1,6 @@
 This is a test
 of the scanner module
-1 line
+121 line
 2 line
 # The third line is a comment.
 

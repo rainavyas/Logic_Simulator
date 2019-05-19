@@ -239,6 +239,7 @@ class Gui(wx.Frame):
         self.file_picker = wx.FilePickerCtrl(self, message='Select Source File', wildcard='Text Files (*.txt)|*.txt')
         self.text_cycles = wx.StaticText(self, wx.ID_ANY, "Cycles:")
         self.text_mps = wx.StaticText(self, wx.ID_ANY, "Monitor Points")
+        self.text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")
         self.spin = wx.SpinCtrl(self, wx.ID_ANY, "10")
         self.run_button = wx.Button(self, wx.ID_ANY, "Run")
         self.continue_button = wx.Button(self, wx.ID_ANY, "Continue")
@@ -246,6 +247,7 @@ class Gui(wx.Frame):
         self.add_button = wx.Button(self, wx.ID_ANY, "Add")
         self.mp_names = wx.TextCtrl(self, wx.ID_ANY, "(ENTER ID)",
                                     style=wx.TE_PROCESS_ENTER)
+        self.toggle = wx.ToggleButton(self, wx.ID_ANY, 'On')
 
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
@@ -261,6 +263,8 @@ class Gui(wx.Frame):
         buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.mp_sizer = wx.BoxSizer(wx.VERTICAL)
         mp_control_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        switches_sizer = wx.BoxSizer(wx.VERTICAL)
+        switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         top_sizer.Add(self.file_picker, 1, wx.EXPAND | wx.ALL, 5, 10)
         top_sizer.Add(main_sizer, 10, wx.EXPAND)
@@ -270,6 +274,7 @@ class Gui(wx.Frame):
 
         side_sizer.Add(cycle_sizer, 1, wx.ALL, 5)
         side_sizer.Add(self.mp_sizer, 1, wx.ALL, 5)
+        side_sizer.Add(switches_sizer, 1, wx.ALL, 5)
         side_sizer.Add(buttons_sizer, 1, wx.ALL, 5)
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
@@ -284,6 +289,12 @@ class Gui(wx.Frame):
 
         mp_control_sizer.Add(self.mp_names, 1, wx.EXPAND)
         mp_control_sizer.Add(self.add_button, 1, wx.LEFT | wx.RIGHT, 5)
+
+        switches_sizer.Add(self.text_switches, 1, wx.RIGHT, 5)
+        switches_sizer.Add(switch_sizer, 1)
+
+        switch_sizer.Add(wx.StaticText(self, wx.ID_ANY, 'Switch 1'), 1, wx.EXPAND)
+        switch_sizer.Add(self.toggle, 1, wx.LEFT | wx.RIGHT, 5)
 
         self.SetSizeHints(600, 600)
         self.SetSizer(top_sizer)

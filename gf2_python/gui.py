@@ -326,7 +326,6 @@ class Gui(wx.Frame):
         """"""
         if len(self.mp_sizer.GetChildren())>2:
             index = self.all_mp_names.index(event.GetEventObject().GetName())
-            print(index)
             self.mp_sizer.Hide(index+2)
             self.mp_sizer.Remove(index+2)
             self.number_of_mps -= 1

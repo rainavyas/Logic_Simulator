@@ -52,6 +52,7 @@ class Parser:
         #Get the first symbol from Scanner
         self.symbol = self.scanner.get_symbol()
 
+        #Main structure
         self.devicelist()
         self.connectlist()
         self.monitorlist()
@@ -71,8 +72,25 @@ class Parser:
     def devicelist(self):
         """Parse the devices section"""
 
+        if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.DEVICES_ID):
+            self.symbol = self.scanner.get_symbol()
+
+            if (self.symbol.type == self.scanner.SEMICOLON):
+                self.symbol = self.scanner.get_symbol()
+                self.device()
+                while not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.CONNECT_ID):
+                    self.device()
+            else:
+                self.error()
+        else:
+            self.error()
+
+
     def connectlist(self):
         """Parse the connections section"""
 
     def monitorlist(self):
         """Parse the monitoring section"""
+
+    def device(self):
+        """Parse the device syntax"""

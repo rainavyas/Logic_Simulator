@@ -52,6 +52,12 @@ class Parser:
         #Get the first symbol from Scanner
         self.symbol = self.scanner.get_symbol()
 
+        self.devicelist()
+        self.connectlist()
+        self.monitorlist()
+
+        if not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
+            self.error()
 
 
         # For now just return True, so that userint and gui can run in the

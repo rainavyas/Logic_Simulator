@@ -121,12 +121,12 @@ class Scanner:
             self.file.readline()
             self.skip_spaces()
             self.current_character = self.file.read(1)
-        elif self.current_character == "/":
-            print("Skipping closed comment...")
-            self.current_character == self.file.read(1)
-            while self.current_character != "/":
-                self.current_character == self.file.read(1)
-            self.current_character == self.file.read(1)
+        # elif self.current_character == "/":
+        #     print("Skipping closed comment...")
+        #     self.current_character == self.file.read(1)
+        #     while self.current_character != "/":
+        #         self.current_character == self.file.read(1)
+        #     self.current_character == self.file.read(1)
 
     def location(self):
         """Print the current input line along with a marker showing symbol position in the line

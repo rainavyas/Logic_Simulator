@@ -9,8 +9,8 @@ connectlist = 'CONNECT', ';', {connection};
 monitorlist = 'MONITOR', ';', monitor_point, {monitor_point};
 
 
-device = name, ':', type, [',', 'initial', '1'|'0'], [',', 'inputs', number ],
-	 [',', 'period', number], ';';
+device = name, ':', type, [ ',', ( 'initial', '1'|'0') | ('inputs', number)
+	 | ('period', number) ], ';';
 
 connection = name, ['.',output_pin] '=', name, '.', input_pin, ';';
 

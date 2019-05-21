@@ -1,0 +1,40 @@
+
+specfile = 'DEVICES', ';', device, {device},'CONNECT', ';', {connection}, 'MONITOR', ';', monitor_point, {monitor_point}, 'END';
+
+
+device = name, ':', type, [',', 'initial', '1'|'0'], [',', 'inputs', number ],
+	 [',', 'period', number], ';';
+
+connection = name, ['.',output_pin] 'to', name, '.', input_pin, ';';
+
+monitor_point = name, ['.', output_pin], ';';
+
+name = alpha, {alphanum};
+
+type = 'CLOCK'| 'SWITCH'| 'AND'| 'NAND'| 'OR'| 'NOR'| 'DTYPE'| 'XOR' ;
+
+output_pin = 'Q'| 'QBAR';
+
+input_pin = 'I1'| 'I2'| 'I3'| 'I4'| 'I5'| 'I6'| 'I7'| 'I8'| 'I9'| 'I10'| 'I11'| 'I12'| 'I13'| 'I14'| 'I15'
+	  | 'I16'| 'DATA'| 'CLK'| 'SET'| 'CLEAR';
+
+number = digit, {with_zero_digit};
+
+alpha  = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+       | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N'
+       | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U'
+       | 'V' | 'W' | 'X' | 'Y' | 'Z' | 'a' | 'b'
+       | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i'
+       | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p'
+       | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w'
+       | 'x' | 'y' | 'z' ;
+
+digit = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
+
+alphanum = alpha|with_zero_digit;
+
+with_zero_digit = digit|'0';
+
+
+Single-line comments begin with "#"
+Multi-line comments in /* */

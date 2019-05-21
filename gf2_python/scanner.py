@@ -89,12 +89,11 @@ class Scanner:
         """
         num = []
 
-        if self.current_character.isdigit():
-            while self.current_character.isdigit():
-                num.append(self.current_character)
-                self.advance()
-            num = ''.join(map(str, num))
+        while self.current_character.isdigit():
+            num.append(self.current_character)
             self.advance()
+        num = ''.join(map(str, num))
+        self.advance()
         return num
 
     def advance(self):
@@ -123,10 +122,6 @@ class Scanner:
                 if self.current_character == "/":
                     self.advance()
                     self.skip_spaces()
-                else:
-                    print("WRONG")
-            else: print("WRONG2")
-
 
     def location(self):
         """Print the current input line along with a marker showing symbol position in the line
@@ -232,4 +227,5 @@ scanner = Scanner(path_test, names_test)
 
 for n in range(30):
     scanner.get_symbol()
+    scanner.location()
     print(' ')

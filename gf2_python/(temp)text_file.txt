@@ -4,6 +4,8 @@ of the scanner module
 2 line
 # The third, line = is; a comment!.
 
+/This is a closed comment    /
+
 ,  ;  .   =
 
 # And another comment.

@@ -80,7 +80,7 @@ class Scanner:
         char = self.current_character
 
         if char.isalpha():
-            while char.isalnum():
+            while char.isalnum() or char == ".":
                 name.append(char)
                 char = self.file.read(1)
             name = ''.join(map(str, name))
@@ -124,10 +124,14 @@ class Scanner:
 
     def skip_comment(self):
         if self.current_character == "#":
-                print("Skipping comment...")
-                self.file.readline()
-                self.skip_spaces()
-                self.current_character = self.file.read(1)
+            self.file.readline()
+            self.skip_spaces()
+            self.current_character = self.file.read(1)
+        elif self.current_character == "\":
+            self.current_character == self.file.read(1)
+            while self.current_character != "\":
+                self.current_character == self.file.read(1)
+            self.current_character == self.file.read(1)
 
     def location(self):
         """Print the current input line along with a marker showing symbol

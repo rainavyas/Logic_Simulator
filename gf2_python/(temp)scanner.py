@@ -57,7 +57,7 @@ class Scanner:
         """Open specified file and initialise reserved words and IDs."""
         self.file = open(path)
 
-        self.names = names
+        self.names = Names()
         self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS, self.KEYWORD, self.NUMBER, self.NAME, self.EOF] = range(7)
         self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END"]
         [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID, self.END_ID] = self.names.lookup(self.keywords_list)
@@ -75,7 +75,7 @@ class Scanner:
         char = self.current_character
 
         if char.isalpha():
-            while char.isalnum():
+            while char.isalnum() or char == ".":
                 name.append(char)
                 char = self.file.read(1)
             name = ''.join(map(str, name))
@@ -117,10 +117,16 @@ class Scanner:
 
     def skip_comment(self):
         if self.current_character == "#":
-                print("Skipping comment...")
-                self.file.readline()
-                self.skip_spaces()
-                self.current_character = self.file.read(1)
+            print("Skipping comment...")
+            self.file.readline()
+            self.skip_spaces()
+            self.current_character = self.file.read(1)
+        elif self.current_character == "/":
+            print("Skipping closed comment...")
+            self.current_character == self.file.read(1)
+            while self.current_character != "/":
+                self.current_character == self.file.read(1)
+            self.current_character == self.file.read(1)
 
     def location(self):
         """Print the current input line along with a marker showing symbol position in the line
@@ -213,7 +219,7 @@ class Scanner:
 
         return symbol
 
-path_test = os.getcwd() + "/(temp)text_file.txt"
+path_test = os.getcwd() + "/ExCircuit"
 names_test = Names()
 scanner = Scanner(path_test, names_test)
 

@@ -53,6 +53,7 @@ class Parser:
         self.symbol = self.scanner.get_symbol()
 
 
+
         # For now just return True, so that userint and gui can run in the
         # skeleton code. When complete, should return False when there are
         # errors in the circuit definition file.
@@ -60,3 +61,12 @@ class Parser:
 
     def error(self):
         print("We have a syntax error")
+
+    def devicelist(self):
+        """Parse the devices section"""
+
+    def connectlist(self):
+        """Parse the connections section"""
+
+    def monitorlist(self):
+        """Parse the monitoring section"""

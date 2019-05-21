@@ -59,7 +59,7 @@ class Scanner:
         """Open specified file and initialise reserved words and IDs."""
         self.file = open(path)
 
-        self.names = names
+        self.names = Names()
         self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS,
                                  self.KEYWORD, self.NUMBER, self.NAME,
                                  self.EOF] = range(7)
@@ -127,11 +127,11 @@ class Scanner:
             self.file.readline()
             self.skip_spaces()
             self.current_character = self.file.read(1)
-        elif self.current_character == "\":
-            self.current_character == self.file.read(1)
-            while self.current_character != "\":
-                self.current_character == self.file.read(1)
-            self.current_character == self.file.read(1)
+        # elif self.current_character == "\":
+        #     self.current_character == self.file.read(1)
+        #     while self.current_character != "\":
+        #         self.current_character == self.file.read(1)
+        #     self.current_character == self.file.read(1)
 
     def location(self):
         """Print the current input line along with a marker showing symbol

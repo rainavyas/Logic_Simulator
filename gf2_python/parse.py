@@ -74,7 +74,6 @@ class Parser:
 
         if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.DEVICES_ID):
             self.symbol = self.scanner.get_symbol()
-
             if (self.symbol.type == self.scanner.SEMICOLON):
                 self.symbol = self.scanner.get_symbol()
                 self.device()
@@ -94,3 +93,24 @@ class Parser:
 
     def device(self):
         """Parse the device syntax"""
+
+        if (self.symbol.type == self.scanner.NAME):
+            self.symbol = self.scanner.get_symbol()
+            if (self.symbol.type == self.scanner.COLON):
+                self.symbol = self.scanner.get_symbol()
+                self.logictype()
+
+                #check for 'initial' optional parameter
+                
+
+                #check for 'inputs' optional parameter
+
+                #check for 'period' optional parameter
+
+            else:
+                self.error()
+        else:
+            self.error()
+
+    def logictype(self):
+        """Parse the type syntax in EBNF"""

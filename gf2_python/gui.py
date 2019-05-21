@@ -242,18 +242,23 @@ class Gui(wx.Frame):
         self.text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")
         self.spin = wx.SpinCtrl(self, wx.ID_ANY, "10")
         self.run_button = wx.Button(self, wx.ID_ANY, "Run")
+        self.run_button.SetBackgroundColour(wx.Colour(100, 255, 100))
         self.continue_button = wx.Button(self, wx.ID_ANY, "Continue")
+        self.continue_button.SetBackgroundColour(wx.Colour(255, 255, 100))
         self.exit_button = wx.Button(self, wx.ID_ANY, "Exit")
+        self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
         self.add_button = wx.Button(self, wx.ID_ANY, "Add")
         self.mp_names = wx.TextCtrl(self, wx.ID_ANY, "(ENTER ID)",
                                     style=wx.TE_PROCESS_ENTER)
-        self.toggle = wx.ToggleButton(self, wx.ID_ANY, 'On')
+        self.toggle = wx.ToggleButton(self, wx.ID_ANY, 'Off')
+        self.toggle.SetBackgroundColour(wx.Colour(255, 130, 130))
 
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
         self.spin.Bind(wx.EVT_SPINCTRL, self.on_spin)
         self.run_button.Bind(wx.EVT_BUTTON, self.on_run_button)
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
+        self.toggle.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
 
         # Configure sizers for layout
         top_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -273,9 +278,9 @@ class Gui(wx.Frame):
         main_sizer.Add(side_sizer, 1, wx.RIGHT, 5)
 
         side_sizer.Add(cycle_sizer, 1, wx.ALL, 5)
+        side_sizer.Add(buttons_sizer, 1, wx.ALL, 5)
         side_sizer.Add(self.mp_sizer, 1, wx.ALL, 5)
         side_sizer.Add(switches_sizer, 1, wx.ALL, 5)
-        side_sizer.Add(buttons_sizer, 1, wx.ALL, 5)
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
         cycle_sizer.Add(self.spin, 3, wx.LEFT | wx.RIGHT, 5)
@@ -287,14 +292,14 @@ class Gui(wx.Frame):
         self.mp_sizer.Add(self.text_mps, 1, wx.RIGHT, 5)
         self.mp_sizer.Add(mp_control_sizer, 1, wx.RIGHT, 5)
 
-        mp_control_sizer.Add(self.mp_names, 1, wx.EXPAND)
-        mp_control_sizer.Add(self.add_button, 1, wx.LEFT | wx.RIGHT, 5)
+        mp_control_sizer.Add(self.mp_names, 1, wx.ALIGN_CENTRE)
+        mp_control_sizer.Add(self.add_button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
 
         switches_sizer.Add(self.text_switches, 1, wx.RIGHT, 5)
         switches_sizer.Add(switch_sizer, 1)
 
-        switch_sizer.Add(wx.StaticText(self, wx.ID_ANY, 'Switch 1'), 1, wx.EXPAND)
-        switch_sizer.Add(self.toggle, 1, wx.LEFT | wx.RIGHT, 5)
+        switch_sizer.Add(wx.StaticText(self, wx.ID_ANY, 'Switch 1'), 1, wx.ALIGN_CENTRE)
+        switch_sizer.Add(self.toggle, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
 
         self.SetSizeHints(600, 600)
         self.SetSizer(top_sizer)
@@ -343,6 +348,15 @@ class Gui(wx.Frame):
             self.Layout()
             del self.all_mp_names[index]
 
+    def onToggleButton(self, event):
+        button = event.GetEventObject()
+        if event.GetEventObject().GetValue():
+            button.SetBackgroundColour(wx.Colour(100, 255, 100))
+            button.SetLabel('On')
+        else:
+            button.SetBackgroundColour(wx.Colour(255, 130, 130))
+            button.SetLabel('Off')
+            
     #def on_text_box(self, event):
     #    """Handle the event when the user enters text."""
     #    text_box_value = self.text_box.GetValue()

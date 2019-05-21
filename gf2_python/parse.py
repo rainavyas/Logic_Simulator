@@ -58,6 +58,7 @@ class Parser:
         self.monitorlist()
 
         if not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
+            # Error Type: 'END' keyword required at end of file
             self.error()
 
 
@@ -80,8 +81,10 @@ class Parser:
                 while not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.CONNECT_ID):
                     self.device()
             else:
+                # Error Type: Semicolon needed after 'DEVICE'
                 self.error()
         else:
+            # Error Type: 'DEVICE' keyword required
             self.error()
 
 
@@ -121,7 +124,7 @@ class Parser:
                 if (self.symbol.type == self.scanner.SEMICOLON):
                     self.symbol = self.scanner.get_symbol()
                 else:
-                    #Error Type: needs to end in ';'
+                    #Error Type: Device definition needs to end in ';'
                     self.error()
             else:
                 # Error Type: Device name has to be followed by ':'

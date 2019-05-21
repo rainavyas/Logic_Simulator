@@ -9,6 +9,8 @@ Classes
 Parser - parses the definition file and builds the logic network.
 """
 
+from scanner import Symbol
+
 
 class Parser:
 
@@ -41,8 +43,16 @@ class Parser:
         self.monitors = monitors
         self.scanner = scanner
 
+        # Initialise current symbol
+        self.symbol = Symbol()
+
     def parse_network(self):
         """Parse the circuit definition file."""
+
+        #
+
+
+        
         # For now just return True, so that userint and gui can run in the
         # skeleton code. When complete, should return False when there are
         # errors in the circuit definition file.

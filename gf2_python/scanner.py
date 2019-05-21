@@ -61,7 +61,7 @@ class Scanner:
         self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS,
                                  self.KEYWORD, self.LOGIC_TYPE, self.OUT_PIN,
                                  self.IN_PIN, self.NUMBER, self.NAME,
-                                 self.PERIOD, self.COLON, self.EOF] = range(9)
+                                 self.PERIOD, self.COLON, self.EOF] = range(12)
 
         self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END",
                               "initial", "period", "inputs"]
@@ -75,7 +75,7 @@ class Scanner:
         [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID,
          self.END_ID, self.initial_ID, self.period_ID,
          self.inputs_ID] = self.names.lookup(self.keywords_list)
-         self.current_character = self.file.read(1)
+        self.current_character = self.file.read(1)
 
 
     def get_name(self):

@@ -2,15 +2,18 @@ This is a test
 of the scanner module
 121 line
 2 line
-# The third, line = is; a comment!.
+# The third, line = is; a comment.
+HELLO!
+/*This is a closed comment
 
-/This is a closed comment    /
+ */
 
-,  ;  .   =
+         ,  ;  .   =
 
 # And another comment.
-DEVICES
+AND.I1 is AND InPuT;
+DEVICES;
 CONNECT
 MONITOR
-line 212 !
+line 212
 "END"

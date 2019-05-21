@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """Read the circuit definition file and translate the characters into symbols.
 
 Used in the Logic Simulator project to read the characters in the definition
@@ -12,7 +10,8 @@ Symbol - encapsulates a symbol and stores its properties.
 """
 
 from names import Names
-
+import sys
+import os
 
 class Symbol:
 
@@ -33,7 +32,6 @@ class Symbol:
         self.id = None
         self.line = None
         self.position = None
-
 
 class Scanner:
 
@@ -59,14 +57,26 @@ class Scanner:
         """Open specified file and initialise reserved words and IDs."""
         self.file = open(path)
 
-        self.names = Names()
+        self.names = names
         self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS,
-                                 self.KEYWORD, self.NUMBER, self.NAME,
-                                 self.EOF] = range(7)
-        self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END"]
+                                 self.KEYWORD, self.LOGIC_TYPE, self.OUT_PIN,
+                                 self.IN_PIN, self.NUMBER, self.NAME,
+                                 self.PERIOD, self.COLON, self.EOF] = range(12)
+
+        self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END",
+                              "initial", "period", "inputs"]
+        self.logic_type_list = ["CLOCK", "SWITCH", "AND", "NAND",
+                                "OR", "NOR", "DTYPE", "XOR"]
+        self.input_pin_list = ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8",
+                                "I9", "I10", "I11", "I12", "I13", "I14", "I15",
+                                "I16", "DATA", "CLK", "SET", "CLEAR"]
+        self.output_pin_list = ["Q", "QBAR"]
+
         [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID,
-         self.END_ID] = self.names.lookup(self.keywords_list)
+         self.END_ID, self.initial_ID, self.period_ID,
+         self.inputs_ID] = self.names.lookup(self.keywords_list)
         self.current_character = self.file.read(1)
+
 
     def get_name(self):
         """Seek the next name string in input_file.
@@ -77,17 +87,13 @@ class Scanner:
         name = []
         lis = []
 
-        char = self.current_character
-
-        if char.isalpha():
-            while char.isalnum() or char == ".":
-                name.append(char)
-                char = self.file.read(1)
+        if self.current_character.isalpha():
+            while self.current_character.isalnum():
+                name.append(self.current_character)
+                self.advance()
             name = ''.join(map(str, name))
-            self.current_character = self.file.read(1)
-            return name
-        else:
-            return None
+            self.advance()
+        return name
 
     def get_number(self):
         """Seek the next number in input_file.
@@ -97,17 +103,12 @@ class Scanner:
         """
         num = []
 
-        char = self.current_character
-
-        if char.isdigit():
-            while char.isdigit():
-                num.append(char)
-                char = self.file.read(1)
-            num = ''.join(map(str, num))
-            self.current_character = self.file.read(1)
-            return num
-        else:
-            return None
+        while self.current_character.isdigit():
+            num.append(self.current_character)
+            self.advance()
+        num = ''.join(map(str, num))
+        self.advance()
+        return num
 
     def advance(self):
         """Read the next character from input_file and place it
@@ -119,25 +120,34 @@ class Scanner:
         """Calls advance as necessary until current_character is not whitsepace
         """
         while self.current_character.isspace():
-            print("skipping space(s)")
             self.advance()
 
     def skip_comment(self):
+        """Skips single line comments (beginning with '#')
+        and closed-comments (of form /* */)
+        """
+
         if self.current_character == "#":
             self.file.readline()
             self.skip_spaces()
-            self.current_character = self.file.read(1)
-        # elif self.current_character == "\":
-        #     self.current_character == self.file.read(1)
-        #     while self.current_character != "\":
-        #         self.current_character == self.file.read(1)
-        #     self.current_character == self.file.read(1)
+            self.advance()
+        elif self.current_character == "/":
+            self.advance()
+            if self.current_character == "*":
+                self.advance()
+                while self.current_character != "*":
+                    self.advance()
+                self.advance()
+                if self.current_character == "/":
+                    self.advance()
+                    self.skip_spaces()
 
     def location(self):
         """Print the current input line along with a marker showing symbol
         position in the line
         """
         stored_position = self.file.tell()
+        print("Stored position:", stored_position)
 
         self.file.seek(0)
         linelengths = []
@@ -148,24 +158,27 @@ class Scanner:
                 linelengths.append(len(line))
             else:
                 linelengths.append(len(line) + linelengths[-1])
+
+        print(linelengths)
         num_line = i
 
         current_line = ''
         current_position = ''
+
         self.file.seek(stored_position)
 
         for n in range(num_line):
             if n == 0:
-                if self.file.tell() <= linelengths[n]:
-                    current_line = 1
-                    current_position = self.file.tell()
-                else:
-                    current_line = ''
-                    current_position = ''
-            elif(self.file.tell() <= linelengths[n] and self.file.tell() >
-                 linelengths[n-1]):
+                if self.file.tell() < linelengths[n]:
+                    current_line = n + 1
+                    current_position = self.file.tell() - 1
+            elif(self.file.tell() < linelengths[n] and self.file.tell()
+                 >= linelengths[n-1]):
                 current_line = n + 1
                 current_position = self.file.tell() - linelengths[n-1]
+
+        print("Current position:", current_position)
+        print("Line", current_line)
 
         self.file.seek(0)
 
@@ -174,7 +187,8 @@ class Scanner:
         for line in self.file:
             marker += 1
             if marker == current_line:
-                print(line, " "*(current_position), "^")
+                print("Marker:", marker)
+                print(line, (current_position-1)*" ", "^")
 
         self.file.seek(stored_position)
 
@@ -185,36 +199,69 @@ class Scanner:
         """
         symbol = Symbol()
         self.skip_spaces()  # current character now not whitespace
-        self.skip_comment()  # current character now not comment
+        self.skip_comment() # current character now not comment
 
         if self.current_character.isalpha():  # name
             name_string = self.get_name()
+            print("Name_string:", name_string)
             if name_string in self.keywords_list:
                 symbol.type = self.KEYWORD
+            elif name_string in self.logic_type_list:
+                symbol.type = self.LOGIC_TYPE
+            elif name_string in self.output_pin_list:
+                symbol.type = self.OUT_PIN
+            elif name_string in self.input_pin_list:
+                symbol.type = self.IN_PIN
             else:
                 symbol.type = self.NAME
             [symbol.id] = self.names.lookup([name_string])
 
         elif self.current_character.isdigit():  # number
+            print("First number is:", self.current_character)
             symbol.id = self.get_number()
             symbol.type = self.NUMBER
 
         elif self.current_character == "=":  # equals
+            print("Found an equals")
             symbol.type = self.EQUALS
             self.advance()
 
-        elif self.current_character == ",":  # comma
+        elif self.current_character == ",": # comma
+            print("Found a comma")
             symbol.type = self.COMMA
             self.advance()
 
-        elif self.current_character == ";":  # semicolon
+        elif self.current_character == ";": # semicolon
+            print("Found a semi-colon")
             symbol.type = self.SEMICOLON
             self.advance()
 
+        elif self.current_character == ".":  # period
+            print("Found a period")
+            symbol.type = self.PERIOD
+            self.advance()
+
         elif self.current_character == "":  # end of file
+            print("Found EOF")
             symbol.type = self.EOF
+            self.advance()
+
+        elif self.current_character == ":":  #  colon
+            print("Found colon")
+            symbol.type = self.COLON
+            self.advance()
 
         else:  # not a valid character
             self.advance()
 
         return symbol
+
+path_test = os.getcwd() + "/(temp)text_file.txt"
+names_test = Names()
+scanner = Scanner(path_test, names_test)
+
+
+for n in range(4):
+    scanner.get_symbol()
+    scanner.location()
+    print(' ')

@@ -9,6 +9,8 @@ Classes
 Parser - parses the definition file and builds the logic network.
 """
 
+from scanner import Symbol
+
 
 class Parser:
 
@@ -35,10 +37,60 @@ class Parser:
 
     def __init__(self, names, devices, network, monitors, scanner):
         """Initialise constants."""
+        self.names = names
+        self.devices = devices
+        self.network = network
+        self.monitors = monitors
+        self.scanner = scanner
+
+        # Initialise current symbol
+        self.symbol = Symbol()
 
     def parse_network(self):
         """Parse the circuit definition file."""
+
+        #Get the first symbol from Scanner
+        self.symbol = self.scanner.get_symbol()
+
+        #Main structure
+        self.devicelist()
+        self.connectlist()
+        self.monitorlist()
+
+        if not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
+            self.error()
+
+
         # For now just return True, so that userint and gui can run in the
         # skeleton code. When complete, should return False when there are
         # errors in the circuit definition file.
         return True
+
+    def error(self):
+        print("We have a syntax error")
+
+    def devicelist(self):
+        """Parse the devices section"""
+
+        if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.DEVICES_ID):
+            self.symbol = self.scanner.get_symbol()
+
+            if (self.symbol.type == self.scanner.SEMICOLON):
+                self.symbol = self.scanner.get_symbol()
+                self.device()
+                while not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.CONNECT_ID):
+                    self.device()
+            else:
+                self.error()
+        else:
+            self.error()
+
+
+    def connectlist(self):
+        """Parse the connections section"""
+
+    def monitorlist(self):
+        """Parse the monitoring section"""
+
+    def device(self):
+        """Parse the device syntax"""

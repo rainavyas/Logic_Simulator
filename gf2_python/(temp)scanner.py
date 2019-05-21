@@ -58,7 +58,7 @@ class Scanner:
         self.file = open(path)
 
         self.names = Names()
-        self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS, self.KEYWORD, self.NUMBER, self.NAME, self.EOF] = range(7)
+        self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS, self.KEYWORD, self.NUMBER, self.NAME, self.PERIOD, self.EOF] = range(8)
         self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END"]
         [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID, self.END_ID] = self.names.lookup(self.keywords_list)
         self.current_character = self.file.read(1)
@@ -75,7 +75,7 @@ class Scanner:
         char = self.current_character
 
         if char.isalpha():
-            while char.isalnum() or char == ".":
+            while char.isalnum():
                 name.append(char)
                 char = self.file.read(1)
             name = ''.join(map(str, name))
@@ -120,13 +120,22 @@ class Scanner:
             print("Skipping comment...")
             self.file.readline()
             self.skip_spaces()
-            self.current_character = self.file.read(1)
-        # elif self.current_character == "/":
-        #     print("Skipping closed comment...")
-        #     self.current_character == self.file.read(1)
-        #     while self.current_character != "/":
-        #         self.current_character == self.file.read(1)
-        #     self.current_character == self.file.read(1)
+            self.advance()
+        elif self.current_character == "/":
+            print("Skipping closed comment")
+            self.advance()
+            if self.current_character == "*":
+                self.advance()
+                while self.current_character != "*":
+                    self.advance()
+                self.advance()
+                if self.current_character == "/":
+                    self.advance()
+                    self.skip_spaces()
+                else:
+                    print("WRONG")
+            else: print("WRONG2")
+
 
     def location(self):
         """Print the current input line along with a marker showing symbol position in the line
@@ -210,20 +219,26 @@ class Scanner:
             symbol.type = self.SEMICOLON
             self.advance()
 
+        elif self.current_character == ".":  # period
+            print("Found a period")
+            symbol.type = self.PERIOD
+            self.advance()
+
         elif self.current_character == "":  # end of file
             print("Found EOF")
             symbol.type = self.EOF
+            self.advance()
 
         else:  # not a valid character
             self.advance()
 
         return symbol
 
-path_test = os.getcwd() + "/ExCircuit"
+path_test = os.getcwd() + "/(temp)text_file.txt"
 names_test = Names()
 scanner = Scanner(path_test, names_test)
 
 
-for n in range(25):
+for n in range(30):
     print(scanner.get_symbol().id)
     print(' ')

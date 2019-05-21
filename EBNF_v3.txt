@@ -1,5 +1,12 @@
 
-specfile = 'DEVICES', ';', device, {device},'CONNECT', ';', {connection}, 'MONITOR', ';', monitor_point, {monitor_point}, 'END';
+specfile = devicelist, connectlist, monitorlist, 'END';
+
+
+devicelist = 'DEVICES', ';', device, {device};
+
+connectlist = 'CONNECT', ';', {connection};
+
+monitorlist = 'MONITOR', ';', monitor_point, {monitor_point};
 
 
 device = name, ':', type, [',', 'initial', '1'|'0'], [',', 'inputs', number ],

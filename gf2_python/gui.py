@@ -252,6 +252,7 @@ class Gui(wx.Frame):
                                     style=wx.TE_PROCESS_ENTER)
         self.toggle = wx.ToggleButton(self, wx.ID_ANY, 'Off')
         self.toggle.SetBackgroundColour(wx.Colour(255, 130, 130))
+        self.scrolling_window = wx.ScrolledWindow(self)
 
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
@@ -259,6 +260,7 @@ class Gui(wx.Frame):
         self.run_button.Bind(wx.EVT_BUTTON, self.on_run_button)
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
         self.toggle.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
+        #self.Bind(wx.EVT_SIZE, self.OnSize)
 
         # Configure sizers for layout
         top_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -267,9 +269,11 @@ class Gui(wx.Frame):
         cycle_sizer = wx.BoxSizer(wx.HORIZONTAL)
         buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.mp_sizer = wx.BoxSizer(wx.VERTICAL)
+        mp_sizer_all = wx.BoxSizer(wx.VERTICAL)
         mp_control_sizer = wx.BoxSizer(wx.HORIZONTAL)
         switches_sizer = wx.BoxSizer(wx.VERTICAL)
         switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        mp_container_sizer = wx.BoxSizer(wx.VERTICAL)
 
         top_sizer.Add(self.file_picker, 1, wx.EXPAND | wx.ALL, 5, 10)
         top_sizer.Add(main_sizer, 10, wx.EXPAND)
@@ -279,7 +283,7 @@ class Gui(wx.Frame):
 
         side_sizer.Add(cycle_sizer, 1, wx.ALL, 5)
         side_sizer.Add(buttons_sizer, 1, wx.ALL, 5)
-        side_sizer.Add(self.mp_sizer, 1, wx.ALL, 5)
+        side_sizer.Add(mp_sizer_all, 1, wx.ALL, 5)
         side_sizer.Add(switches_sizer, 1, wx.ALL, 5)
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
@@ -289,11 +293,19 @@ class Gui(wx.Frame):
         buttons_sizer.Add(self.continue_button, 1)
         buttons_sizer.Add(self.exit_button, 1)
 
-        self.mp_sizer.Add(self.text_mps, 1, wx.RIGHT, 5)
-        self.mp_sizer.Add(mp_control_sizer, 1, wx.RIGHT, 5)
-
         mp_control_sizer.Add(self.mp_names, 1, wx.ALIGN_CENTRE)
         mp_control_sizer.Add(self.add_button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
+
+        mp_sizer_all.Add(self.text_mps, 1, wx.RIGHT, 5)
+        mp_sizer_all.Add(mp_control_sizer, 1, wx.RIGHT, 5)
+        mp_sizer_all.Add(mp_container_sizer, 1, wx.RIGHT, 5)
+
+        mp_sizer_all.Add(self.scrolling_window, 1, wx.EXPAND)
+
+        self.scrolling_window.SetSizer(self.mp_sizer)
+        self.scrolling_window.SetScrollRate(10, 10)
+        self.scrolling_window.EnableScrolling(False, True)
+        self.scrolling_window.SetAutoLayout(True)
 
         switches_sizer.Add(self.text_switches, 1, wx.RIGHT, 5)
         switches_sizer.Add(switch_sizer, 1)
@@ -356,9 +368,6 @@ class Gui(wx.Frame):
         else:
             button.SetBackgroundColour(wx.Colour(255, 130, 130))
             button.SetLabel('Off')
-            
-    #def on_text_box(self, event):
-    #    """Handle the event when the user enters text."""
-    #    text_box_value = self.text_box.GetValue()
-    #    text = "".join(["New text box value: ", text_box_value])
-    #    self.canvas.render(text)
+
+    def OnSize(self, event):
+        self.scrolling_window.SetSize(self.GetClientSize())

@@ -100,16 +100,34 @@ class Parser:
                 self.symbol = self.scanner.get_symbol()
                 self.logictype()
 
-                #check for 'initial' optional parameter
-                
+                if(self.symbol.type == self.scanner.COMMA):
+                    self.symbol = self.scanner.get_symbol()
+                    if(self.symbol.type == self.scanner.KEYWORD):
+                        if(self.symbol.id == self.scanner.initial_ID or (self.symbol.id == self.scanner.inputs_ID or self.symbol.id == self.scanner.period_ID)):
+                            self.symbol = self.scanner.get_symbol()
 
-                #check for 'inputs' optional parameter
+                            if(self.symbol.type == self.scanner.NUMBER):
+                                self.symbol = self.scanner.get_symbol()
+                            else:
+                                # Error type: needs to be an integer
+                                self.error()
+                        else:
+                            # Error type: Parameter has to be initial, inputs or period
+                            self.error()
 
-                #check for 'period' optional parameter
-
+                    else:
+                        # Error type: Comma has to followed by parameter speficification
+                        self.error()
+                if (self.symbol.type == self.scanner.SEMICOLON):
+                    self.symbol = self.scanner.get_symbol()
+                else:
+                    #Error Type: needs to end in ';'
+                    self.error()
             else:
+                # Error Type: Device name has to be followed by ':'
                 self.error()
         else:
+            # Error Type: Valid Device name required
             self.error()
 
     def logictype(self):

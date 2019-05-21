@@ -92,7 +92,6 @@ class Scanner:
                 name.append(self.current_character)
                 self.advance()
             name = ''.join(map(str, name))
-            self.advance()
         return name
 
     def get_number(self):
@@ -107,7 +106,6 @@ class Scanner:
             num.append(self.current_character)
             self.advance()
         num = ''.join(map(str, num))
-        self.advance()
         return num
 
     def advance(self):
@@ -147,7 +145,6 @@ class Scanner:
         position in the line
         """
         stored_position = self.file.tell()
-        print("Stored position:", stored_position)
 
         self.file.seek(0)
         linelengths = []
@@ -159,7 +156,6 @@ class Scanner:
             else:
                 linelengths.append(len(line) + linelengths[-1])
 
-        print(linelengths)
         num_line = i
 
         current_line = ''
@@ -169,16 +165,13 @@ class Scanner:
 
         for n in range(num_line):
             if n == 0:
-                if self.file.tell() < linelengths[n]:
+                if self.file.tell() <= linelengths[n]:
                     current_line = n + 1
-                    current_position = self.file.tell() - 1
-            elif(self.file.tell() < linelengths[n] and self.file.tell()
-                 >= linelengths[n-1]):
+                    current_position = self.file.tell()
+            elif(self.file.tell() <= linelengths[n] and self.file.tell()
+                 > linelengths[n-1]):
                 current_line = n + 1
                 current_position = self.file.tell() - linelengths[n-1]
-
-        print("Current position:", current_position)
-        print("Line", current_line)
 
         self.file.seek(0)
 
@@ -187,8 +180,8 @@ class Scanner:
         for line in self.file:
             marker += 1
             if marker == current_line:
-                print("Marker:", marker)
-                print(line, (current_position-1)*" ", "^")
+                print(line.replace("\n", ""))
+                print((current_position-2)*" " + "^")
 
         self.file.seek(stored_position)
 
@@ -261,7 +254,7 @@ names_test = Names()
 scanner = Scanner(path_test, names_test)
 
 
-for n in range(4):
+for n in range(30):
     scanner.get_symbol()
     scanner.location()
     print(' ')

@@ -135,3 +135,9 @@ class Parser:
 
     def logictype(self):
         """Parse the type syntax in EBNF"""
+
+        if (self.symbol.type == self.scanner.LOGIC_TYPE):
+            self.symbol = self.scanner.get_symbol()
+        else:
+            #Error Type: Valid Logic gate required e.g. 'AND'
+            self.error()

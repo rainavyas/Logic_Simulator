@@ -91,6 +91,21 @@ class Parser:
     def connectlist(self):
         """Parse the connections section"""
 
+        if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.CONNECT_ID):
+            self.symbol = self.scanner.get_symbol()
+
+            if (self.symbol.type == self.scanner.SEMICOLON):
+                self.symbol = self.scanner.get_symbol()
+
+                while not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.MONITOR_ID):
+                    self.connection()
+            else:
+                # Error Type: Semicolon needed after 'CONNECT'
+                self.error()
+        else:
+            # Error Type: 'CONNECT' keyword required
+            self.error()
+
     def monitorlist(self):
         """Parse the monitoring section"""
 

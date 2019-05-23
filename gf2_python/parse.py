@@ -78,7 +78,7 @@ class Parser:
             if (self.symbol.type == self.scanner.SEMICOLON):
                 self.symbol = self.scanner.get_symbol()
                 self.device()
-                while not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.CONNECT_ID):
+                while (self.symbol.type == self.scanner.Name):
                     self.device()
             else:
                 # Error Type: Semicolon needed after 'DEVICE'
@@ -97,7 +97,7 @@ class Parser:
             if (self.symbol.type == self.scanner.SEMICOLON):
                 self.symbol = self.scanner.get_symbol()
 
-                while not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.MONITOR_ID):
+                while (self.symbol.type == self.scanner.NAME):
                     self.connection()
             else:
                 # Error Type: Semicolon needed after 'CONNECT'

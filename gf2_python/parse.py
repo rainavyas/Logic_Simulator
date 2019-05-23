@@ -222,3 +222,21 @@ class Parser:
 
     def monitor_point(self):
         """Parse the monitor_point in EBNF"""
+
+        if (self.symbol.type == self.scanner.NAME):
+            self.symbol = self.scanner.get_symbol()
+
+            if (self.symbol.type == self.scanner.PERIOD):
+                self.symbol = self.scanner.get_symbol()
+
+                if(self.symbol.type == self.scanner.OUT_PIN):
+                    self.symbol = self.scanner.get_symbol()
+                else:
+                    #Error Type: Output pin has to be 'Q' or 'QBAR'
+                    self.error()
+
+            if(self.symbol.type == self.scanner.SEMICOLON):
+                self.symbol = self.scanner.get_symbol()
+            else:
+                # Error Type: Monitor point has to be terminated by ';'
+                self.error()

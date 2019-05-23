@@ -156,3 +156,6 @@ class Parser:
         else:
             #Error Type: Valid Logic gate required e.g. 'AND'
             self.error()
+
+    def connection(self):
+        """Parse the connection syntax in EBNF"""

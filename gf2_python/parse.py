@@ -109,6 +109,20 @@ class Parser:
     def monitorlist(self):
         """Parse the monitoring section"""
 
+        if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.MONITOR_ID):
+            self.symbol = self.scanner.get_symbol()
+            if (self.symbol.type == self.scanner.SEMICOLON):
+                self.symbol = self.scanner.get_symbol()
+                self.monitor()
+                while (self.symbol.type == self.scanner.Name):
+                    self.monitor()
+            else:
+                # Error Type: Semicolon needed after 'MONITOR'
+                self.error()
+        else:
+            # Error Type: 'MONITOR' keyword required
+            self.error()
+
     def device(self):
         """Parse the device syntax"""
 

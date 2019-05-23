@@ -113,9 +113,9 @@ class Parser:
             self.symbol = self.scanner.get_symbol()
             if (self.symbol.type == self.scanner.SEMICOLON):
                 self.symbol = self.scanner.get_symbol()
-                self.monitor()
+                self.monitor_point()
                 while (self.symbol.type == self.scanner.Name):
-                    self.monitor()
+                    self.monitor_point()
             else:
                 # Error Type: Semicolon needed after 'MONITOR'
                 self.error()
@@ -218,3 +218,7 @@ class Parser:
         else:
             #Error Type: Valid string name required
             self.error()
+
+
+    def monitor_point(self):
+        """Parse the monitor_point in EBNF"""

@@ -159,3 +159,48 @@ class Parser:
 
     def connection(self):
         """Parse the connection syntax in EBNF"""
+
+        if (self.symbol.type == self.scanner.NAME):
+            self.symbol = self.scanner.get_symbol()
+
+            if (self.symbol.type == self.scanner.PERIOD):
+                self.symbol = self.scanner.get_symbol()
+
+                if(self.symbol.type == self.scanner.OUT_PIN):
+                    self.symbol = self.scanner.get_symbol()
+                else:
+                    #Error Type: Output pin has to be 'Q' or 'QBAR'
+                    self.error()
+
+            if (self.symbol.type == self.scanner.EQUALS):
+                self.symbol = self.scanner.get_symbol()
+
+                if (self.symbol.type == self.scanner.NAME):
+                    self.symbol = self.scanner.get_symbol()
+
+                    if (self.symbol.type == self.scanner.PERIOD):
+                        self.symbol = self.scanner.get_symbol()
+
+                        if(self.symbol.type == self.scanner.IN_PIN):
+                            self.symbol = self.scanner.get_symbol()
+
+                            if(self.symbol.type == self.scanner.SEMICOLON):
+                                self.symbol = self.scanner.get_symbol()
+                            else:
+                                # Error Type: Connection has to be terminated by ';'
+                                self.error()
+                        else:
+                            # Error Type: Valid input pin required
+                            self.error()
+                    else:
+                        # Error Type: Period required to specify input pin
+                        self.error()
+                else:
+                    #Error Type: Name string of input device required
+                    self.error()
+            else:
+                #Error Type: '=' Assignment operator requried
+                self.error()
+        else:
+            #Error Type: Valid string name required
+            self.error()

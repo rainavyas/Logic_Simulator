@@ -135,6 +135,9 @@ class Parser:
                     move_on = True
             else:
                 move_on = self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF
+                if ((not move_on) and self.symbol.type != self.scanner.NAME) :
+                    # Move n once more after terminating punctuation
+                    self.symbol = self.scanner.get_symbol()
 
     def devicelist(self):
         """Parse the devices section"""
@@ -264,7 +267,7 @@ class Parser:
                 else:
                     #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
                     # Stopping symbols: ';' , '=', 'MONITOR' or 'END' KEYWORD
-                    self.error(9, [self.scanner.KEYWORD, self.scanner.SEMICOLON. self.scanner.EQUALS], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                    self.error(14, [self.scanner.KEYWORD, self.scanner.SEMICOLON. self.scanner.EQUALS], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
             if (self.symbol.type == self.scanner.EQUALS):
                 self.symbol = self.scanner.get_symbol()
@@ -282,22 +285,28 @@ class Parser:
                                 self.symbol = self.scanner.get_symbol()
                             else:
                                 # Error Type: 15: Connection has to be terminated by ';'
-                                self.error()
+                                # Stopping symbols: NAME, ';' , 'MONITOR' or 'END' KEYWORD
+                                self.error(15, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.MONITOR_ID, self.scanner.END_ID])
                         else:
                             # Error Type: 16: Valid input pin required
-                            self.error()
+                            # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
+                            self.error(16, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
                     else:
                         # Error Type: 17: Period required to specify input pin
-                        self.error()
+                        # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
+                        self.error(17, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
                 else:
                     #Error Type: 18: Name string of input device required
-                    self.error()
+                    # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
+                    self.error(18, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
             else:
                 #Error Type: 19: '=' Assignment operator requried
-                self.error()
+                # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
+                self.error(19, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
         else:
             #Error Type: 20: Valid string name required
-            self.error()
+            # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
+            self.error(20, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
 
     def monitor_point(self):

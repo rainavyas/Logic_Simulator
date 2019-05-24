@@ -113,7 +113,7 @@ class Parser:
         # Return to recovery point
 
         #Define list of error IDs for which punctuation termination should not be moved on from
-        dont_move_err_IDS = [9, 7]
+        dont_move_err_IDS = [9, 7, 13]
 
         #Define a move_on Boolean state
         move_on = True

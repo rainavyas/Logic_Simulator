@@ -125,23 +125,37 @@ class Scanner:
         """Skips single line comments (beginning with '#')
         and closed-comments (of form /* */)
         """
-
+        #  Skip single-line comments.
         if self.current_character == "#":
             self.file.readline()
             self.skip_spaces()
             self.advance()
 
+        #  Skip closed comments.
         elif self.current_character == "/":
             self.advance()
             if self.current_character == "*":
                 self.advance()
                 while not self.current_character == "*":
+                    if self.current_character == "":
+                        print("""ERROR: EOF reached. Comment not closed
+                              correctly. Missing '*'.""")
+                        break
                     self.advance()
                 self.advance()
                 if self.current_character == "/":
                     self.advance()
                     self.skip_spaces()
-    # Add that if EOF reached, print there's an error.
+                elif not self.current_character == "/":
+                    print("""ERROR: Comment terminated incorrectly.
+                          Missing '/'.""")
+                    comment_symbol = Symbol()
+                    comment_symbol.line = self.location()[0]
+                    comment_symbol.position = self.location()[1]
+                    self.print_location(comment_symbol)
+            else:
+                print("""Forward slash skipped but adjacent '*' not found
+                      (closed comment not started).""")
 
     def location(self):
         """Print the current input line along with a marker showing symbol
@@ -261,15 +275,11 @@ class Scanner:
 
         return symbol
 
-# path_test = os.getcwd() + "/(temp)text_file.txt"
-# names_test = Names()
-# scanner = Scanner(path_test, names_test)
-#
-# Test_symbol = scanner.get_symbol()
-#
-# scanner.print_location(Test_symbol)
-#
-# # for n in range(30):
-# #     scanner.get_symbol()
-# #     scanner.location()
-# #     print(' ')
+path_test = os.getcwd() + "/(temp)text_file.txt"
+names_test = Names()
+scanner = Scanner(path_test, names_test)
+
+for n in range(30):
+    Test_symbol = scanner.get_symbol()
+    scanner.print_location(Test_symbol)
+    print(' ')

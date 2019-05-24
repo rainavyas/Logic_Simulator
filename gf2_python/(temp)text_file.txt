@@ -4,9 +4,11 @@ of the scanner module
 2 line
 # The third, line = is; a comment.
 HELLO!
-/*This is a closed comment
+/ This is a
 
- */
+closed comment
+
+test test test */
 
          ,  ;  .   =
 

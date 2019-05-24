@@ -215,7 +215,8 @@ class Parser:
                                 self.symbol = self.scanner.get_symbol()
                             else:
                                 # Error type: 7: Needs to be an integer
-                                self.error()
+                                # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
+                                self.error(7, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
                         else:
                             # Error type: 8: Parameter has to be 'initial', 'inputs' or 'period'
                             self.error()

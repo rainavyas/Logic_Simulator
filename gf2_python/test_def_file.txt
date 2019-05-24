@@ -15,7 +15,7 @@ DTYPE1: DTYPE;
 DTYPE2: DTYPE;
 
 
-CONNECT;
+#CONNECT;
 /* Define any
 connections in
 the space below: */
@@ -31,4 +31,4 @@ DTYPE1.Q;
 DTYPE2.Q;
 
 # End the definition file.
-END;
+END

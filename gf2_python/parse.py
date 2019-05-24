@@ -247,7 +247,8 @@ class Parser:
             self.symbol = self.scanner.get_symbol()
         else:
             #Error Type: 13: Valid Logic gate required e.g. 'AND'
-            self.error()
+            # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
+            self.error(13, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def connection(self):
         """Parse the connection syntax in EBNF"""

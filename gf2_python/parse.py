@@ -101,7 +101,9 @@ class Parser:
         # errors in the circuit definition file.
         return True
 
-    def error(self, error_ID, stopping_symbols, symbol_IDs):
+    def error(self, error_ID, stopping_symbols, symbol_IDs = []]):
+        """ Display Error and recover to a useful parsing position"""
+
         # Display Error
         print("SYNTAX ERROR:")
         err_msg = self.err_msgs[error_ID]
@@ -110,7 +112,7 @@ class Parser:
 
         # Return to recovery point
 
-        #Define a move on Boolean state
+        #Define a move_on Boolean state
         move_on = True
 
         if(self.symbol.type == self.scanner.KEYWORD):

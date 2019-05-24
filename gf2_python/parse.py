@@ -101,7 +101,7 @@ class Parser:
         # errors in the circuit definition file.
         return True
 
-    def error(self, error_ID, stopping_symbols, symbol_ID):
+    def error(self, error_ID, stopping_symbols, symbol_IDs):
         # Display Error
         print("SYNTAX ERROR:")
         err_msg = self.err_msgs[error_ID]
@@ -109,8 +109,30 @@ class Parser:
         self.scanner.print_location(self.symbol)
 
         # Return to recovery point
-        while (self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF):
+
+        #Define a move on Boolean state
+        move_on = True
+
+        if(self.symbol.type == self.scanner.KEYWORD):
+            if (self.symbol.id in symbol_IDs):
+                move_on = False
+            else:
+                move_on = True
+        else:
+            move_on = self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF
+
+
+        while (move_on):
             self.symbol = self.scanner.get_symbol()
+
+            # Update move_on Boolean state
+            if(self.symbol.type == self.scanner.KEYWORD):
+                if (self.symbol.id in symbol_IDs):
+                    move_on = False
+                else:
+                    move_on = True
+            else:
+                move_on = self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF
 
     def devicelist(self):
         """Parse the devices section"""

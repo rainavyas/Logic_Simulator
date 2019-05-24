@@ -233,10 +233,12 @@ class Parser:
                     self.error(10, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
             else:
                 # Error Type: 11: Device name has to be followed by ':'
-                self.error()
+                # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
+                self.error(11, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
         else:
             # Error Type: 12: Valid Device name required
-            self.error()
+            # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
+            self.error(12, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def logictype(self):
         """Parse the type syntax in EBNF"""

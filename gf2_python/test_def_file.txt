@@ -1,7 +1,34 @@
-DEVICES; myand1: AND, inputs 1; myswitch1: SWITCH, initial 0;
-/* This is
-a multi-line comment */
-CONNECT; myswitch1 = myand1.I1;
-# This is a comment
-MONITOR; myand1;
-END
+DEVICES;
+# Declare my devices below.
+myCLOCK1: CLOCK, period 100;
+mySWITCH1: SWITCH, initial 0;
+myAND1: AND, inputs 3;
+myNAND1: NAND, inputs 2;
+myOR1: OR, inputs 2;
+myNOR1: NOR, inputs 4;
+myDTYPE1: DTYPE;
+myXOR1: XOR;
+
+SWITCH1: SWITCH, initial 0;
+CLOCK1: CLOCK, period 10;
+DTYPE1: DTYPE;
+DTYPE2: DTYPE;
+
+
+CONNECT;
+/* Define any
+connections in
+the space below: */
+myswitch1 = myand1.I1;
+
+SWITCH1 = DTYPE1.DATA;
+CLOCK1 = DTYPE1.CLK;
+DTYPE1.QBAR = DTYPE2.CLK;
+SWITCH1 = DTYPE2.DATA;
+
+MONITOR;
+DTYPE1.Q;
+DTYPE2.Q;
+
+# End the definition file.
+END;

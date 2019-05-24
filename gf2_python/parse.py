@@ -93,7 +93,7 @@ class Parser:
 
         if not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
             # Error Type: 0: 'END' keyword required at end of file
-            self.error(0, None)
+            self.error(0, [])
 
 
         # For now just return True, so that userint and gui can run in the

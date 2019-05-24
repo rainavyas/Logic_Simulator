@@ -21,7 +21,7 @@ connections in
 the space below: */
 myswitch1 = myand1.I1;
 
-SWITCH1 = DTYPE1.;
+SWITCH1 = DTYPE1;
 CLOCK1 = DTYPE1.CLK;
 DTYPE1.QBAR = DTYPE2.CLK;
 SWITCH1 = DTYPE2.DATA;

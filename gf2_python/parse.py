@@ -125,7 +125,11 @@ class Parser:
                 move_on = True
         else:
             move_on = self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF
-
+            if ((not move_on) and self.symbol.type != self.scanner.NAME) :
+                # Move on once more after terminating punctuation
+                # Only move on for certain error types
+                if error_ID not in dont_move_err_IDS:
+                    self.symbol = self.scanner.get_symbol()
 
         while (move_on):
             self.symbol = self.scanner.get_symbol()
@@ -141,7 +145,7 @@ class Parser:
                 if ((not move_on) and self.symbol.type != self.scanner.NAME) :
                     # Move on once more after terminating punctuation
                     # Only move on for certain error types
-                    if not (error_ID in dont_move_err_IDS):
+                    if error_ID not in dont_move_err_IDS:
                         self.symbol = self.scanner.get_symbol()
 
     def devicelist(self):

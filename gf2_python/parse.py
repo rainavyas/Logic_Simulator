@@ -174,7 +174,8 @@ class Parser:
 
         else:
             # Error Type: 4: 'CONNECT' keyword required
-            self.error()
+            # Stopping Symbols: MONITOR' or 'END' KEYWORD
+            self.error(4, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def monitorlist(self):
         """Parse the monitoring section"""

@@ -263,7 +263,8 @@ class Parser:
                     self.symbol = self.scanner.get_symbol()
                 else:
                     #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
-                    self.error()
+                    # Stopping symbols: ';' , '=', 'MONITOR' or 'END' KEYWORD
+                    self.error(9, [self.scanner.KEYWORD, self.scanner.SEMICOLON. self.scanner.EQUALS], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
             if (self.symbol.type == self.scanner.EQUALS):
                 self.symbol = self.scanner.get_symbol()

@@ -222,13 +222,15 @@ class Parser:
                             self.error()
 
                     else:
-                        # Error type: 9: Comma has to followed by parameter speficification
-                        self.error()
+                        # Error type: 9: Comma has to be followed by parameter speficification
+                        # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
+                        self.error(9, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
                 if (self.symbol.type == self.scanner.SEMICOLON):
                     self.symbol = self.scanner.get_symbol()
                 else:
                     #Error Type: 10: Device definition needs to end in ';'
-                    self.error()
+                    # Stopping symbols: NAME, ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
+                    self.error(10, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
             else:
                 # Error Type: 11: Device name has to be followed by ':'
                 self.error()

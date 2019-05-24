@@ -67,7 +67,18 @@ class Parser:
                     "Needs to be an integer",
                     "Parameter has to be 'initial', 'inputs' or 'period'",
                     "Comma has to followed by parameter speficification",
-                    ""]
+                    "Device definition needs to end in ';'",
+                    "Device name has to be followed by ':'",
+                    "Valid Device name required",
+                    "Valid Logic gate required e.g. 'AND'",
+                    "Output pin has to be 'Q' or 'QBAR'",
+                    "Connection has to be terminated by ';'",
+                    "Valid input pin required",
+                    "Period required to specify input pin",
+                    "Name string of input device required",
+                    "'=' Assignment operator requried",
+                    "Valid string name required",
+                    "Monitor point has to be terminated by ';'"]
 
     def parse_network(self):
         """Parse the circuit definition file."""
@@ -177,13 +188,13 @@ class Parser:
                 if (self.symbol.type == self.scanner.SEMICOLON):
                     self.symbol = self.scanner.get_symbol()
                 else:
-                    #Error Type: Device definition needs to end in ';'
+                    #Error Type: 10: Device definition needs to end in ';'
                     self.error()
             else:
-                # Error Type: Device name has to be followed by ':'
+                # Error Type: 11: Device name has to be followed by ':'
                 self.error()
         else:
-            # Error Type: Valid Device name required
+            # Error Type: 12: Valid Device name required
             self.error()
 
     def logictype(self):
@@ -192,7 +203,7 @@ class Parser:
         if (self.symbol.type == self.scanner.LOGIC_TYPE):
             self.symbol = self.scanner.get_symbol()
         else:
-            #Error Type: Valid Logic gate required e.g. 'AND'
+            #Error Type: 13: Valid Logic gate required e.g. 'AND'
             self.error()
 
     def connection(self):
@@ -207,7 +218,7 @@ class Parser:
                 if(self.symbol.type == self.scanner.OUT_PIN):
                     self.symbol = self.scanner.get_symbol()
                 else:
-                    #Error Type: Output pin has to be 'Q' or 'QBAR'
+                    #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
                     self.error()
 
             if (self.symbol.type == self.scanner.EQUALS):
@@ -225,22 +236,22 @@ class Parser:
                             if(self.symbol.type == self.scanner.SEMICOLON):
                                 self.symbol = self.scanner.get_symbol()
                             else:
-                                # Error Type: Connection has to be terminated by ';'
+                                # Error Type: 15: Connection has to be terminated by ';'
                                 self.error()
                         else:
-                            # Error Type: Valid input pin required
+                            # Error Type: 16: Valid input pin required
                             self.error()
                     else:
-                        # Error Type: Period required to specify input pin
+                        # Error Type: 17: Period required to specify input pin
                         self.error()
                 else:
-                    #Error Type: Name string of input device required
+                    #Error Type: 18: Name string of input device required
                     self.error()
             else:
-                #Error Type: '=' Assignment operator requried
+                #Error Type: 19: '=' Assignment operator requried
                 self.error()
         else:
-            #Error Type: Valid string name required
+            #Error Type: 20: Valid string name required
             self.error()
 
 
@@ -256,13 +267,13 @@ class Parser:
                 if(self.symbol.type == self.scanner.OUT_PIN):
                     self.symbol = self.scanner.get_symbol()
                 else:
-                    #Error Type: Output pin has to be 'Q' or 'QBAR'
+                    #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
                     self.error()
 
             if(self.symbol.type == self.scanner.SEMICOLON):
                 self.symbol = self.scanner.get_symbol()
             else:
-                # Error Type: Monitor point has to be terminated by ';'
+                # Error Type: 21: Monitor point has to be terminated by ';'
                 self.error()
 
 

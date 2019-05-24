@@ -261,6 +261,7 @@ class Gui(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_menu)
         self.spin.Bind(wx.EVT_SPINCTRL, self.on_spin)
         self.run_button.Bind(wx.EVT_BUTTON, self.on_run_button)
+        self.exit_button.Bind(wx.EVT_BUTTON, self.on_exit_button)
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
         self.toggle.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
 
@@ -332,6 +333,10 @@ class Gui(wx.Frame):
         """Handle the event when the user clicks the run button."""
         text = "Run button pressed."
         self.canvas.render(text)
+
+    def on_exit_button(self, event):
+        """Handle the event when the user clicks the run button."""
+        self.Close()
 
     def onAddMP(self, event):
         """"""

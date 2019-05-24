@@ -237,6 +237,12 @@ class Gui(wx.Frame):
         self.canvas = MyGLCanvas(self, devices, monitors)
 
         # Configure the widgets
+        self.panel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
+        self.panel.SetAutoLayout(1)
+        self.panel.SetupScrolling(False, True)
+        self.switchpanel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
+        self.switchpanel.SetAutoLayout(1)
+        self.switchpanel.SetupScrolling(False, True)
         self.file_picker = wx.FilePickerCtrl(self, message='Select Source File', wildcard='Text Files (*.txt)|*.txt')
         self.text_cycles = wx.StaticText(self, wx.ID_ANY, "Cycles:")
         self.text_mps = wx.StaticText(self, wx.ID_ANY, "Monitor Points")
@@ -251,19 +257,15 @@ class Gui(wx.Frame):
         self.add_button = wx.Button(self, wx.ID_ANY, "Add")
         self.mp_names = wx.TextCtrl(self, wx.ID_ANY, "(ENTER ID)",
                                     style=wx.TE_PROCESS_ENTER)
-        self.toggle = wx.ToggleButton(self, wx.ID_ANY, 'Off')
-        self.toggle.SetBackgroundColour(wx.Colour(255, 130, 130))
-        self.panel =scrolled.ScrolledPanel(self, size = wx.Size(200,200), style = wx.SUNKEN_BORDER)
-        self.panel.SetAutoLayout(1)
-        self.panel.SetupScrolling(False, True)
-
+        
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
         self.spin.Bind(wx.EVT_SPINCTRL, self.on_spin)
         self.run_button.Bind(wx.EVT_BUTTON, self.on_run_button)
+        self.continue_button.Bind(wx.EVT_BUTTON, self.on_continue_button)
         self.exit_button.Bind(wx.EVT_BUTTON, self.on_exit_button)
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
-        self.toggle.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
+        self.mp_names.Bind(wx.EVT_SET_FOCUS, self.onMpFocus)
 
         # Configure sizers for layout
         top_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -274,9 +276,8 @@ class Gui(wx.Frame):
         self.mp_sizer = wx.BoxSizer(wx.VERTICAL)
         mp_sizer_all = wx.BoxSizer(wx.VERTICAL)
         mp_control_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        switches_sizer = wx.BoxSizer(wx.VERTICAL)
-        switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        mp_container_sizer = wx.BoxSizer(wx.VERTICAL)
+        switch_sizer_all = wx.BoxSizer(wx.VERTICAL)
+        switch_sizer_container = wx.BoxSizer(wx.VERTICAL)
 
         top_sizer.Add(self.file_picker, 1, wx.EXPAND | wx.ALL, 5, 10)
         top_sizer.Add(main_sizer, 10, wx.EXPAND)
@@ -284,10 +285,10 @@ class Gui(wx.Frame):
         main_sizer.Add(self.canvas, 5, wx.EXPAND | wx.ALL, 5)
         main_sizer.Add(side_sizer, 1, wx.RIGHT, 5)
 
-        side_sizer.Add(cycle_sizer, 1, wx.ALL, 5)
-        side_sizer.Add(buttons_sizer, 1, wx.ALL, 5)
-        side_sizer.Add(mp_sizer_all, 5, wx.ALL, 5)
-        side_sizer.Add(switches_sizer, 5, wx.ALL, 5)
+        side_sizer.Add(cycle_sizer, 0, wx.ALL, 5)
+        side_sizer.Add(buttons_sizer, 0, wx.ALL, 5)
+        side_sizer.Add(mp_sizer_all, 1, wx.ALL, 5)
+        side_sizer.Add(switch_sizer_all, 1, wx.ALL, 5)
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
         cycle_sizer.Add(self.spin, 3, wx.LEFT | wx.RIGHT, 5)
@@ -301,17 +302,24 @@ class Gui(wx.Frame):
 
         mp_sizer_all.Add(self.text_mps, 0, wx.RIGHT, 5)
         mp_sizer_all.Add(mp_control_sizer, 0, wx.RIGHT|wx.TOP, 5)
-        mp_sizer_all.Add(self.panel, 0, wx.RIGHT|wx.TOP, 5)
+        mp_sizer_all.Add(self.panel, 1, wx.RIGHT|wx.TOP|wx.EXPAND, 5)
 
         self.panel.SetSizer(self.mp_sizer)
+        self.switchpanel.SetSizer(switch_sizer_container)
         
-        switches_sizer.Add(self.text_switches, 0, wx.RIGHT, 5)
-        switches_sizer.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)
+        switch_sizer_all.Add(self.text_switches, 0, wx.RIGHT, 5)
+        switch_sizer_all.Add(self.switchpanel, 1, wx.TOP|wx.RIGHT|wx.EXPAND, 5)
 
-        switch_sizer.Add(wx.StaticText(self, wx.ID_ANY, 'Switch 1'), 1, wx.ALIGN_CENTRE)
-        switch_sizer.Add(self.toggle, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
+        for i in range(4): #change to range(len(switches)) once functionality implemented
+            switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
+            switch_sizer.Add(wx.StaticText(self.switchpanel, wx.ID_ANY, 'Switch {}'.format(i+1)), 1, wx.ALIGN_CENTRE)
+            button = wx.ToggleButton(self.switchpanel, wx.ID_ANY, 'Off', name='Switch {}'.format(i+1))
+            button.SetBackgroundColour(wx.Colour(255, 130, 130))
+            button.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
+            switch_sizer.Add(button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
+            switch_sizer_container.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)
 
-        self.SetSizeHints(600, 600)
+        self.SetSizeHints(600, 800)
         self.SetSizer(top_sizer)
 
     def on_menu(self, event):
@@ -334,15 +342,22 @@ class Gui(wx.Frame):
         text = "Run button pressed."
         self.canvas.render(text)
 
+    def on_continue_button(self, event):
+        """Handle the event when the user clicks the continue button."""
+        text = "Continue button pressed."
+        self.canvas.render(text)
+
     def on_exit_button(self, event):
-        """Handle the event when the user clicks the run button."""
+        """Handle the event when the user clicks the exit button."""
         self.Close()
 
     def onAddMP(self, event):
         """"""
-        if self.mp_names.GetValue() not in self.all_mp_names:
+        if self.mp_names.GetValue() not in self.all_mp_names and self.mp_names.GetValue() != '' and self.mp_names.GetValue() != '(ENTER ID)':
             id = self.mp_names.GetValue()
-            self.mp_names.Clear()
+            self.mp_names.SetValue('(ENTER ID)')
+            text = "Monitor Point {} added.".format(id)
+            self.canvas.render(text)
             self.number_of_mps += 1
             self.all_mp_names.append(id)
             new_button = wx.Button(self.panel, label='Remove', name=id)
@@ -355,7 +370,10 @@ class Gui(wx.Frame):
 
     def onRemoveMP(self, event):
         """"""
-        index = self.all_mp_names.index(event.GetEventObject().GetName())
+        mp_name = event.GetEventObject().GetName()
+        index = self.all_mp_names.index(mp_name)
+        text = "Monitor Point {} removed.".format(mp_name)
+        self.canvas.render(text)
         self.mp_sizer.Hide(index)
         self.mp_sizer.Remove(index)
         self.number_of_mps -= 1
@@ -364,9 +382,19 @@ class Gui(wx.Frame):
 
     def onToggleButton(self, event):
         button = event.GetEventObject()
-        if event.GetEventObject().GetValue():
+        if button.GetValue():
             button.SetBackgroundColour(wx.Colour(100, 255, 100))
             button.SetLabel('On')
+            text = "{} turned on.".format(button.GetName())
+            self.canvas.render(text)
         else:
             button.SetBackgroundColour(wx.Colour(255, 130, 130))
             button.SetLabel('Off')
+            text = "{} turned off.".format(button.GetName())
+            self.canvas.render(text)
+
+    def onMpFocus(self, event):
+        textbox = event.GetEventObject()
+        if textbox.GetValue() == '(ENTER ID)':
+            textbox.SetValue('')
+        event.Skip()

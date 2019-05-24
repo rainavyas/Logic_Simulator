@@ -1,0 +1,4 @@
+'DEVICES'; myand1: AND, inputs 1; myswitch1: SWITCH, initial 0;
+'CONNECT'; myswitch1 = myand1.I1;
+'MONITOR'; myand1;
+END

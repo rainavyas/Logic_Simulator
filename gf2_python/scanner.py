@@ -132,7 +132,7 @@ class Scanner:
             self.advance()
 
         #  Skip closed comments.
-        elif self.current_character == "/":
+        if self.current_character == "/":
             self.advance()
             if self.current_character == "*":
                 self.advance()
@@ -203,6 +203,7 @@ class Scanner:
         for line in self.file:
             marker += 1
             if marker == symbol.line:
+                print("Line " + str(symbol.line) + ":")
                 print(line.replace("\n", ""))
                 print((symbol.position-2)*" " + "^")
 

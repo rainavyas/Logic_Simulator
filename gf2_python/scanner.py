@@ -34,7 +34,6 @@ class Symbol:
         self.line = None
         self.position = None
 
-
 class Scanner:
 
     """Read circuit definition file and translate the characters into symbols.
@@ -180,6 +179,7 @@ class Scanner:
 
         self.file.seek(stored_position)
 
+
         for n in range(num_line):
             if n == 0:
                 if self.file.tell() <= linelengths[n]:
@@ -189,6 +189,9 @@ class Scanner:
                  linelengths[n-1]):
                 current_line = n + 1
                 current_position = self.file.tell() - linelengths[n-1]
+            # if self.file.readline() == "":
+            #     current_line = n
+            #     current_position = self.file.tell() - linelengths[n-1]
 
         return [current_line, current_position]
 

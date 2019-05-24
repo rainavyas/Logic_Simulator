@@ -169,7 +169,9 @@ class Parser:
                     self.connection()
             else:
                 # Error Type: 3: Semicolon needed after 'CONNECT'
-                self.error()
+                # Stopping Symbols: MONITOR' or 'END' KEYWORD
+                self.error(3, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+
         else:
             # Error Type: 4: 'CONNECT' keyword required
             self.error()

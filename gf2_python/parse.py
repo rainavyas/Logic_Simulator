@@ -101,7 +101,7 @@ class Parser:
         # errors in the circuit definition file.
         return True
 
-    def error(self, error_ID, stopping_symbols, symbol_IDs = []]):
+    def error(self, error_ID, stopping_symbols, symbol_IDs = []):
         """ Display Error and recover to a useful parsing position"""
 
         # Display Error

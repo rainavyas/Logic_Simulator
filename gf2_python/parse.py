@@ -148,8 +148,8 @@ class Parser:
                     self.device()
             else:
                 # Error Type: 1: Semicolon needed after 'DEVICE'
-                # Stopping Symbols: 'CONNECT' KEYWORD
-                self.error(1, [3])
+                # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
+                self.error(1, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
         else:
             # Error Type: 2: 'DEVICE' keyword required
             # Stopping Symbols: 'CONNECT' KEYWORD

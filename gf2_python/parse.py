@@ -69,6 +69,7 @@ class Parser:
 
     def error(self):
         print("We have a syntax error")
+        self.scanner.print_location(self.symbol)
 
     def devicelist(self):
         """Parse the devices section"""

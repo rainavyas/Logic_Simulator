@@ -101,9 +101,16 @@ class Parser:
         # errors in the circuit definition file.
         return True
 
-    def error(self):
-        print("We have a syntax error")
+    def error(self, error_ID, stopping_symbols):
+        # Display Error
+        print("SYNTAX ERROR:")
+        err_msg = self.err_msgs[error_ID]
+        print(err_msg)
         self.scanner.print_location(self.symbol)
+
+        # Return to recovery point
+        while (self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF):
+            self.symbol = self.scanner.get_symbol()
 
     def devicelist(self):
         """Parse the devices section"""

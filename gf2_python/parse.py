@@ -37,48 +37,32 @@ class Parser:
     parse_network(self): Parses the circuit definition file.
     """
 
-    # def __init__(self, names, devices, network, monitors, scanner):
-    #     """Initialise constants."""
-    #     self.names = names
-    #     self.devices = devices
-    #     self.network = network
-    #     self.monitors = monitors
-    #     self.scanner = scanner
-    #
-    #     # Initialise current symbol
-    #     self.symbol = Symbol()
 
-    def __init__(self,  scanner):
+    def __init__(self,  names, devices, network, monitors, scanner):
         """Initialise constants."""
+        self.names = names
+        self.devices = devices
+        self.network = network
+        self.monitors = monitors
         self.scanner = scanner
 
         # Initialise current symbol
         self.symbol = Symbol()
 
-        #Define all the error types and associated messages
-        #Index is the error type ID
-        self.err_msgs = ["'END' keyword required at end of file",
-                    "Semicolon needed after 'DEVICE'",
-                    "'DEVICE' keyword required",
-                    "Semicolon needed after 'CONNECT'",
-                    "'CONNECT' keyword required",
-                    "Semicolon needed after 'MONITOR'",
-                    "'MONITOR' keyword required",
-                    "Needs to be an integer",
-                    "Parameter has to be 'initial', 'inputs' or 'period'",
-                    "Comma has to followed by parameter speficification",
-                    "Device definition needs to end in ';'",
-                    "Device name has to be followed by ':'",
-                    "Valid Device name required",
-                    "Valid Logic gate required e.g. 'AND'",
-                    "Output pin has to be 'Q' or 'QBAR'",
-                    "Connection has to be terminated by ';'",
-                    "Valid input pin required",
-                    "Period required to specify input pin",
-                    "Name string of input device required",
-                    "'=' Assignment operator requried",
-                    "Valid string name required",
-                    "Monitor point has to be terminated by ';'"]
+        # Define all Syntax Errors
+        [self.NO_END, self.NO_SEMICOLON_DEVICE,
+        self.NEED_DEVICE_KEYWORD, self.NO_SEMICOLON_CONNECT,
+        self.NEED_CONNECT_KEYWORD, self.NO_SEMICOLON_MONITOR,
+        self.NEED_MONITOR_KEYWORD, self.INTEGER,
+        self.NEED_QUALIFIER, self.NEED_PARAM,
+        self.NO_DEVICE_SEMICOLON, self.NO_DEVICE_COLON,
+        self.DEVICE_NAME, self.LOGIC_GATE,
+        self.OUTPUT_PIN, self.NO_CONNECT_SEMICOLON,
+        self.INPUT_PIN, self.PERIOD_INPUT_PIN,
+        self.NAME_INPUT, self.ASSIGNMENT,
+        self.NAME_STRING,
+        self.NO_MONITOR_SEMICOLON]= self.names.unique_error_codes(22)
+
 
     def parse_network(self):
         """Parse the circuit definition file."""
@@ -104,16 +88,66 @@ class Parser:
     def error(self, error_ID, stopping_symbols, symbol_IDs = []):
         """ Display Error and recover to a useful parsing position"""
 
-        # Display Error
-        print("SYNTAX ERROR:")
-        err_msg = self.err_msgs[error_ID]
-        print(err_msg)
+        #Consider Syntax Errors
+
+        if error_ID == self.NO_END:
+            print("'END' keyword required at end of file")
+        elif error_ID == self.NO_SEMICOLON_DEVICE:
+            print("Semicolon needed after 'DEVICE'")
+        elif error_ID == self.NEED_DEVICE_KEYWORD:
+            print("'DEVICE' keyword required")
+        elif error_ID == self.NO_SEMICOLON_CONNECT:
+            print("Semicolon needed after 'CONNECT'")
+        elif error_ID == self.NEED_CONNECT_KEYWORD:
+            print("'CONNECT' keyword required")
+        elif error_ID == self.NO_SEMICOLON_MONITOR:
+            print("Semicolon needed after 'MONITOR'")
+        elif error_ID == self.NEED_MONITOR_KEYWORD:
+            print("'MONITOR' keyword required")
+        elif error_ID == self.INTEGER:
+            print("Needs to be a positive integer")
+        elif error_ID == self.NEED_QUALIFIER:
+            print("Parameter has to be 'initial', 'inputs' or 'period'")
+        elif error_ID == self.NEED_PARAM:
+            print("Comma has to followed by parameter speficification")
+        elif error_ID == self.NO_DEVICE_SEMICOLON:
+            print("Device definition needs to end in ';'")
+        elif error_ID == self.NO_DEVICE_COLON:
+            print("Device name has to be followed by ':'")
+        elif error_ID == self.DEVICE_NAME:
+            print("Valid Device name required")
+        elif error_ID == self.LOGIC_GATE:
+            print("Valid Logic gate required e.g. 'AND'")
+        elif error_ID == self.OUTPUT_PIN:
+            print("Output pin has to be 'Q' or 'QBAR'")
+        elif error_ID == self.NO_CONNECT_SEMICOLON:
+            print("Connection has to be terminated by ';'")
+        elif error_ID == self.INPUT_PIN:
+            print("Valid input pin required")
+        elif error_ID == self.PERIOD_INPUT_PIN:
+            print("'.' required to specify input pin")
+        elif error_ID == self.NAME_INPUT:
+            print("Name string of input device required")
+        elif error_ID == self.ASSIGNMENT:
+            print("'=' Assignment operator requried")
+        elif error_ID == self.NAME_STRING:
+            print("Valid string name required")
+        elif error_ID == self.NO_MONITOR_SEMICOLON:
+            print("Monitor point has to be terminated by ';'")
+
+        #Consider Semantic Errors
+
+        elif error_ID == self.devices.DEVICE_PRESENT:
+            print("Device Name already used")
+
+        # Display Error position
         self.scanner.print_location(self.symbol)
 
-        # Return to recovery point
+
+        # Return to recovery point for syntax errors
 
         #Define list of error IDs for which punctuation termination should not be moved on from
-        dont_move_err_IDS = [9, 7, 13]
+        dont_move_err_IDS = [self.INTEGER, self.NEED_PARAM, self.LOGIC_GATE]
 
         #Define a move_on Boolean state
         move_on = True
@@ -212,10 +246,12 @@ class Parser:
         """Parse the device syntax"""
 
         if (self.symbol.type == self.scanner.NAME):
+            device_name = self.names.get_name_string(self.symbol.id)
+            device_id = self.names.query(device_name)
             self.symbol = self.scanner.get_symbol()
             if (self.symbol.type == self.scanner.COLON):
                 self.symbol = self.scanner.get_symbol()
-                self.logictype()
+                device_kind = self.logictype()
 
                 if(self.symbol.type == self.scanner.COMMA):
                     self.symbol = self.scanner.get_symbol()
@@ -224,9 +260,10 @@ class Parser:
                             self.symbol = self.scanner.get_symbol()
 
                             if(self.symbol.type == self.scanner.NUMBER):
+                                device_property = int(self.names.get_name_string(self.symbol.id))
                                 self.symbol = self.scanner.get_symbol()
                             else:
-                                # Error type: 7: Needs to be an integer
+                                # Error type: 7: Needs to be a positive integer
                                 # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
                                 self.error(7, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
                         else:
@@ -251,16 +288,26 @@ class Parser:
             # Error Type: 12: Valid Device name required
             # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
             self.error(12, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+        if self.error_count == 0:
+            # i.e.no errors so far
+            err = self.devices.make_device(device_id, device_kind, device_property)
+            if err != self.devices.NO_ERROR:
+                self.error(err,[self.SEMICOLON])
+
 
     def logictype(self):
         """Parse the type syntax in EBNF"""
 
         if (self.symbol.type == self.scanner.LOGIC_TYPE):
+            device_kind = self.names.get_name_string(self.symbol.id)
             self.symbol = self.scanner.get_symbol()
+            return device_kind
         else:
             #Error Type: 13: Valid Logic gate required e.g. 'AND'
             # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
             self.error(13, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+            return None
+
 
     def connection(self):
         """Parse the connection syntax in EBNF"""

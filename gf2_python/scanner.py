@@ -275,11 +275,11 @@ class Scanner:
 
         return symbol
 
-path_test = os.getcwd() + "/(temp)text_file.txt"
-names_test = Names()
-scanner = Scanner(path_test, names_test)
-
-for n in range(30):
-    Test_symbol = scanner.get_symbol()
-    scanner.print_location(Test_symbol)
-    print(' ')
+# path_test = os.getcwd() + "/(temp)text_file.txt"
+# names_test = Names()
+# scanner = Scanner(path_test, names_test)
+#
+# for n in range(30):
+#     Test_symbol = scanner.get_symbol()
+#     scanner.print_location(Test_symbol)
+#     print(' ')

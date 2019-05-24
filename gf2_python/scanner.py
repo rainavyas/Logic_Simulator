@@ -34,7 +34,6 @@ class Symbol:
         self.line = None
         self.position = None
 
-
 class Scanner:
 
     """Read circuit definition file and translate the characters into symbols.
@@ -132,7 +131,7 @@ class Scanner:
             self.advance()
 
         #  Skip closed comments.
-        elif self.current_character == "/":
+        if self.current_character == "/":
             self.advance()
             if self.current_character == "*":
                 self.advance()
@@ -180,6 +179,7 @@ class Scanner:
 
         self.file.seek(stored_position)
 
+
         for n in range(num_line):
             if n == 0:
                 if self.file.tell() <= linelengths[n]:
@@ -189,6 +189,9 @@ class Scanner:
                  linelengths[n-1]):
                 current_line = n + 1
                 current_position = self.file.tell() - linelengths[n-1]
+            # if self.file.readline() == "":
+            #     current_line = n
+            #     current_position = self.file.tell() - linelengths[n-1]
 
         return [current_line, current_position]
 
@@ -203,6 +206,7 @@ class Scanner:
         for line in self.file:
             marker += 1
             if marker == symbol.line:
+                print("Line " + str(symbol.line) + ":")
                 print(line.replace("\n", ""))
                 print((symbol.position-2)*" " + "^")
 
@@ -275,11 +279,11 @@ class Scanner:
 
         return symbol
 
-path_test = os.getcwd() + "/(temp)text_file.txt"
-names_test = Names()
-scanner = Scanner(path_test, names_test)
-
-for n in range(30):
-    Test_symbol = scanner.get_symbol()
-    scanner.print_location(Test_symbol)
-    print(' ')
+# path_test = os.getcwd() + "/(temp)text_file.txt"
+# names_test = Names()
+# scanner = Scanner(path_test, names_test)
+#
+# for n in range(30):
+#     Test_symbol = scanner.get_symbol()
+#     scanner.print_location(Test_symbol)
+#     print(' ')

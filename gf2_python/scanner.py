@@ -130,16 +130,18 @@ class Scanner:
             self.file.readline()
             self.skip_spaces()
             self.advance()
+
         elif self.current_character == "/":
             self.advance()
             if self.current_character == "*":
                 self.advance()
-                while self.current_character != "*":
+                while not self.current_character == "*":
                     self.advance()
                 self.advance()
                 if self.current_character == "/":
                     self.advance()
                     self.skip_spaces()
+    # Add that if EOF reached, print there's an error.
 
     def location(self):
         """Print the current input line along with a marker showing symbol

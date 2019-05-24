@@ -55,6 +55,20 @@ class Parser:
         # Initialise current symbol
         self.symbol = Symbol()
 
+        #Define all the error types and associated messages
+        #Index is the error type ID
+        self.err_msgs = ["'END' keyword required at end of file",
+                    "Semicolon needed after 'DEVICE'",
+                    "'DEVICE' keyword required",
+                    "Semicolon needed after 'CONNECT'",
+                    "'CONNECT' keyword required",
+                    "Semicolon needed after 'MONITOR'",
+                    "'MONITOR' keyword required",
+                    "Needs to be an integer",
+                    "Parameter has to be 'initial', 'inputs' or 'period'",
+                    "Comma has to followed by parameter speficification",
+                    ""]
+
     def parse_network(self):
         """Parse the circuit definition file."""
 
@@ -67,7 +81,7 @@ class Parser:
         self.monitorlist()
 
         if not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
-            # Error Type: 'END' keyword required at end of file
+            # Error Type: 0: 'END' keyword required at end of file
             self.error()
 
 
@@ -91,11 +105,10 @@ class Parser:
                 while (self.symbol.type == self.scanner.NAME):
                     self.device()
             else:
-                # Error Type: Semicolon needed after 'DEVICE'
-                print("Semicolon needed after 'DEVICE'")
+                # Error Type: 1: Semicolon needed after 'DEVICE'
                 self.error()
         else:
-            # Error Type: 'DEVICE' keyword required
+            # Error Type: 2: 'DEVICE' keyword required
             self.error()
 
 
@@ -111,10 +124,10 @@ class Parser:
                 while (self.symbol.type == self.scanner.NAME):
                     self.connection()
             else:
-                # Error Type: Semicolon needed after 'CONNECT'
+                # Error Type: 3: Semicolon needed after 'CONNECT'
                 self.error()
         else:
-            # Error Type: 'CONNECT' keyword required
+            # Error Type: 4: 'CONNECT' keyword required
             self.error()
 
     def monitorlist(self):
@@ -128,10 +141,10 @@ class Parser:
                 while (self.symbol.type == self.scanner.NAME):
                     self.monitor_point()
             else:
-                # Error Type: Semicolon needed after 'MONITOR'
+                # Error Type: 5: Semicolon needed after 'MONITOR'
                 self.error()
         else:
-            # Error Type: 'MONITOR' keyword required
+            # Error Type: 6: 'MONITOR' keyword required
             self.error()
 
     def device(self):
@@ -152,14 +165,14 @@ class Parser:
                             if(self.symbol.type == self.scanner.NUMBER):
                                 self.symbol = self.scanner.get_symbol()
                             else:
-                                # Error type: needs to be an integer
+                                # Error type: 7: Needs to be an integer
                                 self.error()
                         else:
-                            # Error type: Parameter has to be initial, inputs or period
+                            # Error type: 8: Parameter has to be 'initial', 'inputs' or 'period'
                             self.error()
 
                     else:
-                        # Error type: Comma has to followed by parameter speficification
+                        # Error type: 9: Comma has to followed by parameter speficification
                         self.error()
                 if (self.symbol.type == self.scanner.SEMICOLON):
                     self.symbol = self.scanner.get_symbol()
@@ -260,3 +273,8 @@ my_scanner = Scanner(path, my_names)
 my_parser = Parser(my_scanner)
 
 my_parser.parse_network()
+
+"""Defining all the error types and their messages:
+
+
+"""

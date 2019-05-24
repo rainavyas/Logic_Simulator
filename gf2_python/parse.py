@@ -112,6 +112,9 @@ class Parser:
 
         # Return to recovery point
 
+        #Define list of error IDs for which punctuation termination should not be moved on from
+        dont_move_err_IDS = [9]
+
         #Define a move_on Boolean state
         move_on = True
 
@@ -138,7 +141,7 @@ class Parser:
                 if ((not move_on) and self.symbol.type != self.scanner.NAME) :
                     # Move on once more after terminating punctuation
                     # Only move on for certain error types
-                    if not (error_ID in [9]):
+                    if not (error_ID in dont_move_err_IDS):
                         self.symbol = self.scanner.get_symbol()
 
     def devicelist(self):

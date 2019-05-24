@@ -72,15 +72,15 @@ def main(arg_list):
             sys.exit()
 
         [path] = arguments
-        scanner = Scanner(path, names)
-        parser = Parser(names, devices, network, monitors, scanner)
-        if parser.parse_network():
+        #scanner = Scanner(path, names)
+        #parser = Parser(names, devices, network, monitors, scanner)
+        #if parser.parse_network():
             # Initialise an instance of the gui.Gui() class
-            app = wx.App()
-            gui = Gui("Logic Simulator", path, names, devices, network,
-                      monitors)
-            gui.Show(True)
-            app.MainLoop()
+        app = wx.App()
+        gui = Gui("Logic Simulator", path, names, devices, network,
+                  monitors)
+        gui.Show(True)
+        app.MainLoop()
 
 
 if __name__ == "__main__":

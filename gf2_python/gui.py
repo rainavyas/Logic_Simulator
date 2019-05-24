@@ -253,7 +253,7 @@ class Gui(wx.Frame):
                                     style=wx.TE_PROCESS_ENTER)
         self.toggle = wx.ToggleButton(self, wx.ID_ANY, 'Off')
         self.toggle.SetBackgroundColour(wx.Colour(255, 130, 130))
-        self.panel =scrolled.ScrolledPanel(self, size = wx.Size(250,200), style = wx.SUNKEN_BORDER)
+        self.panel =scrolled.ScrolledPanel(self, size = wx.Size(200,200), style = wx.SUNKEN_BORDER)
         self.panel.SetAutoLayout(1)
         self.panel.SetupScrolling(False, True)
 
@@ -303,7 +303,7 @@ class Gui(wx.Frame):
         mp_sizer_all.Add(self.panel, 0, wx.RIGHT|wx.TOP, 5)
 
         self.panel.SetSizer(self.mp_sizer)
-
+        
         switches_sizer.Add(self.text_switches, 0, wx.RIGHT, 5)
         switches_sizer.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)
 
@@ -337,6 +337,7 @@ class Gui(wx.Frame):
         """"""
         if self.mp_names.GetValue() not in self.all_mp_names:
             id = self.mp_names.GetValue()
+            self.mp_names.Clear()
             self.number_of_mps += 1
             self.all_mp_names.append(id)
             new_button = wx.Button(self.panel, label='Remove', name=id)
@@ -364,6 +365,3 @@ class Gui(wx.Frame):
         else:
             button.SetBackgroundColour(wx.Colour(255, 130, 130))
             button.SetLabel('Off')
-
-    def OnSize(self, event):
-        self.scrolling_window.SetSize(self.GetClientSize())

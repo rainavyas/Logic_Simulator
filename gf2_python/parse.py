@@ -93,7 +93,7 @@ class Parser:
 
         if not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
             # Error Type: 0: 'END' keyword required at end of file
-            self.error()
+            self.error(0, None)
 
 
         # For now just return True, so that userint and gui can run in the
@@ -101,7 +101,7 @@ class Parser:
         # errors in the circuit definition file.
         return True
 
-    def error(self, error_ID, stopping_symbols):
+    def error(self, error_ID, stopping_symbols, symbol_ID):
         # Display Error
         print("SYNTAX ERROR:")
         err_msg = self.err_msgs[error_ID]
@@ -124,10 +124,12 @@ class Parser:
                     self.device()
             else:
                 # Error Type: 1: Semicolon needed after 'DEVICE'
-                self.error()
+                # Stopping Symbols: 'CONNECT' KEYWORD
+                self.error(1, [3])
         else:
             # Error Type: 2: 'DEVICE' keyword required
-            self.error()
+            # Stopping Symbols: 'CONNECT' KEYWORD
+            self.error(2, [3])
 
 
     def connectlist(self):

@@ -136,8 +136,10 @@ class Parser:
             else:
                 move_on = self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF
                 if ((not move_on) and self.symbol.type != self.scanner.NAME) :
-                    # Move n once more after terminating punctuation
-                    self.symbol = self.scanner.get_symbol()
+                    # Move on once more after terminating punctuation
+                    # Only move on for certain error types
+                    if not (error_ID in [9]):
+                        self.symbol = self.scanner.get_symbol()
 
     def devicelist(self):
         """Parse the devices section"""

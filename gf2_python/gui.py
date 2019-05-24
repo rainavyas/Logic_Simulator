@@ -9,6 +9,7 @@ MyGLCanvas - handles all canvas drawing operations.
 Gui - configures the main window and all the widgets.
 """
 import wx
+import wx.lib.scrolledpanel as scrolled
 import random
 import wx.glcanvas as wxcanvas
 from OpenGL import GL, GLUT
@@ -252,7 +253,9 @@ class Gui(wx.Frame):
                                     style=wx.TE_PROCESS_ENTER)
         self.toggle = wx.ToggleButton(self, wx.ID_ANY, 'Off')
         self.toggle.SetBackgroundColour(wx.Colour(255, 130, 130))
-        self.scrolling_window = wx.ScrolledWindow(self)
+        self.panel =scrolled.ScrolledPanel(self, size = wx.Size(200,200), style = wx.SUNKEN_BORDER)
+        self.panel.SetAutoLayout(1)
+        self.panel.SetupScrolling(False, True)
 
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
@@ -260,7 +263,6 @@ class Gui(wx.Frame):
         self.run_button.Bind(wx.EVT_BUTTON, self.on_run_button)
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
         self.toggle.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
-        #self.Bind(wx.EVT_SIZE, self.OnSize)
 
         # Configure sizers for layout
         top_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -283,8 +285,8 @@ class Gui(wx.Frame):
 
         side_sizer.Add(cycle_sizer, 1, wx.ALL, 5)
         side_sizer.Add(buttons_sizer, 1, wx.ALL, 5)
-        side_sizer.Add(mp_sizer_all, 1, wx.ALL, 5)
-        side_sizer.Add(switches_sizer, 1, wx.ALL, 5)
+        side_sizer.Add(mp_sizer_all, 5, wx.ALL, 5)
+        side_sizer.Add(switches_sizer, 5, wx.ALL, 5)
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
         cycle_sizer.Add(self.spin, 3, wx.LEFT | wx.RIGHT, 5)
@@ -296,19 +298,14 @@ class Gui(wx.Frame):
         mp_control_sizer.Add(self.mp_names, 1, wx.ALIGN_CENTRE)
         mp_control_sizer.Add(self.add_button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
 
-        mp_sizer_all.Add(self.text_mps, 1, wx.RIGHT, 5)
-        mp_sizer_all.Add(mp_control_sizer, 1, wx.RIGHT, 5)
-        mp_sizer_all.Add(mp_container_sizer, 1, wx.RIGHT, 5)
+        mp_sizer_all.Add(self.text_mps, 0, wx.RIGHT, 5)
+        mp_sizer_all.Add(mp_control_sizer, 0, wx.RIGHT|wx.TOP, 5)
+        mp_sizer_all.Add(self.panel, 0, wx.RIGHT|wx.TOP, 5)
 
-        mp_sizer_all.Add(self.scrolling_window, 1, wx.EXPAND)
-
-        self.scrolling_window.SetSizer(self.mp_sizer)
-        self.scrolling_window.SetScrollRate(10, 10)
-        self.scrolling_window.EnableScrolling(False, True)
-        self.scrolling_window.SetAutoLayout(True)
-
-        switches_sizer.Add(self.text_switches, 1, wx.RIGHT, 5)
-        switches_sizer.Add(switch_sizer, 1)
+        self.panel.SetSizer(self.mp_sizer)
+        
+        switches_sizer.Add(self.text_switches, 0, wx.RIGHT, 5)
+        switches_sizer.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)
 
         switch_sizer.Add(wx.StaticText(self, wx.ID_ANY, 'Switch 1'), 1, wx.ALIGN_CENTRE)
         switch_sizer.Add(self.toggle, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
@@ -338,27 +335,26 @@ class Gui(wx.Frame):
 
     def onAddMP(self, event):
         """"""
-        if self.number_of_mps < 5 and self.mp_names.GetValue() not in self.all_mp_names:
+        if self.mp_names.GetValue() not in self.all_mp_names:
             id = self.mp_names.GetValue()
             self.number_of_mps += 1
             self.all_mp_names.append(id)
-            new_button = wx.Button(self, label='Remove', name=id)
+            new_button = wx.Button(self.panel, label='Remove', name=id)
             new_sizer = wx.BoxSizer(wx.HORIZONTAL)
-            new_sizer.Add(wx.StaticText(self, wx.ID_ANY, id), 1, wx.ALIGN_CENTRE)
+            new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, id), 1, wx.ALIGN_CENTRE)
             new_sizer.Add(new_button, 1, wx.LEFT | wx.RIGHT | wx.TOP, 5)
-            new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)#, id=int(self.number_of_mps))
+            new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
             self.mp_sizer.Add(new_sizer, 0, wx.RIGHT, 5)
             self.Layout()
 
     def onRemoveMP(self, event):
         """"""
-        if len(self.mp_sizer.GetChildren())>2:
-            index = self.all_mp_names.index(event.GetEventObject().GetName())
-            self.mp_sizer.Hide(index+2)
-            self.mp_sizer.Remove(index+2)
-            self.number_of_mps -= 1
-            self.Layout()
-            del self.all_mp_names[index]
+        index = self.all_mp_names.index(event.GetEventObject().GetName())
+        self.mp_sizer.Hide(index)
+        self.mp_sizer.Remove(index)
+        self.number_of_mps -= 1
+        self.Layout()
+        del self.all_mp_names[index]
 
     def onToggleButton(self, event):
         button = event.GetEventObject()

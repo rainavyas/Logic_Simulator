@@ -10,6 +10,8 @@ Parser - parses the definition file and builds the logic network.
 """
 
 from scanner import Symbol
+from names import Names
+from scanner import Scanner
 
 
 class Parser:
@@ -35,12 +37,19 @@ class Parser:
     parse_network(self): Parses the circuit definition file.
     """
 
-    def __init__(self, names, devices, network, monitors, scanner):
+    # def __init__(self, names, devices, network, monitors, scanner):
+    #     """Initialise constants."""
+    #     self.names = names
+    #     self.devices = devices
+    #     self.network = network
+    #     self.monitors = monitors
+    #     self.scanner = scanner
+    #
+    #     # Initialise current symbol
+    #     self.symbol = Symbol()
+
+    def __init__(self,  scanner):
         """Initialise constants."""
-        self.names = names
-        self.devices = devices
-        self.network = network
-        self.monitors = monitors
         self.scanner = scanner
 
         # Initialise current symbol
@@ -79,10 +88,11 @@ class Parser:
             if (self.symbol.type == self.scanner.SEMICOLON):
                 self.symbol = self.scanner.get_symbol()
                 self.device()
-                while (self.symbol.type == self.scanner.Name):
+                while (self.symbol.type == self.scanner.Names):
                     self.device()
             else:
                 # Error Type: Semicolon needed after 'DEVICE'
+                print("Semicolon needed after 'DEVICE'")
                 self.error()
         else:
             # Error Type: 'DEVICE' keyword required
@@ -241,3 +251,12 @@ class Parser:
             else:
                 # Error Type: Monitor point has to be terminated by ';'
                 self.error()
+
+
+# Rough Testing
+path = 'test_def_file.txt'
+my_names = Names()
+my_scanner = Scanner(path, my_names)
+my_parser = Parser(my_scanner)
+
+my_parser.parse_network()

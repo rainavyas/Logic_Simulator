@@ -203,7 +203,7 @@ class Scanner:
 
         if self.current_character.isalpha():  # name
             name_string = self.get_name()
-            print("Name_string:", name_string)
+            # print("Name_string:", name_string)
             if name_string in self.keywords_list:
                 symbol.type = self.KEYWORD
             elif name_string in self.logic_type_list:
@@ -217,37 +217,37 @@ class Scanner:
             [symbol.id] = self.names.lookup([name_string])
 
         elif self.current_character.isdigit():  # number
-            print("First number is:", self.current_character)
+            # print("First number is:", self.current_character)
             symbol.id = self.get_number()
             symbol.type = self.NUMBER
 
         elif self.current_character == "=":  # equals
-            print("Found an equals")
+            # print("Found an equals")
             symbol.type = self.EQUALS
             self.advance()
 
         elif self.current_character == ",":  # comma
-            print("Found a comma")
+            # print("Found a comma")
             symbol.type = self.COMMA
             self.advance()
 
         elif self.current_character == ";":  # semicolon
-            print("Found a semi-colon")
+            # print("Found a semi-colon")
             symbol.type = self.SEMICOLON
             self.advance()
 
         elif self.current_character == ".":  # period
-            print("Found a period")
+            # print("Found a period")
             symbol.type = self.PERIOD
             self.advance()
 
         elif self.current_character == "":  # end of file
-            print("Found EOF")
+            # print("Found EOF")
             symbol.type = self.EOF
             self.advance()
 
         elif self.current_character == ":":  # colon
-            print("Found colon")
+            # print("Found colon")
             symbol.type = self.COLON
             self.advance()
 

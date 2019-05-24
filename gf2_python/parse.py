@@ -189,10 +189,12 @@ class Parser:
                     self.monitor_point()
             else:
                 # Error Type: 5: Semicolon needed after 'MONITOR'
-                self.error()
+                # Stopping Symbols: END' KEYWORD
+                self.error(5, [self.scanner.KEYWORD], [self.scanner.END_ID])
         else:
             # Error Type: 6: 'MONITOR' keyword required
-            self.error()
+            # Stopping Symbols: END' KEYWORD
+            self.error(6, [self.scanner.KEYWORD], [self.scanner.END_ID])
 
     def device(self):
         """Parse the device syntax"""

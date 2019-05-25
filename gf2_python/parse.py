@@ -431,6 +431,10 @@ class Parser:
                 # Error Type: 21: Monitor point has to be terminated by ';'
                 # Stopping symbols: 'NAME', ';' or 'END' KEYWORD
                 self.error(self.NO_MONITOR_SEMICOLON, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
+        else:
+            #Error Type: 20: Valid string name required
+            # Stopping symbols: 'NAME', ';' or 'END' KEYWORD
+            self.error(self.NAME_STRING, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
 
 
 # Rough Testing

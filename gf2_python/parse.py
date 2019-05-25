@@ -66,7 +66,6 @@ class Parser:
         self.NAME_STRING,
         self.NO_MONITOR_SEMICOLON]= self.names.unique_error_codes(22)
 
-
     def parse_network(self):
         """Parse the circuit definition file."""
 
@@ -330,28 +329,39 @@ class Parser:
         """Parse the connection syntax in EBNF"""
 
         if (self.symbol.type == self.scanner.NAME):
+            device_name = self.names.get_name_string(self.symbol.id)
+            first_device_id = self.names.query(device_name)
             self.symbol = self.scanner.get_symbol()
 
             if (self.symbol.type == self.scanner.PERIOD):
                 self.symbol = self.scanner.get_symbol()
 
                 if(self.symbol.type == self.scanner.OUT_PIN):
+                    pin_name = self.names.get_name_string(self.symbol.id)
+                    first_port_id = self.names.query(pin_name)
                     self.symbol = self.scanner.get_symbol()
                 else:
                     #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
                     # Stopping symbols: ';' , '=', 'MONITOR' or 'END' KEYWORD
                     self.error(self.OUTPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON. self.scanner.EQUALS], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+            else:
+                # Device with only a single output port
+                first_port_id = None
 
             if (self.symbol.type == self.scanner.EQUALS):
                 self.symbol = self.scanner.get_symbol()
 
                 if (self.symbol.type == self.scanner.NAME):
+                    device_name = self.names.get_name_string(self.symbol.id)
+                    second_device_id = self.names.query(device_name)
                     self.symbol = self.scanner.get_symbol()
 
                     if (self.symbol.type == self.scanner.PERIOD):
                         self.symbol = self.scanner.get_symbol()
 
                         if(self.symbol.type == self.scanner.IN_PIN):
+                            pin_name = self.names.get_name_string(self.symbol.id)
+                            second_port_id = self.names.query(pin_name)
                             self.symbol = self.scanner.get_symbol()
 
                             if(self.symbol.type == self.scanner.SEMICOLON):
@@ -380,6 +390,15 @@ class Parser:
             #Error Type: 20: Valid string name required
             # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
             self.error(self.NAME_STRING, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+
+        # Check for Connection Semantic errors
+        if self.error_count == 0:
+            # Only check for semantic errors if no errors so far
+            err = self.network.make_connection(first_device_id, first_port_id, second_device_id, second_port_id)
+            if err != self.devices.NO_ERROR:
+                # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
+                self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+
 
     def monitor_point(self):
         """Parse the monitor_point in EBNF"""

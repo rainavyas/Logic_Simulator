@@ -31,9 +31,11 @@ class Symbol:
         """Initialise symbol properties."""
         self.type = None
         self.id = None
+        # Keep a record of the current symbol's line and position.
         self.line = None
-        self.prev_line = None
         self.position = None
+        # Keep a record of the previous symbol's line and position.
+        self.prev_line = None
         self.prev_position = None
 
 class Scanner:
@@ -251,37 +253,30 @@ class Scanner:
             [symbol.id] = self.names.lookup([name_string])
 
         elif self.current_character.isdigit():  # number
-            # print("First number is:", self.current_character)
-            symbol.id = self.names.lookup([self.get_number()])
+            [symbol.id] = self.names.lookup([self.get_number()])
             symbol.type = self.NUMBER
 
         elif self.current_character == "=":  # equals
-            # print("Found an equals")
             symbol.type = self.EQUALS
             self.advance()
 
         elif self.current_character == ",":  # comma
-            # print("Found a comma")
             symbol.type = self.COMMA
             self.advance()
 
         elif self.current_character == ";":  # semicolon
-            # print("Found a semi-colon")
             symbol.type = self.SEMICOLON
             self.advance()
 
         elif self.current_character == ".":  # period
-            # print("Found a period")
             symbol.type = self.PERIOD
             self.advance()
 
         elif self.current_character == "":  # end of file
-            # print("Found EOF")
             symbol.type = self.EOF
             self.advance()
 
         elif self.current_character == ":":  # colon
-            # print("Found colon")
             symbol.type = self.COLON
             self.advance()
 

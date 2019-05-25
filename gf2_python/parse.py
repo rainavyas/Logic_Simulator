@@ -85,10 +85,10 @@ class Parser:
             self.error(self.NO_END, [])
 
 
-        # For now just return True, so that userint and gui can run in the
-        # skeleton code. When complete, should return False when there are
-        # errors in the circuit definition file.
-        return True
+        if self.error_count == 0:
+            return True
+        else:
+            return False
 
     def error(self, error_ID, stopping_symbols, symbol_IDs = []):
         """ Display Error and recover to a useful parsing position"""

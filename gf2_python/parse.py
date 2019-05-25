@@ -404,7 +404,7 @@ class Parser:
         if self.error_count == 0:
             # Only check for semantic errors if no errors so far
             err = self.network.make_connection(first_device_id, first_port_id, second_device_id, second_port_id)
-            if err != self.devices.NO_ERROR:
+            if err != self.network.NO_ERROR:
                 # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
                 self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
@@ -413,17 +413,25 @@ class Parser:
         """Parse the monitor_point in EBNF"""
 
         if (self.symbol.type == self.scanner.NAME):
+            device_name = self.names.get_name_string(self.symbol.id)
+            device_id = self.names.query(device_name)
             self.symbol = self.scanner.get_symbol()
 
             if (self.symbol.type == self.scanner.PERIOD):
                 self.symbol = self.scanner.get_symbol()
 
                 if(self.symbol.type == self.scanner.OUT_PIN):
+                    pin_name = self.names.get_name_string(self.symbol.id)
+                    output_id = self.names.query(pin_name)
                     self.symbol = self.scanner.get_symbol()
                 else:
                     #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
                     # Stopping symbols: ';' or 'END' KEYWORD
                     self.error(self.OUTPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.END_ID])
+
+            else:
+                # Device only has one output port
+                output_id = None
 
             if(self.symbol.type == self.scanner.SEMICOLON):
                 self.symbol = self.scanner.get_symbol()
@@ -436,6 +444,13 @@ class Parser:
             # Stopping symbols: 'NAME', ';' or 'END' KEYWORD
             self.error(self.NAME_STRING, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
 
+        # Check for Monitor Semantic errors
+        if self.error_count == 0:
+            # Only check for semantic errors if no errors so far
+            err = self.monitors.make_monitor(device_id, output_id)
+            if err != self.monitors.NO_ERROR:
+                # Stopping symbols: 'NAME', ';' or 'END' KEYWORD
+                self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
 
 # Rough Testing
 path = 'test_def_file.txt'

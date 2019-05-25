@@ -164,10 +164,16 @@ class Parser:
         elif error_ID == self.network.OUTPUT_TO_OUTPUT:
             print("Both ports are outputs")
 
+        # MONITORING
+        elif error_ID == self.monitors.NOT_OUTPUT:
+            print("Cannot monitor a point that is not an output")
+        elif error_ID == self.monitors.MONITOR_PRESENT:
+            print("This point is already being monitored")
+        else:
+            print("ERROR")
 
         # Display Error position
         self.scanner.print_location(self.symbol)
-
 
         # Return to recovery point for syntax errors
 
@@ -407,7 +413,6 @@ class Parser:
             if err != self.network.NO_ERROR:
                 # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
                 self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
-
 
     def monitor_point(self):
         """Parse the monitor_point in EBNF"""

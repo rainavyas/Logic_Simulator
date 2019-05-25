@@ -94,7 +94,6 @@ class Parser:
         self.error_count += 1
 
         #Consider Syntax Errors
-
         if error_ID == self.NO_END:
             print("'END' keyword required at end of file")
         elif error_ID == self.NO_SEMICOLON_DEVICE:
@@ -154,6 +153,16 @@ class Parser:
             print("Invalid device declared")
 
         # CONNECTIONS
+        elif error_ID == self.network.DEVICE_ABSENT:
+            print("Device is not declared")
+        elif error_ID == self.network.INPUT_CONNECTED:
+            print("Input is already in a connection")
+        elif error_ID == self.network.INPUT_TO_INPUT:
+            print("Both ports are inputs")
+        elif error_ID == self.network.PORT_ABSENT:
+            print("Port is absent")
+        elif error_ID == self.network.OUTPUT_TO_OUTPUT:
+            print("Both ports are outputs")
 
 
         # Display Error position

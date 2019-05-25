@@ -12,6 +12,9 @@ Parser - parses the definition file and builds the logic network.
 from scanner import Symbol
 from names import Names
 from scanner import Scanner
+from monitors import Monitors
+from devices import Devices
+from network import Network
 
 
 class Parser:
@@ -461,6 +464,9 @@ class Parser:
 path = 'test_def_file.txt'
 my_names = Names()
 my_scanner = Scanner(path, my_names)
-my_parser = Parser(my_scanner)
+my_monitors = Monitors()
+my_devices = Devices()
+my_network = Network()
+my_parser = Parser(self,  my_names, my_devices, my_network, my_monitors, my_scanner)
 
 my_parser.parse_network()

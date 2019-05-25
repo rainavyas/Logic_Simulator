@@ -77,7 +77,7 @@ class Parser:
 
         if not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
             # Error Type: 0: 'END' keyword required at end of file
-            self.error(0, [])
+            self.error(self.NO_END, [])
 
 
         # For now just return True, so that userint and gui can run in the
@@ -147,7 +147,7 @@ class Parser:
         # Return to recovery point for syntax errors
 
         #Define list of error IDs for which punctuation termination should not be moved on from
-        dont_move_err_IDS = [self.INTEGER, self.NEED_PARAM, self.LOGIC_GATE]
+        dont_move_err_IDS = [self.INTEGER, self.NEED_PARAM, self.LOGIC_GATE, self.NEED_QUALIFIER]
 
         #Define a move_on Boolean state
         move_on = True
@@ -195,12 +195,11 @@ class Parser:
             else:
                 # Error Type: 1: Semicolon needed after 'DEVICE'
                 # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                self.error(1, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                self.error(self.NO_SEMICOLON_DEVICE, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
         else:
             # Error Type: 2: 'DEVICE' keyword required
             # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
-            self.error(2, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
-
+            self.error(self.NEED_DEVICE_KEYWORD, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def connectlist(self):
         """Parse the connections section"""
@@ -216,12 +215,12 @@ class Parser:
             else:
                 # Error Type: 3: Semicolon needed after 'CONNECT'
                 # Stopping Symbols: MONITOR' or 'END' KEYWORD
-                self.error(3, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                self.error(self.NO_SEMICOLON_CONNECT, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
         else:
             # Error Type: 4: 'CONNECT' keyword required
             # Stopping Symbols: MONITOR' or 'END' KEYWORD
-            self.error(4, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+            self.error(self.NEED_CONNECT_KEYWORD, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def monitorlist(self):
         """Parse the monitoring section"""
@@ -236,11 +235,11 @@ class Parser:
             else:
                 # Error Type: 5: Semicolon needed after 'MONITOR'
                 # Stopping Symbols: END' KEYWORD
-                self.error(5, [self.scanner.KEYWORD], [self.scanner.END_ID])
+                self.error(self.NO_SEMICOLON_MONITOR, [self.scanner.KEYWORD], [self.scanner.END_ID])
         else:
             # Error Type: 6: 'MONITOR' keyword required
             # Stopping Symbols: END' KEYWORD
-            self.error(6, [self.scanner.KEYWORD], [self.scanner.END_ID])
+            self.error(self.NEED_MONITOR_KEYWORD, [self.scanner.KEYWORD], [self.scanner.END_ID])
 
     def device(self):
         """Parse the device syntax"""
@@ -265,35 +264,34 @@ class Parser:
                             else:
                                 # Error type: 7: Needs to be a positive integer
                                 # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                                self.error(7, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                                self.error(self.INTEGER, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
                         else:
                             # Error type: 8: Parameter has to be 'initial', 'inputs' or 'period'
-                            self.error()
-
+                            # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
+                            self.error(self.NEED_QUALIFIER, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
                     else:
                         # Error type: 9: Comma has to be followed by parameter speficification
                         # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                        self.error(9, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        self.error(self.NEED_PARAM, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
                 if (self.symbol.type == self.scanner.SEMICOLON):
                     self.symbol = self.scanner.get_symbol()
                 else:
                     #Error Type: 10: Device definition needs to end in ';'
                     # Stopping symbols: NAME, ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                    self.error(10, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                    self.error(self.NO_DEVICE_SEMICOLON, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
             else:
                 # Error Type: 11: Device name has to be followed by ':'
                 # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                self.error(11, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                self.error(self.NO_DEVICE_COLON, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
         else:
             # Error Type: 12: Valid Device name required
             # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
-            self.error(12, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+            self.error(self.DEVICE_NAME, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
         if self.error_count == 0:
             # i.e.no errors so far
             err = self.devices.make_device(device_id, device_kind, device_property)
             if err != self.devices.NO_ERROR:
                 self.error(err,[self.SEMICOLON])
-
 
     def logictype(self):
         """Parse the type syntax in EBNF"""
@@ -305,9 +303,8 @@ class Parser:
         else:
             #Error Type: 13: Valid Logic gate required e.g. 'AND'
             # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
-            self.error(13, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+            self.error(self.LOGIC_GATE, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
             return None
-
 
     def connection(self):
         """Parse the connection syntax in EBNF"""
@@ -323,7 +320,7 @@ class Parser:
                 else:
                     #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
                     # Stopping symbols: ';' , '=', 'MONITOR' or 'END' KEYWORD
-                    self.error(14, [self.scanner.KEYWORD, self.scanner.SEMICOLON. self.scanner.EQUALS], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                    self.error(self.OUTPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON. self.scanner.EQUALS], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
             if (self.symbol.type == self.scanner.EQUALS):
                 self.symbol = self.scanner.get_symbol()
@@ -342,28 +339,27 @@ class Parser:
                             else:
                                 # Error Type: 15: Connection has to be terminated by ';'
                                 # Stopping symbols: NAME, ';' , 'MONITOR' or 'END' KEYWORD
-                                self.error(15, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                                self.error(self.NO_CONNECT_SEMICOLON, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.MONITOR_ID, self.scanner.END_ID])
                         else:
                             # Error Type: 16: Valid input pin required
                             # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
-                            self.error(16, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                            self.error(self.INPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
                     else:
                         # Error Type: 17: Period required to specify input pin
                         # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
-                        self.error(17, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        self.error(self.PERIOD_INPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
                 else:
                     #Error Type: 18: Name string of input device required
                     # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
-                    self.error(18, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                    self.error(self.NAME_INPUT, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
             else:
                 #Error Type: 19: '=' Assignment operator requried
                 # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
-                self.error(19, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                self.error(self.ASSIGNMENT, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
         else:
             #Error Type: 20: Valid string name required
             # Stopping symbols: ';' , 'MONITOR' or 'END' KEYWORD
-            self.error(20, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
-
+            self.error(self.NAME_STRING, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def monitor_point(self):
         """Parse the monitor_point in EBNF"""
@@ -379,14 +375,14 @@ class Parser:
                 else:
                     #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
                     # Stopping symbols: ';' or 'END' KEYWORD
-                    self.error(14, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.END_ID])
+                    self.error(self.OUTPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.END_ID])
 
             if(self.symbol.type == self.scanner.SEMICOLON):
                 self.symbol = self.scanner.get_symbol()
             else:
                 # Error Type: 21: Monitor point has to be terminated by ';'
                 # Stopping symbols: 'NAME', ';' or 'END' KEYWORD
-                self.error(14, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
+                self.error(self.NO_MONITOR_SEMICOLON, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
 
 
 # Rough Testing

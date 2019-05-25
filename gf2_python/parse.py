@@ -91,6 +91,9 @@ class Parser:
     def error(self, error_ID, stopping_symbols, symbol_IDs = []):
         """ Display Error and recover to a useful parsing position"""
 
+        # Increment Error Counter
+        self.error_count += 1
+
         #Consider Syntax Errors
 
         if error_ID == self.NO_END:
@@ -290,11 +293,14 @@ class Parser:
             # Error Type: 12: Valid Device name required
             # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
             self.error(self.DEVICE_NAME, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+
+        # Check for device semantic errors
         if self.error_count == 0:
-            # i.e.no errors so far
+            # Only check for semantic errors if no errors so far
             err = self.devices.make_device(device_id, device_kind, device_property)
             if err != self.devices.NO_ERROR:
-                self.error(err,[self.SEMICOLON])
+                # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
+                self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def logictype(self):
         """Parse the type syntax in EBNF"""

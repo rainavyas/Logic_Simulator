@@ -334,7 +334,8 @@ class Parser:
         """Parse the type syntax in EBNF"""
 
         if (self.symbol.type == self.scanner.LOGIC_TYPE):
-            device_kind = self.names.get_name_string(self.symbol.id)
+            device_kind_string = self.names.get_name_string(self.symbol.id)
+            device_kind = self.names.query(device_kind_string)
             self.symbol = self.scanner.get_symbol()
             return device_kind
         else:

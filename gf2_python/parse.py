@@ -49,6 +49,9 @@ class Parser:
         # Initialise current symbol
         self.symbol = Symbol()
 
+        #Initisalised error counter
+        self.error_count = 0
+
         # Define all Syntax Errors
         [self.NO_END, self.NO_SEMICOLON_DEVICE,
         self.NEED_DEVICE_KEYWORD, self.NO_SEMICOLON_CONNECT,
@@ -392,8 +395,3 @@ my_scanner = Scanner(path, my_names)
 my_parser = Parser(my_scanner)
 
 my_parser.parse_network()
-
-"""Defining all the error types and their messages:
-
-
-"""

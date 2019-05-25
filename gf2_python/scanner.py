@@ -252,7 +252,7 @@ class Scanner:
 
         elif self.current_character.isdigit():  # number
             # print("First number is:", self.current_character)
-            symbol.id = self.names.lookup(self.get_number())
+            symbol.id = self.names.lookup([self.get_number()])
             symbol.type = self.NUMBER
 
         elif self.current_character == "=":  # equals

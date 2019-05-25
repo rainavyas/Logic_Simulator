@@ -307,6 +307,10 @@ class Parser:
                         # Error type: 9: Comma has to be followed by parameter speficification
                         # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
                         self.error(self.NEED_PARAM, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                else:
+                    # There is no device property
+                    device_property = None
+
                 if (self.symbol.type == self.scanner.SEMICOLON):
                     self.symbol = self.scanner.get_symbol()
                 else:

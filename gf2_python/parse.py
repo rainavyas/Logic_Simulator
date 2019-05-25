@@ -142,9 +142,20 @@ class Parser:
             print("Monitor point has to be terminated by ';'")
 
         #Consider Semantic Errors
-
+        # DEVICES
         elif error_ID == self.devices.DEVICE_PRESENT:
             print("Device Name already used")
+        elif error_ID == self.devices.NO_QUALIFIER:
+            print("Device qualifier required")
+        elif error_ID == self.devices.INVALID_QUALIFIER:
+            print("Valid device qualifier requried")
+        elif error_ID == self.devices.QUALIFIER_PRESENT:
+            print("Qualifier already present")
+        elif error_ID == self.devices.BAD_DEVICE:
+            print("Invalid device declared")
+
+        # CONNECTIONS
+
 
         # Display Error position
         self.scanner.print_location(self.symbol)

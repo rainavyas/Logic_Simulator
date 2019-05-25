@@ -32,7 +32,9 @@ class Symbol:
         self.type = None
         self.id = None
         self.line = None
+        self.prev_line = None
         self.position = None
+        self.prev_position = None
 
 class Scanner:
 
@@ -186,16 +188,15 @@ class Scanner:
                     current_line = n + 1
                     current_position = self.file.tell()
             elif(self.file.tell() <= linelengths[n] and self.file.tell() >
-                 linelengths[n-1]):
+                linelengths[n-1]):
                 current_line = n + 1
                 current_position = self.file.tell() - linelengths[n-1]
-            # if self.file.readline() == "":
-            #     current_line = n
-            #     current_position = self.file.tell() - linelengths[n-1]
 
         return [current_line, current_position]
 
-    def print_location(self, symbol):
+    def print_location(self, symbol, option = False):
+        """ Add correct documentation here.
+        """
 
         stored_position = self.file.tell()
 
@@ -203,12 +204,21 @@ class Scanner:
 
         marker = 0
 
-        for line in self.file:
-            marker += 1
-            if marker == symbol.line:
-                print("Line " + str(symbol.line) + ":")
-                print(line.replace("\n", ""))
-                print((symbol.position-2)*" " + "^")
+        if option == False:
+            for line in self.file:
+                marker += 1
+                if marker == symbol.line:
+                    print("Line " + str(symbol.line) + ":")
+                    print(line.replace("\n", ""))
+                    print((symbol.position-2)*" " + "^")
+
+        elif option == True:
+            for line in self.file:
+                marker += 1
+                if marker == symbol.prev_line:
+                    print("Line " + str(symbol.prev_line) + ":")
+                    print(line.replace("\n", ""))
+                    print((symbol.prev_position-2)*" " + "^")
 
         self.file.seek(stored_position)
 
@@ -217,7 +227,11 @@ class Scanner:
 
         Break if 'END' reached.
         """
+
         symbol = Symbol()
+        symbol.prev_line = self.location()[0]
+        symbol.prev_position = self.location()[1]
+
         self.skip_spaces()  # current character now not whitespace
         self.skip_comment()  # current character now not comment
 

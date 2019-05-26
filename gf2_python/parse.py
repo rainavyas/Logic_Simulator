@@ -597,12 +597,12 @@ class Parser:
 
 
 # Rough Testing
-path = 'test_def_file.txt'
-my_names = Names()
-my_scanner = Scanner(path, my_names)
-my_devices = Devices(my_names)
-my_network = Network(my_names, my_devices)
-my_monitors = Monitors(my_names, my_devices, my_network)
-my_parser = Parser(my_names, my_devices, my_network, my_monitors, my_scanner)
+#path = 'test_def_file.txt'
+#my_names = Names()
+#my_scanner = Scanner(path, my_names)
+#my_devices = Devices(my_names)
+#my_network = Network(my_names, my_devices)
+#my_monitors = Monitors(my_names, my_devices, my_network)
+#my_parser = Parser(my_names, my_devices, my_network, my_monitors, my_scanner)
 
 my_parser.parse_network()

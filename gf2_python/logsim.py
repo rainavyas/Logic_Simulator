@@ -42,15 +42,11 @@ def main(arg_list):
         print(usage_message)
         sys.exit()
 
-    # Initialise instances of the four inner simulator classes
-    # names = Names()
-    # devices = Devices(names)
-    # network = Network(names, devices)
-    # monitors = Monitors(names, devices, network)
-    names = None
-    devices = None
-    network = None
-    monitors = None
+    #Initialise instances of the four inner simulator classes
+    names = Names()
+    devices = Devices(names)
+    network = Network(names, devices)
+    monitors = Monitors(names, devices, network)
 
     for option, path in options:
         if option == "-h":  # print the usage message
@@ -77,8 +73,7 @@ def main(arg_list):
         #if parser.parse_network():
             # Initialise an instance of the gui.Gui() class
         app = wx.App()
-        gui = Gui("Logic Simulator", path, names, devices, network,
-                  monitors)
+        gui = Gui("Logic Simulator")
         gui.Show(True)
         app.MainLoop()
 

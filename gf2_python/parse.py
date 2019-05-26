@@ -271,7 +271,7 @@ class Parser:
                         # Stopping Symbols: MONITOR' or 'END' KEYWORD
                         self.error(self.MISSING_RIGHT_CURLY, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
                     else:
-                        # Bad name terminated devices incorrectly
+                        # Bad name terminated connections incorrectly
                         # Error type: Invalid name
                         # Stopping Symbols: MONITOR' or 'END' KEYWORD
                         self.error(self.NAME_STRING, [self.scanner.KEYWORD], [ self.scanner.MONITOR_ID, self.scanner.END_ID])
@@ -295,6 +295,20 @@ class Parser:
                 self.monitor_point()
                 while (self.symbol.type == self.scanner.NAME):
                     self.monitor_point()
+
+                # Check right curly bracket ends monitors block
+                if (self.symbol.type == self.scanner.RIGHT_CURLY):
+                    self.symbol = self.scanner.get_symbol()
+                else:
+                    if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
+                        # Error Type: missing '}'
+                        # Stopping Symbols: END' KEYWORD
+                        self.error(self.MISSING_RIGHT_CURLY, [self.scanner.KEYWORD], [self.scanner.END_ID])
+                    else:
+                        # Bad name terminated monitors incorrectly
+                        # Error type: Invalid name
+                        # Stopping Symbols: END' KEYWORD
+                        self.error(self.NAME_STRING, [self.scanner.KEYWORD], [self.scanner.END_ID])
             else:
                 # Error Type: 5: Curly needed after 'MONITOR'
                 # Stopping Symbols: END' KEYWORD
@@ -468,8 +482,8 @@ class Parser:
                     self.symbol = self.scanner.get_symbol()
                 else:
                     #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
-                    # Stopping symbols: ';' or 'END' KEYWORD
-                    self.error(self.OUTPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.END_ID])
+                    # Stopping symbols: '}', ';' or 'END' KEYWORD
+                    self.error(self.OUTPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
 
             else:
                 # Device only has one output port
@@ -479,20 +493,20 @@ class Parser:
                 self.symbol = self.scanner.get_symbol()
             else:
                 # Error Type: 21: Monitor point has to be terminated by ';'
-                # Stopping symbols: 'NAME', ';' or 'END' KEYWORD
-                self.error(self.NO_MONITOR_SEMICOLON, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
+                # Stopping symbols: 'NAME', '}', ';' or 'END' KEYWORD
+                self.error(self.NO_MONITOR_SEMICOLON, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME, self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
         else:
             #Error Type: 20: Valid string name required
-            # Stopping symbols: 'NAME', ';' or 'END' KEYWORD
-            self.error(self.NAME_STRING, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
+            # Stopping symbols: 'NAME', '}', ';' or 'END' KEYWORD
+            self.error(self.NAME_STRING, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME, self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
 
         # Check for Monitor Semantic errors
         if self.error_count == 0:
             # Only check for semantic errors if no errors so far
             err = self.monitors.make_monitor(device_id, output_id)
             if err != self.monitors.NO_ERROR:
-                # Stopping symbols: 'NAME', ';' or 'END' KEYWORD
-                self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME], [self.scanner.END_ID])
+                # Stopping symbols: 'NAME', '}', ';' or 'END' KEYWORD
+                self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME, self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
 
 # Rough Testing
 path = 'test_def_file.txt'

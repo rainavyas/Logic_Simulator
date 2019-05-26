@@ -31,8 +31,13 @@ class Symbol:
         """Initialise symbol properties."""
         self.type = None
         self.id = None
+        # Keep a record of the current symbol's line and position.
         self.line = None
         self.position = None
+        # Keep a record of the previous symbol's line and position.
+        self.prev_line = None
+        self.prev_position = None
+
 
 class Scanner:
 
@@ -56,14 +61,20 @@ class Scanner:
 
     def __init__(self, path, names):
         """Open specified file and initialise reserved words and IDs."""
+        #  Open the file.
         self.file = open(path)
 
+        #  Assign names module for reference.
         self.names = names
+
+        #  Create a list of possible types and assign them a suitable integer.
         self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS,
                                  self.KEYWORD, self.LOGIC_TYPE, self.OUT_PIN,
                                  self.IN_PIN, self.NUMBER, self.NAME,
-                                 self.PERIOD, self.COLON, self.EOF] = range(12)
+                                 self.PERIOD, self.COLON, self.EOF,
+                                 self.LEFT_CURLY, self.RIGHT_CURLY] = range(14)
 
+        #  Create a list of keywords, logic types, input and output pins.
         self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END",
                               "initial", "period", "inputs"]
         self.logic_type_list = ["CLOCK", "SWITCH", "AND", "NAND",
@@ -73,6 +84,7 @@ class Scanner:
                                "I16", "DATA", "CLK", "SET", "CLEAR"]
         self.output_pin_list = ["Q", "QBAR"]
 
+        #  Assign keywords an id using the "Names" module's "lookup" function.
         [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID,
          self.END_ID, self.initial_ID, self.period_ID,
          self.inputs_ID] = self.names.lookup(self.keywords_list)
@@ -102,6 +114,7 @@ class Scanner:
         """
         num = []
 
+        #  Return a string of all consecutive numeric characters.
         while self.current_character.isdigit():
             num.append(self.current_character)
             self.advance()
@@ -136,15 +149,18 @@ class Scanner:
             if self.current_character == "*":
                 self.advance()
                 while not self.current_character == "*":
+                    #  Check whether EOF reached before comment closed.
                     if self.current_character == "":
                         print("""ERROR: EOF reached. Comment not closed
                               correctly. Missing '*'.""")
                         break
                     self.advance()
                 self.advance()
+                #  Comment closed so advance and skip spaces.
                 if self.current_character == "/":
                     self.advance()
                     self.skip_spaces()
+                #  Comment not closed correctly as "/" is missing.
                 elif not self.current_character == "/":
                     print("""ERROR: Comment terminated incorrectly.
                           Missing '/'.""")
@@ -152,19 +168,25 @@ class Scanner:
                     comment_symbol.line = self.location()[0]
                     comment_symbol.position = self.location()[1]
                     self.print_location(comment_symbol)
+            #  Closed comment missing "*" to start.
             else:
                 print("""Forward slash skipped but adjacent '*' not found
                       (closed comment not started).""")
 
     def location(self):
-        """Print the current input line along with a marker showing symbol
-        position in the line
+        """Return the current line and position within the file.
         """
+
+        #  Store the current position.
         stored_position = self.file.tell()
 
+        #  Return to the file's beginning and create an empty list of lengths.
         self.file.seek(0)
         linelengths = []
+
         i = 0
+
+        #  Occupy the list with cumulative line lengths.
         for line in self.file:
             i += 1
             if len(linelengths) == 0:
@@ -177,9 +199,10 @@ class Scanner:
         current_line = ''
         current_position = ''
 
+        #  Return to the stored (current) position within the file.
         self.file.seek(stored_position)
 
-
+        #  Return line and position by comparing current position to the list.
         for n in range(num_line):
             if n == 0:
                 if self.file.tell() <= linelengths[n]:
@@ -189,27 +212,41 @@ class Scanner:
                  linelengths[n-1]):
                 current_line = n + 1
                 current_position = self.file.tell() - linelengths[n-1]
-            # if self.file.readline() == "":
-            #     current_line = n
-            #     current_position = self.file.tell() - linelengths[n-1]
 
         return [current_line, current_position]
 
-    def print_location(self, symbol):
+    def print_location(self, symbol, option=False):
+        """Print the line that the passed symbol is on and a caret on the line
+         below to indicate the final character of the symbol.
+        """
 
+        #  Store the current position.
         stored_position = self.file.tell()
 
+        #  Return to the beginning of the file.
         self.file.seek(0)
 
         marker = 0
 
-        for line in self.file:
-            marker += 1
-            if marker == symbol.line:
-                print("Line " + str(symbol.line) + ":")
-                print(line.replace("\n", ""))
-                print((symbol.position-2)*" " + "^")
+        #  User wants to print the current symbol's line and position.
+        if option is False:
+            for line in self.file:
+                marker += 1
+                if marker == symbol.line:
+                    print("Line " + str(symbol.line) + ":")
+                    print(line.replace("\n", ""))
+                    print((symbol.position-2)*" " + "^")
 
+        #  User wants to print the last symbol's line and position.
+        elif option is True:
+            for line in self.file:
+                marker += 1
+                if marker == symbol.prev_line:
+                    print("Line " + str(symbol.prev_line) + ":")
+                    print(line.replace("\n", ""))
+                    print((symbol.prev_position-2)*" " + "^")
+
+        #  Return to the stored (current) position.
         self.file.seek(stored_position)
 
     def get_symbol(self):
@@ -217,13 +254,17 @@ class Scanner:
 
         Break if 'END' reached.
         """
+
+        #  Create symbol object and record the previous line and position.
         symbol = Symbol()
+        symbol.prev_line = self.location()[0]
+        symbol.prev_position = self.location()[1]
+
         self.skip_spaces()  # current character now not whitespace
         self.skip_comment()  # current character now not comment
 
         if self.current_character.isalpha():  # name
             name_string = self.get_name()
-            # print("Name_string:", name_string)
             if name_string in self.keywords_list:
                 symbol.type = self.KEYWORD
             elif name_string in self.logic_type_list:
@@ -237,53 +278,45 @@ class Scanner:
             [symbol.id] = self.names.lookup([name_string])
 
         elif self.current_character.isdigit():  # number
-            # print("First number is:", self.current_character)
-            symbol.id = self.get_number()
+            [symbol.id] = self.names.lookup([self.get_number()])
             symbol.type = self.NUMBER
 
         elif self.current_character == "=":  # equals
-            # print("Found an equals")
             symbol.type = self.EQUALS
             self.advance()
 
         elif self.current_character == ",":  # comma
-            # print("Found a comma")
             symbol.type = self.COMMA
             self.advance()
 
         elif self.current_character == ";":  # semicolon
-            # print("Found a semi-colon")
             symbol.type = self.SEMICOLON
             self.advance()
 
         elif self.current_character == ".":  # period
-            # print("Found a period")
             symbol.type = self.PERIOD
             self.advance()
 
         elif self.current_character == "":  # end of file
-            # print("Found EOF")
             symbol.type = self.EOF
             self.advance()
 
         elif self.current_character == ":":  # colon
-            # print("Found colon")
             symbol.type = self.COLON
             self.advance()
+        elif self.current_character == "{": #  exclamation
+            symbol.type = self.LEFT_CURLY
+            self.advance()
 
+        elif self.current_character == "}":
+            symbol.type = self.RIGHT_CURLY
+            self.advance()
+            
         else:  # not a valid character
             self.advance()
 
+        #  Record the current line and position in the symbol.
         symbol.line = self.location()[0]
         symbol.position = self.location()[1]
 
         return symbol
-
-# path_test = os.getcwd() + "/(temp)text_file.txt"
-# names_test = Names()
-# scanner = Scanner(path_test, names_test)
-#
-# for n in range(30):
-#     Test_symbol = scanner.get_symbol()
-#     scanner.print_location(Test_symbol)
-#     print(' ')

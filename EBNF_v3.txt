@@ -2,11 +2,11 @@
 specfile = devicelist, connectlist, monitorlist, 'END';
 
 
-devicelist = 'DEVICES', ';', device, {device};
+devicelist = 'DEVICES', '{', device, {device}, '}';
 
-connectlist = 'CONNECT', ';', {connection};
+connectlist = 'CONNECT', '{', {connection}, '}';
 
-monitorlist = 'MONITOR', ';', monitor_point, {monitor_point};
+monitorlist = 'MONITOR', '{', monitor_point, {monitor_point}, '}';
 
 
 device = name, ':', type, [ ',', ( 'initial' | 'inputs' | 'period' ), number ], ';';

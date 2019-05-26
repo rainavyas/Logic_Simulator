@@ -16,7 +16,7 @@ DTYPE2: DTYPE;
 
 
 CONNECT;
-/* Define any
+/ Define any
 connections in
 the space below: */
 myswitch1 = myand1.I1;

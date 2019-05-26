@@ -266,6 +266,7 @@ class Gui(wx.Frame):
         self.exit_button.Bind(wx.EVT_BUTTON, self.on_exit_button)
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
         self.mp_names.Bind(wx.EVT_SET_FOCUS, self.onMpFocus)
+        self.mp_names.Bind(wx.EVT_KILL_FOCUS, self.onMpKillFocus)
 
         # Configure sizers for layout
         top_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -397,4 +398,10 @@ class Gui(wx.Frame):
         textbox = event.GetEventObject()
         if textbox.GetValue() == '(ENTER ID)':
             textbox.SetValue('')
+        event.Skip()
+
+    def onMpKillFocus(self, event):
+        textbox = event.GetEventObject()
+        if textbox.GetValue() == '':
+            textbox.SetValue('(ENTER ID)')
         event.Skip()

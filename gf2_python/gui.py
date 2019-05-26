@@ -194,7 +194,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
             else:
                 GLUT.glutBitmapCharacter(font, ord(character))
 
-
+#Do the scanner, parser stuffs
 class Gui(wx.Frame):
     """Configure the main window and all the widgets.
 

@@ -244,7 +244,7 @@ class UserInterface:
                 print("Error! Could not zap monitor.")
 
     def run_network(self, cycles):
-        """Run the network for the specified number of simulation cycles.
+         """Run the network for the specified number of simulation cycles.
 
         Return True if successful.
         """

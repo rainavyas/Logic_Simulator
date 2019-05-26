@@ -56,9 +56,9 @@ class Parser:
         self.error_count = 0
 
         # Define all Syntax Errors
-        [self.NO_END, self.NO_SEMICOLON_DEVICE,
-        self.NEED_DEVICE_KEYWORD, self.NO_SEMICOLON_CONNECT,
-        self.NEED_CONNECT_KEYWORD, self.NO_SEMICOLON_MONITOR,
+        [self.NO_END, self.NO_CURLY_DEVICE,
+        self.NEED_DEVICE_KEYWORD, self.NO_CURLY_CONNECT,
+        self.NEED_CONNECT_KEYWORD, self.NO_CURLY_MONITOR,
         self.NEED_MONITOR_KEYWORD, self.INTEGER,
         self.NEED_QUALIFIER, self.NEED_PARAM,
         self.NO_DEVICE_SEMICOLON, self.NO_DEVICE_COLON,
@@ -99,16 +99,16 @@ class Parser:
         #Consider Syntax Errors
         if error_ID == self.NO_END:
             print("'END' keyword required at end of file")
-        elif error_ID == self.NO_SEMICOLON_DEVICE:
-            print("Semicolon needed after 'DEVICE'")
+        elif error_ID == self.NO_CURLY_DEVICE:
+            print("Expected '{' after 'DEVICE'")
         elif error_ID == self.NEED_DEVICE_KEYWORD:
             print("'DEVICE' keyword required")
-        elif error_ID == self.NO_SEMICOLON_CONNECT:
-            print("Semicolon needed after 'CONNECT'")
+        elif error_ID == self.NO_CURLY_CONNECT:
+            print("Expected '{' after 'CONNECT'")
         elif error_ID == self.NEED_CONNECT_KEYWORD:
             print("'CONNECT' keyword required")
-        elif error_ID == self.NO_SEMICOLON_MONITOR:
-            print("Semicolon needed after 'MONITOR'")
+        elif error_ID == self.NO_CURLY_MONITOR:
+            print("Expected '{' after 'MONITOR'")
         elif error_ID == self.NEED_MONITOR_KEYWORD:
             print("'MONITOR' keyword required")
         elif error_ID == self.INTEGER:
@@ -221,15 +221,15 @@ class Parser:
 
         if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.DEVICES_ID):
             self.symbol = self.scanner.get_symbol()
-            if (self.symbol.type == self.scanner.SEMICOLON):
+            if (self.symbol.type == self.scanner.LEFT_CURLY):
                 self.symbol = self.scanner.get_symbol()
                 self.device()
                 while (self.symbol.type == self.scanner.NAME):
                     self.device()
             else:
-                # Error Type: 1: Semicolon needed after 'DEVICE'
+                # Error Type: 1: Left curly needed after 'DEVICE'
                 # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                self.error(self.NO_SEMICOLON_DEVICE, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                self.error(self.NO_CURLY_DEVICE, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
         else:
             # Error Type: 2: 'DEVICE' keyword required
             # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
@@ -241,15 +241,15 @@ class Parser:
         if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.CONNECT_ID):
             self.symbol = self.scanner.get_symbol()
 
-            if (self.symbol.type == self.scanner.SEMICOLON):
+            if (self.symbol.type == self.scanner.LEFT_CURLY):
                 self.symbol = self.scanner.get_symbol()
 
                 while (self.symbol.type == self.scanner.NAME):
                     self.connection()
             else:
-                # Error Type: 3: Semicolon needed after 'CONNECT'
+                # Error Type: 3: Left curly needed after 'CONNECT'
                 # Stopping Symbols: MONITOR' or 'END' KEYWORD
-                self.error(self.NO_SEMICOLON_CONNECT, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                self.error(self.NO_CURLY_CONNECT, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
         else:
             # Error Type: 4: 'CONNECT' keyword required
@@ -261,15 +261,15 @@ class Parser:
 
         if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.MONITOR_ID):
             self.symbol = self.scanner.get_symbol()
-            if (self.symbol.type == self.scanner.SEMICOLON):
+            if (self.symbol.type == self.scanner.LEFT_CURLY):
                 self.symbol = self.scanner.get_symbol()
                 self.monitor_point()
                 while (self.symbol.type == self.scanner.NAME):
                     self.monitor_point()
             else:
-                # Error Type: 5: Semicolon needed after 'MONITOR'
+                # Error Type: 5: Curly needed after 'MONITOR'
                 # Stopping Symbols: END' KEYWORD
-                self.error(self.NO_SEMICOLON_MONITOR, [self.scanner.KEYWORD], [self.scanner.END_ID])
+                self.error(self.NO_CURLY_MONITOR, [self.scanner.KEYWORD], [self.scanner.END_ID])
         else:
             # Error Type: 6: 'MONITOR' keyword required
             # Stopping Symbols: END' KEYWORD

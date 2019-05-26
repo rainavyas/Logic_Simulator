@@ -5,7 +5,7 @@ mySWITCH1: SWITCH, initial 0;
 myAND1: AND, inputs 3;
 myNAND1: NAND, inputs 2;
 myOR1: OR, inputs 2;
-myNOR1: NOR, inputs 4
+myNOR1: NOR, inputs 4;
 myDTYPE1: DTYPE;
 myXOR1: XOR;
 
@@ -16,7 +16,7 @@ DTYPE2: DTYPE;
 
 
 CONNECT;
-/* Define any
+/ Define any
 connections in
 the space below: */
 myswitch1 = myand1.I1;

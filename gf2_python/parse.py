@@ -99,7 +99,8 @@ class Parser:
         self.connectlist()
         self.monitorlist()
 
-        if not (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
+        if not (self.symbol.type == self.scanner.KEYWORD
+                and self.symbol.id == self.scanner.END_ID):
             # Error Type: 0: 'END' keyword required at end of file
             self.error(self.NO_END, [])
 
@@ -201,8 +202,9 @@ class Parser:
 
         # Return to recovery point for syntax errors
 
-        #Define list of error IDs for which punctuation termination should not be moved on from
-        dont_move_err_IDS = [self.INTEGER, self.NEED_PARAM, self.LOGIC_GATE, self.NEED_QUALIFIER]
+        #Define error IDs where punctuation stopping to not be moved on from
+        dont_move_err_IDS = [self.INTEGER, self.NEED_PARAM, self.LOGIC_GATE,
+                             self.NEED_QUALIFIER]
 
         #Define a move_on Boolean state
         move_on = True
@@ -213,8 +215,10 @@ class Parser:
             else:
                 move_on = True
         else:
-            move_on = self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF
-            if ((not move_on) and (self.symbol.type != self.scanner.NAME and self.symbol.type != self.scanner.RIGHT_CURLY)) :
+            move_on = self.symbol.type not in stopping_symbols and \
+                      self.symbol.type != self.scanner.EOF
+            if ((not move_on) and (self.symbol.type != self.scanner.NAME and \
+                 self.symbol.type != self.scanner.RIGHT_CURLY)) :
                 # Move on once more after terminating punctuation
                 # Only move on for certain error types
                 if error_ID not in dont_move_err_IDS:
@@ -230,7 +234,8 @@ class Parser:
                 else:
                     move_on = True
             else:
-                move_on = self.symbol.type not in stopping_symbols and self.symbol.type != self.scanner.EOF
+                move_on = self.symbol.type not in stopping_symbols and \
+                          self.symbol.type != self.scanner.EOF
                 if ((not move_on) and self.symbol.type != self.scanner.NAME) :
                     # get next symbol once more after terminating punctuation
                     # Only for certain error types
@@ -240,7 +245,8 @@ class Parser:
     def devicelist(self):
         """Parse the devices section"""
 
-        if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.DEVICES_ID):
+        if (self.symbol.type == self.scanner.KEYWORD and \
+            self.symbol.id == self.scanner.DEVICES_ID):
             self.symbol = self.scanner.get_symbol()
             if (self.symbol.type == self.scanner.LEFT_CURLY):
                 self.symbol = self.scanner.get_symbol()
@@ -251,28 +257,41 @@ class Parser:
                 if (self.symbol.type == self.scanner.RIGHT_CURLY):
                     self.symbol = self.scanner.get_symbol()
                 else:
-                    if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.CONNECT_ID):
+                    if (self.symbol.type == self.scanner.KEYWORD and \
+                        self.symbol.id == self.scanner.CONNECT_ID):
                         # Error Type: missing '}'
-                        # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                        self.error(self.MISSING_RIGHT_CURLY, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END'
+                        self.error(self.MISSING_RIGHT_CURLY,
+                                   [self.scanner.KEYWORD],
+                                   [self.scanner.CONNECT_ID,
+                                    self.scanner.MONITOR_ID,
+                                    self.scanner.END_ID])
                     else:
                         # Bad name terminated devices incorrectly
                         # Error type: Invalid name
-                        # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                        self.error(self.NAME_STRING, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END'
+                        self.error(self.NAME_STRING, [self.scanner.KEYWORD],
+                                   [self.scanner.CONNECT_ID,
+                                    self.scanner.MONITOR_ID,
+                                    self.scanner.END_ID])
             else:
                 # Error Type: 1: Left curly needed after 'DEVICE'
                 # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                self.error(self.NO_CURLY_DEVICE, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                self.error(self.NO_CURLY_DEVICE, [self.scanner.KEYWORD],
+                           [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID,
+                            self.scanner.END_ID])
         else:
             # Error Type: 2: 'DEVICE' keyword required
             # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END' KEYWORD
-            self.error(self.NEED_DEVICE_KEYWORD, [self.scanner.KEYWORD], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+            self.error(self.NEED_DEVICE_KEYWORD, [self.scanner.KEYWORD],
+                       [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID,
+                        self.scanner.END_ID])
 
     def connectlist(self):
         """Parse the connections section"""
 
-        if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.CONNECT_ID):
+        if (self.symbol.type == self.scanner.KEYWORD and \
+            self.symbol.id == self.scanner.CONNECT_ID):
             self.symbol = self.scanner.get_symbol()
 
             if (self.symbol.type == self.scanner.LEFT_CURLY):
@@ -285,29 +304,38 @@ class Parser:
                 if (self.symbol.type == self.scanner.RIGHT_CURLY):
                     self.symbol = self.scanner.get_symbol()
                 else:
-                    if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.MONITOR_ID):
+                    if (self.symbol.type == self.scanner.KEYWORD and \
+                        self.symbol.id == self.scanner.MONITOR_ID):
                         # Error Type: missing '}'
                         # Stopping Symbols: MONITOR' or 'END' KEYWORD
-                        self.error(self.MISSING_RIGHT_CURLY, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        self.error(self.MISSING_RIGHT_CURLY,
+                                   [self.scanner.KEYWORD],
+                                   [self.scanner.MONITOR_ID,
+                                    self.scanner.END_ID])
                     else:
                         # Bad name terminated connections incorrectly
                         # Error type: Invalid name
                         # Stopping Symbols: MONITOR' or 'END' KEYWORD
-                        self.error(self.NAME_STRING, [self.scanner.KEYWORD], [ self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        self.error(self.NAME_STRING, [self.scanner.KEYWORD],
+                                   [self.scanner.MONITOR_ID,
+                                    self.scanner.END_ID])
             else:
                 # Error Type: 3: Left curly needed after 'CONNECT'
                 # Stopping Symbols: MONITOR' or 'END' KEYWORD
-                self.error(self.NO_CURLY_CONNECT, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+                self.error(self.NO_CURLY_CONNECT, [self.scanner.KEYWORD],
+                           [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
         else:
             # Error Type: 4: 'CONNECT' keyword required
             # Stopping Symbols: MONITOR' or 'END' KEYWORD
-            self.error(self.NEED_CONNECT_KEYWORD, [self.scanner.KEYWORD], [self.scanner.MONITOR_ID, self.scanner.END_ID])
+            self.error(self.NEED_CONNECT_KEYWORD, [self.scanner.KEYWORD],
+                       [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def monitorlist(self):
         """Parse the monitoring section"""
 
-        if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.MONITOR_ID):
+        if (self.symbol.type == self.scanner.KEYWORD and \
+            self.symbol.id == self.scanner.MONITOR_ID):
             self.symbol = self.scanner.get_symbol()
             if (self.symbol.type == self.scanner.LEFT_CURLY):
                 self.symbol = self.scanner.get_symbol()
@@ -319,23 +347,29 @@ class Parser:
                 if (self.symbol.type == self.scanner.RIGHT_CURLY):
                     self.symbol = self.scanner.get_symbol()
                 else:
-                    if (self.symbol.type == self.scanner.KEYWORD and self.symbol.id == self.scanner.END_ID):
+                    if (self.symbol.type == self.scanner.KEYWORD and \
+                        self.symbol.id == self.scanner.END_ID):
                         # Error Type: missing '}'
                         # Stopping Symbols: END' KEYWORD
-                        self.error(self.MISSING_RIGHT_CURLY, [self.scanner.KEYWORD], [self.scanner.END_ID])
+                        self.error(self.MISSING_RIGHT_CURLY,
+                                   [self.scanner.KEYWORD],
+                                   [self.scanner.END_ID])
                     else:
                         # Bad name terminated monitors incorrectly
                         # Error type: Invalid name
                         # Stopping Symbols: END' KEYWORD
-                        self.error(self.NAME_STRING, [self.scanner.KEYWORD], [self.scanner.END_ID])
+                        self.error(self.NAME_STRING, [self.scanner.KEYWORD],
+                                   [self.scanner.END_ID])
             else:
                 # Error Type: 5: Curly needed after 'MONITOR'
                 # Stopping Symbols: END' KEYWORD
-                self.error(self.NO_CURLY_MONITOR, [self.scanner.KEYWORD], [self.scanner.END_ID])
+                self.error(self.NO_CURLY_MONITOR, [self.scanner.KEYWORD],
+                           [self.scanner.END_ID])
         else:
             # Error Type: 6: 'MONITOR' keyword required
             # Stopping Symbols: END' KEYWORD
-            self.error(self.NEED_MONITOR_KEYWORD, [self.scanner.KEYWORD], [self.scanner.END_ID])
+            self.error(self.NEED_MONITOR_KEYWORD, [self.scanner.KEYWORD],
+                       [self.scanner.END_ID])
 
     def device(self):
         """Parse the device syntax"""
@@ -351,24 +385,48 @@ class Parser:
                 if(self.symbol.type == self.scanner.COMMA):
                     self.symbol = self.scanner.get_symbol()
                     if(self.symbol.type == self.scanner.KEYWORD):
-                        if(self.symbol.id == self.scanner.initial_ID or (self.symbol.id == self.scanner.inputs_ID or self.symbol.id == self.scanner.period_ID)):
+                        if(self.symbol.id == self.scanner.initial_ID or \
+                           (self.symbol.id == self.scanner.inputs_ID or \
+                            self.symbol.id == self.scanner.period_ID)):
+
                             self.symbol = self.scanner.get_symbol()
 
                             if(self.symbol.type == self.scanner.NUMBER):
-                                device_property = int(self.names.get_name_string(self.symbol.id))
+                                device_property = int( \
+                                self.names.get_name_string(self.symbol.id))
                                 self.symbol = self.scanner.get_symbol()
                             else:
                                 # Error type: 7: Needs to be a positive integer
-                                # Stopping symbols: ';' , '}' 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                                self.error(self.INTEGER, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                                # Stop symbs:';','}','CONNECT','MONITOR', END
+                                self.error(self.INTEGER, [self.scanner.KEYWORD,
+                                           self.scanner.SEMICOLON,
+                                           self.scanner.RIGHT_CURLY],
+                                           [self.scanner.CONNECT_ID,
+                                            self.scanner.MONITOR_ID,
+                                            self.scanner.END_ID])
                         else:
-                            # Error type: 8: Parameter has to be 'initial', 'inputs' or 'period'
-                            # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                            self.error(self.NEED_QUALIFIER, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                             # Error type: 8: Parameter has to be 'initial',
+                             # 'inputs' or 'period'
+                             # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR'
+                             #                   or 'END' KEYWORD '
+                            self.error(self.NEED_QUALIFIER,
+                                       [self.scanner.KEYWORD,
+                                        self.scanner.SEMICOLON,
+                                        self.scanner.RIGHT_CURLY],
+                                       [self.scanner.CONNECT_ID,
+                                        self.scanner.MONITOR_ID,
+                                        self.scanner.END_ID])
                     else:
-                        # Error type: 9: Comma has to be followed by parameter speficification
-                        # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR' or 'END' KEYWORD
-                        self.error(self.NEED_PARAM, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        # Error type: 9: Comma has to be followed by parameter
+                        # speficification
+                        # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR'
+                        #                   or 'END' KEYWORD
+                        self.error(self.NEED_PARAM, [self.scanner.KEYWORD,
+                                   self.scanner.SEMICOLON,
+                                   self.scanner.RIGHT_CURLY],
+                                   [self.scanner.CONNECT_ID,
+                                   self.scanner.MONITOR_ID,
+                                   self.scanner.END_ID])
                 else:
                     # There is no device property
                     device_property = None
@@ -504,7 +562,9 @@ class Parser:
                 else:
                     #Error Type: 14: Output pin has to be 'Q' or 'QBAR'
                     # Stopping symbols: '}', ';' or 'END' KEYWORD
-                    self.error(self.OUTPUT_PIN, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
+                    self.error(self.OUTPUT_PIN, [self.scanner.KEYWORD,
+                               self.scanner.SEMICOLON,
+                               self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
 
             else:
                 # Device only has one output port
@@ -515,11 +575,15 @@ class Parser:
             else:
                 # Error Type: 21: Monitor point has to be terminated by ';'
                 # Stopping symbols: 'NAME', '}', ';' or 'END' KEYWORD
-                self.error(self.NO_MONITOR_SEMICOLON, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME, self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
+                self.error(self.NO_MONITOR_SEMICOLON, [self.scanner.KEYWORD,
+                           self.scanner.SEMICOLON, self.scanner.NAME,
+                           self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
         else:
-            #Error Type: 20: Valid string name required
+            # Error Type: 20: Valid string name required
             # Stopping symbols: 'NAME', '}', ';' or 'END' KEYWORD
-            self.error(self.NAME_STRING, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME, self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
+            self.error(self.NAME_STRING, [self.scanner.KEYWORD,
+                       self.scanner.SEMICOLON, self.scanner.NAME,
+                       self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
 
         # Check for Monitor Semantic errors
         if self.error_count == 0:
@@ -527,7 +591,10 @@ class Parser:
             err = self.monitors.make_monitor(device_id, output_id)
             if err != self.monitors.NO_ERROR:
                 # Stopping symbols: 'NAME', '}', ';' or 'END' KEYWORD
-                self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME, self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
+                self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                                 self.scanner.NAME, self.scanner.RIGHT_CURLY],
+                                [self.scanner.END_ID])
+
 
 # Rough Testing
 path = 'test_def_file.txt'

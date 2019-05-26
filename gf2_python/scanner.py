@@ -71,7 +71,8 @@ class Scanner:
         self.symbol_type_list = [self.COMMA, self.SEMICOLON, self.EQUALS,
                                  self.KEYWORD, self.LOGIC_TYPE, self.OUT_PIN,
                                  self.IN_PIN, self.NUMBER, self.NAME,
-                                 self.PERIOD, self.COLON, self.EOF] = range(12)
+                                 self.PERIOD, self.COLON, self.EOF,
+                                 self.EXCLAMATION] = range(13)
 
         #  Create a list of keywords, logic types, input and output pins.
         self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END",
@@ -302,6 +303,9 @@ class Scanner:
 
         elif self.current_character == ":":  # colon
             symbol.type = self.COLON
+            self.advance()
+        elif self.current_character == "!": #  exclamation
+            symbol.type = self.EXCLAMATION
             self.advance()
 
         else:  # not a valid character

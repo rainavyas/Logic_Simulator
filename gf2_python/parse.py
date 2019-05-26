@@ -67,7 +67,7 @@ class Parser:
         self.INPUT_PIN, self.PERIOD_INPUT_PIN,
         self.NAME_INPUT, self.ASSIGNMENT,
         self.NAME_STRING, self.MISSING_RIGHT_CURLY,
-        self.NO_MONITOR_SEMICOLON]= self.names.unique_error_codes(22)
+        self.NO_MONITOR_SEMICOLON]= self.names.unique_error_codes(23)
 
     def parse_network(self):
         """Parse the circuit definition file."""

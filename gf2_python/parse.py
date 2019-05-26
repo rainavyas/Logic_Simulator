@@ -359,8 +359,8 @@ class Parser:
             return device_kind
         else:
             #Error Type: 13: Valid Logic gate required e.g. 'AND'
-            # Stopping symbols: ';' , 'CONNECT', 'MONITOR' or 'END' KEYWORD
-            self.error(self.LOGIC_GATE, [self.scanner.KEYWORD, self.scanner.SEMICOLON], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+            # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR' or 'END' KEYWORD
+            self.error(self.LOGIC_GATE, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
             return None
 
     def connection(self):

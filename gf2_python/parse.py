@@ -605,4 +605,4 @@ class Parser:
 #my_monitors = Monitors(my_names, my_devices, my_network)
 #my_parser = Parser(my_names, my_devices, my_network, my_monitors, my_scanner)
 
-my_parser.parse_network()
+#my_parser.parse_network()

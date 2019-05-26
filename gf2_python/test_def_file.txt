@@ -18,7 +18,7 @@ mySWITCH1 = myAND1.I1;
 myCLOCK1 = myAND1.I2;}
 
 MONITOR{
-myAND1;}
+mySWITCH1;}
 
 # End the definition file.
 END

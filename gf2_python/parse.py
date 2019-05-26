@@ -38,6 +38,25 @@ class Parser:
     Public methods
     --------------
     parse_network(self): Parses the circuit definition file.
+
+    error(self, error_ID, stopping_symbols, symbol_IDs = []): Display error and
+                                        and recover to a useful parsing position
+
+    devicelist(self): Parse the devices section
+
+    connectlist(self): Parse the connections section
+
+    monitorlist(self): Parse the monitoring section
+
+    device(self): Parse the device syntax
+
+    logictype(self): Parse the type syntax and the return the type of the
+                     current device
+
+    connection(self): Parse the connection syntax
+
+    monitor_point(self): Parse the monitor_point syntax
+
     """
 
 
@@ -52,7 +71,7 @@ class Parser:
         # Initialise current symbol
         self.symbol = Symbol()
 
-        #Initisalised error counter
+        #Initisalise error counter
         self.error_count = 0
 
         # Define all Syntax Errors
@@ -378,7 +397,9 @@ class Parser:
                 self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def logictype(self):
-        """Parse the type syntax in EBNF"""
+        """Parse the type syntax
+
+        Retrun the device type of the current device"""
 
         if (self.symbol.type == self.scanner.LOGIC_TYPE):
             device_kind_string = self.names.get_name_string(self.symbol.id)
@@ -392,7 +413,7 @@ class Parser:
             return None
 
     def connection(self):
-        """Parse the connection syntax in EBNF"""
+        """Parse the connection syntax"""
 
         if (self.symbol.type == self.scanner.NAME):
             device_name = self.names.get_name_string(self.symbol.id)
@@ -466,7 +487,7 @@ class Parser:
                 self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def monitor_point(self):
-        """Parse the monitor_point in EBNF"""
+        """Parse the monitor_point syntax"""
 
         if (self.symbol.type == self.scanner.NAME):
             device_name = self.names.get_name_string(self.symbol.id)

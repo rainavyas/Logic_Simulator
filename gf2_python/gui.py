@@ -403,6 +403,7 @@ class Gui(wx.Frame):
     def onRemoveMP(self, event):
         """"""
         mp_name = event.GetEventObject().GetName()
+        #self.monitors.remove_monitor(device, port)
         index = self.all_mp_names.index(mp_name)
         text = "Monitor Point {} removed.".format(mp_name)
         self.canvas.render(text)
@@ -451,18 +452,41 @@ class Gui(wx.Frame):
             self.file_picker.SetPath('')
 
     def loadNetwork(self):
+        for i in range(len(self.all_mp_names)-1, -1, -1):
+            name = self.all_mp_names[i]
+            self.mp_sizer.Hide(i)
+            self.mp_sizer.Remove(i)
+            self.number_of_mps -= 1
+            self.Layout()
+            self.all_mp_names.remove(name)
         
         if self.loaded_switches == True:
             self.side_sizer.Hide(3)
             self.side_sizer.Remove(3)
             self.Layout()
             self.loaded_switches = False
+
+        signal_list = self.monitors.get_signal_names()
+        monitored_signal_list = signal_list[0]
+        
             
         device_kind = self.names.query('SWITCH')
         switch_ids = self.devices.find_devices(device_kind)
         switch_names = []
         for i in switch_ids:
             switch_names.append(self.names.get_name_string(i))
+        
+        if monitored_signal_list != []:
+            for i in monitored_signal_list:
+                self.number_of_mps += 1
+                self.all_mp_names.append(i)
+                new_button = wx.Button(self.panel, label='Remove', name=i)
+                new_sizer = wx.BoxSizer(wx.HORIZONTAL)
+                new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, i), 1, wx.ALIGN_CENTRE)
+                new_sizer.Add(new_button, 1, wx.LEFT | wx.RIGHT | wx.TOP, 5)
+                new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
+                self.mp_sizer.Add(new_sizer, 0, wx.RIGHT, 5)
+            self.Layout()
 
         if switch_names != []:
             text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")

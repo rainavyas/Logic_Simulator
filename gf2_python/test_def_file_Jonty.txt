@@ -1,0 +1,27 @@
+DEVICES {
+# Declare my devices below.
+
+myswitch1: SWITCH, initial 1;
+myswitch2: SWITCH, initial 0;
+myswitch3: SWITCH, initial 0;
+myswitch4: SWITCH, initial 1;
+myclock: CLOCK, period 5;
+}
+
+
+CONNECT{
+/* Define any
+connections in
+the space below: */
+}
+
+MONITOR{
+
+myswitch1;
+myswitch4;
+myclock;
+}
+
+# End the definition file.
+
+END

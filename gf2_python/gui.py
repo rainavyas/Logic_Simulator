@@ -516,7 +516,6 @@ class Gui(wx.Frame):
                 new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
                 self.mp_sizer.Add(new_sizer, 0, wx.RIGHT, 5)
             self.Layout()
-        print(switch_initials)
 
         if switch_names != []:
             text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")
@@ -540,6 +539,7 @@ class Gui(wx.Frame):
                 if switch_initials[i] == 1:
                     button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'On', name='{}'.format(switch_names[i]))
                     button.SetBackgroundColour(wx.Colour(100, 255, 100))
+                    button.SetValue(True)
                 else:
                     button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'Off', name='{}'.format(switch_names[i]))
                     button.SetBackgroundColour(wx.Colour(255, 130, 130))

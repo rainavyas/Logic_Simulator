@@ -1,5 +1,6 @@
 DEVICES {
 # Declare my devices below.
+
 myswitch1: SWITCH, initial 1;
 myswitch2: SWITCH, initial 0;
 }
@@ -17,4 +18,5 @@ myswitch1;
 myswitch2;}
 
 # End the definition file.
+
 END

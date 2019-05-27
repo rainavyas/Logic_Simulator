@@ -1,5 +1,6 @@
 DEVICES {
 # Declare my devices below.
+
 myswitch1: SWITCH, initial 1;
 myclock: CLOCK, period 5;
 mydtype: DTYPE;
@@ -21,4 +22,5 @@ mydtype.Q;
 }
 
 # End the definition file.
+
 END

@@ -15,5 +15,4 @@ MONITOR{
 myswitch1;}
 
 # End the definition file.
-
 END

@@ -385,16 +385,25 @@ class Gui(wx.Frame):
 
     def onAddMP(self, event):
         """"""
-        if self.mp_names.GetValue() not in self.all_mp_names and self.mp_names.GetValue() != '' and self.mp_names.GetValue() != '(ENTER ID)':
-            id = self.mp_names.GetValue()
+        mp_name = self.mp_names.GetValue()
+        mp = mp_name.split('.')
+        if len(mp) == 1:
+            device = self.names.query(mp[0])
+            port = None
+        else:
+            device = self.names.query(mp[0])
+            port = self.names.query(mp[1])
+        monitor_error = self.monitors.make_monitor(device, port, self.cycles_completed)
+                
+        if monitor_error == self.monitors.NO_ERROR:
             self.mp_names.SetValue('(ENTER ID)')
-            text = "Monitor Point {} added.".format(id)
+            text = "Monitor Point {} added.".format(mp_name)
             self.canvas.render(text)
             self.number_of_mps += 1
-            self.all_mp_names.append(id)
-            new_button = wx.Button(self.panel, label='Remove', name=id)
+            self.all_mp_names.append(mp_name)
+            new_button = wx.Button(self.panel, label='Remove', name=mp_name)
             new_sizer = wx.BoxSizer(wx.HORIZONTAL)
-            new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, id), 1, wx.ALIGN_CENTRE)
+            new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, mp_name), 1, wx.ALIGN_CENTRE)
             new_sizer.Add(new_button, 1, wx.LEFT | wx.RIGHT | wx.TOP, 5)
             new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
             self.mp_sizer.Add(new_sizer, 0, wx.RIGHT, 5)
@@ -403,7 +412,14 @@ class Gui(wx.Frame):
     def onRemoveMP(self, event):
         """"""
         mp_name = event.GetEventObject().GetName()
-        #self.monitors.remove_monitor(device, port)
+        mp = mp_name.split('.')
+        if len(mp) == 1:
+            device = self.names.query(mp[0])
+            port = None
+        else:
+            device = self.names.query(mp[0])
+            port = self.names.query(mp[1])
+        self.monitors.remove_monitor(device, port)
         index = self.all_mp_names.index(mp_name)
         text = "Monitor Point {} removed.".format(mp_name)
         self.canvas.render(text)
@@ -415,12 +431,15 @@ class Gui(wx.Frame):
 
     def onToggleButton(self, event):
         button = event.GetEventObject()
+        switch_id = self.names.query(button.GetName())
         if button.GetValue():
+            self.devices.set_switch(switch_id, 1)
             button.SetBackgroundColour(wx.Colour(100, 255, 100))
             button.SetLabel('On')
             text = "{} turned on.".format(button.GetName())
             self.canvas.render(text)
         else:
+            self.devices.set_switch(switch_id, 0)
             button.SetBackgroundColour(wx.Colour(255, 130, 130))
             button.SetLabel('Off')
             text = "{} turned off.".format(button.GetName())
@@ -468,16 +487,26 @@ class Gui(wx.Frame):
 
         signal_list = self.monitors.get_signal_names()
         monitored_signal_list = signal_list[0]
-        
             
         device_kind = self.names.query('SWITCH')
         switch_ids = self.devices.find_devices(device_kind)
+        switch_initials = []
         switch_names = []
         for i in switch_ids:
+            switch = self.devices.get_device(i)
+            switch_initials.append(switch.switch_state)
             switch_names.append(self.names.get_name_string(i))
         
         if monitored_signal_list != []:
             for i in monitored_signal_list:
+                mp = i.split('.')
+                if len(mp) == 1:
+                    device = self.names.query(mp[0])
+                    port = None
+                else:
+                    device = self.names.query(mp[0])
+                    port = self.names.query(mp[1])
+                monitor_error = self.monitors.make_monitor(device, port, self.cycles_completed)
                 self.number_of_mps += 1
                 self.all_mp_names.append(i)
                 new_button = wx.Button(self.panel, label='Remove', name=i)
@@ -487,6 +516,7 @@ class Gui(wx.Frame):
                 new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
                 self.mp_sizer.Add(new_sizer, 0, wx.RIGHT, 5)
             self.Layout()
+        print(switch_initials)
 
         if switch_names != []:
             text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")
@@ -504,11 +534,15 @@ class Gui(wx.Frame):
             switch_sizer_all.Add(text_switches, 0, wx.RIGHT, 5)
             switch_sizer_all.Add(switchpanel, 1, wx.TOP|wx.RIGHT|wx.EXPAND, 5)
 
-            for name in switch_names:
+            for i in range(len(switch_ids)):
                 switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
-                switch_sizer.Add(wx.StaticText(switchpanel, wx.ID_ANY, '{}'.format(name)), 1, wx.ALIGN_CENTRE)
-                button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'Off', name='{}'.format(name))
-                button.SetBackgroundColour(wx.Colour(255, 130, 130))
+                switch_sizer.Add(wx.StaticText(switchpanel, wx.ID_ANY, '{}'.format(switch_names[i])), 1, wx.ALIGN_CENTRE)
+                if switch_initials[i] == 1:
+                    button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'On', name='{}'.format(switch_names[i]))
+                    button.SetBackgroundColour(wx.Colour(100, 255, 100))
+                else:
+                    button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'Off', name='{}'.format(switch_names[i]))
+                    button.SetBackgroundColour(wx.Colour(255, 130, 130))
                 button.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
                 switch_sizer.Add(button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
                 switch_sizer_container.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)

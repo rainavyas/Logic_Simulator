@@ -50,7 +50,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                                            operations.
     """
 
-    def __init__(self, parent):#, devices, monitors):
+    def __init__(self, parent):
         """Initialise canvas properties and useful variables."""
         super().__init__(parent, -1,
                          attribList=[wxcanvas.WX_GL_RGBA,
@@ -59,6 +59,8 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         GLUT.glutInit()
         self.init = False
         self.context = wxcanvas.GLContext(self)
+        self.current_signal = None
+        self.current_monitor_points = None
 
         # Initialise variables for panning
         self.pan_x = 0
@@ -89,8 +91,10 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         GL.glTranslated(self.pan_x, self.pan_y, 0.0)
         GL.glScaled(self.zoom, self.zoom, self.zoom)
 
-    def render(self, text):
+    def render(self, text, monitors=None):
         """Handle all drawing operations."""
+        if monitors != None:
+            self.current_signal, self.current_monitor_points = monitors.get_signals()
         self.SetCurrent(self.context)
         if not self.init:
             # Configure the viewport, modelview and projection matrices
@@ -103,19 +107,24 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         # Draw specified text at position (10, 10)
         self.render_text(text, 10, 10)
 
-        # Draw a sample signal trace
-        GL.glColor3f(0.0, 0.0, 1.0)  # signal trace is blue
-        GL.glBegin(GL.GL_LINE_STRIP)
-        for i in range(10):
-            x = (i * 20) + 10
-            x_next = (i * 20) + 30
-            if i % 2 == 0:
-                y = 75
-            else:
-                y = 100
-            GL.glVertex2f(x, y)
-            GL.glVertex2f(x_next, y)
-        GL.glEnd()
+        if self.current_signal != None:
+            for j in range(len(self.current_signal)):
+                GL.glColor3f(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))  # signal trace is blue
+                GL.glBegin(GL.GL_LINE_STRIP)
+                for i in range(len(self.current_signal[j])):
+                    x = (i * 20) + 30
+                    x_next = (i * 20) + 50
+                    if self.current_signal[j][i] == 0:
+                        y = 75*(j+1)
+                    else:
+                        y = 75*(j+1)+25
+                    GL.glVertex2f(x, y)
+                    GL.glVertex2f(x_next, y)
+                GL.glEnd()
+                self.render_text('0', 10, 75*(j+1))
+                self.render_text('1', 10, 75*(j+1)+25)
+                self.render_text(self.current_monitor_points[j], 10, 75*(j+1)-20)
+                self.render_text(self.current_monitor_points[j], 10, 75*(j+1)-20)
 
         # We have been drawing to the back buffer, flush the graphics pipeline
         # and swap the back buffer to the front
@@ -231,6 +240,7 @@ class Gui(wx.Frame):
         self.number_of_mps = 0
         self.all_mp_names = []
         self.cycles_completed = 0
+        self.loaded_switches = False
 
         # Configure the file menu
         fileMenu = wx.Menu()
@@ -241,7 +251,7 @@ class Gui(wx.Frame):
         self.SetMenuBar(menuBar)
 
         # Canvas for drawing signals
-        self.canvas = MyGLCanvas(self)#, devices, monitors)
+        self.canvas = MyGLCanvas(self)
 
         # Configure the widgets
         self.panel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
@@ -340,7 +350,7 @@ class Gui(wx.Frame):
             else:
                 print("Error! Network oscillating.")
                 return False
-        self.monitors.display_signals()
+        self.canvas.render('Drawing signal', self.monitors)
         return True
 
     def on_run_button(self, event):
@@ -353,7 +363,6 @@ class Gui(wx.Frame):
 
         if cycles is not None:
             self.monitors.reset_monitors()
-            print("".join(["Running for ", str(cycles), " cycles"]))
             self.devices.cold_startup()
             if self.run_network(cycles):
                 self.cycles_completed += cycles
@@ -369,8 +378,6 @@ class Gui(wx.Frame):
                 print("Error! Nothing to continue. Run first.")
             elif self.run_network(cycles):
                 self.cycles_completed += cycles
-                print(" ".join(["Continuing for", str(cycles), "cycles.",
-                                "Total:", str(self.cycles_completed)]))
 
     def on_exit_button(self, event):
         """Handle the event when the user clicks the exit button."""
@@ -431,6 +438,10 @@ class Gui(wx.Frame):
         event.Skip()
 
     def checkFile(self, event):
+        self.names = Names()
+        self.devices = Devices(self.names)
+        self.network = Network(self.names, self.devices)
+        self.monitors = Monitors(self.names, self.devices, self.network)
         self.path = event.GetEventObject().GetPath()
         scanner = Scanner(self.path, self.names)
         parser = Parser(self.names, self.devices, self.network, self.monitors, scanner)
@@ -440,35 +451,43 @@ class Gui(wx.Frame):
             self.file_picker.SetPath('')
 
     def loadNetwork(self):
-        if self.file_picker.GetPath() == None:
-            self.file_picker.SetPath(path)
+        
+        if self.loaded_switches == True:
+            self.side_sizer.Hide(3)
+            self.side_sizer.Remove(3)
+            self.Layout()
+            self.loaded_switches = False
+            
+        device_kind = self.names.query('SWITCH')
+        switch_ids = self.devices.find_devices(device_kind)
+        switch_names = []
+        for i in switch_ids:
+            switch_names.append(self.names.get_name_string(i))
 
-        switch_ids = self.devices.find_devices('SWITCH')
-
-        if switch_ids != []:
+        if switch_names != []:
             text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")
             switchpanel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
             switchpanel.SetAutoLayout(1)
             switchpanel.SetupScrolling(False, True)
-
-            switch_sizer_all = wx.BoxSizer(wx.VERTICAL)
+            
             switch_sizer_container = wx.BoxSizer(wx.VERTICAL)
+            switch_sizer_all = wx.BoxSizer(wx.VERTICAL)
 
             self.side_sizer.Add(switch_sizer_all, 1, wx.ALL, 5)
             
             switchpanel.SetSizer(switch_sizer_container)
-
             
             switch_sizer_all.Add(text_switches, 0, wx.RIGHT, 5)
             switch_sizer_all.Add(switchpanel, 1, wx.TOP|wx.RIGHT|wx.EXPAND, 5)
 
-            for id in switch_ids:
+            for name in switch_names:
                 switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
-                switch_sizer.Add(wx.StaticText(switchpanel, wx.ID_ANY, '{}'.format(i)), 1, wx.ALIGN_CENTRE)
-                button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'Off', name='{}'.format(i))
+                switch_sizer.Add(wx.StaticText(switchpanel, wx.ID_ANY, '{}'.format(name)), 1, wx.ALIGN_CENTRE)
+                button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'Off', name='{}'.format(name))
                 button.SetBackgroundColour(wx.Colour(255, 130, 130))
                 button.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
                 switch_sizer.Add(button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
                 switch_sizer_container.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)
 
+            self.loaded_switches = True
             self.Layout()

@@ -17,7 +17,6 @@ myswitch1 =mydtype.DATA;
 MONITOR{
 
 myswitch1;
-mydtype.Q;
 }
 
 # End the definition file.

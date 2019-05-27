@@ -10,8 +10,6 @@ CONNECT{
 /* Define any
 connections in
 the space below: */
-myclock = mydtype.CLK;
-myswitch1 =mydtype.DATA;
 }
 
 MONITOR{

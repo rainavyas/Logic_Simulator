@@ -1,8 +1,14 @@
 DEVICES {
 # Declare my devices below.
 
-myswitch1: SWITCH, initial 1;
-myclock: CLOCK, period 5;
+clock1: CLOCK, period 8;
+clock2: CLOCK, period 10;
+clock3: CLOCK, period 10;
+switch1: SWITCH, initial 0;
+switch2: SWITCH, initial 1;
+nand: NAND, inputs 2;
+xor: XOR;
+dtype: DTYPE;
 }
 
 
@@ -10,11 +16,18 @@ CONNECT{
 /* Define any
 connections in
 the space below: */
+clock1 = dtype.SET;
+clock2 = dtype.DATA;
+clock3 = dtype.CLK;
+switch1 = dtype.CLEAR;
+dtype.Q = nand.I1;
+switch2 = nand.I2;
+nand = xor.I1;
+switch2 = xor.I2;
 }
 
 MONITOR{
-
-myswitch1;
+clock1;
 }
 
 # End the definition file.

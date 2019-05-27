@@ -218,12 +218,19 @@ class Gui(wx.Frame):
     on_text_box(self, event): Event handler for when the user enters text.
     """
 
-    def __init__(self, title):
+    def __init__(self, title, names, devices, network, monitors, path=None):
         """Initialise widgets and layout."""
         super().__init__(parent=None, title=title, size=(800, 600))
 
+        self.names = names
+        self.devices = devices
+        self.network = network
+        self.monitors = monitors
+        self.path = path
+        
         self.number_of_mps = 0
         self.all_mp_names = []
+        self.cycles_completed = 0
 
         # Configure the file menu
         fileMenu = wx.Menu()
@@ -240,13 +247,9 @@ class Gui(wx.Frame):
         self.panel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
         self.panel.SetAutoLayout(1)
         self.panel.SetupScrolling(False, True)
-        self.switchpanel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
-        self.switchpanel.SetAutoLayout(1)
-        self.switchpanel.SetupScrolling(False, True)
         self.file_picker = wx.FilePickerCtrl(self, message='Select Source File', wildcard='Text Files (*.txt)|*.txt')
         self.text_cycles = wx.StaticText(self, wx.ID_ANY, "Cycles:")
         self.text_mps = wx.StaticText(self, wx.ID_ANY, "Monitor Points")
-        self.text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")
         self.spin = wx.SpinCtrl(self, wx.ID_ANY, "10")
         self.run_button = wx.Button(self, wx.ID_ANY, "Run")
         self.run_button.SetBackgroundColour(wx.Colour(100, 255, 100))
@@ -267,29 +270,27 @@ class Gui(wx.Frame):
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
         self.mp_names.Bind(wx.EVT_SET_FOCUS, self.onMpFocus)
         self.mp_names.Bind(wx.EVT_KILL_FOCUS, self.onMpKillFocus)
+        self.file_picker.Bind(wx.EVT_FILEPICKER_CHANGED, self.checkFile)
 
         # Configure sizers for layout
         top_sizer = wx.BoxSizer(wx.VERTICAL)
         main_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        side_sizer = wx.BoxSizer(wx.VERTICAL)
+        self.side_sizer = wx.BoxSizer(wx.VERTICAL)
         cycle_sizer = wx.BoxSizer(wx.HORIZONTAL)
         buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.mp_sizer = wx.BoxSizer(wx.VERTICAL)
         mp_sizer_all = wx.BoxSizer(wx.VERTICAL)
         mp_control_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        switch_sizer_all = wx.BoxSizer(wx.VERTICAL)
-        switch_sizer_container = wx.BoxSizer(wx.VERTICAL)
 
         top_sizer.Add(self.file_picker, 1, wx.EXPAND | wx.ALL, 5, 10)
         top_sizer.Add(main_sizer, 10, wx.EXPAND)
 
         main_sizer.Add(self.canvas, 5, wx.EXPAND | wx.ALL, 5)
-        main_sizer.Add(side_sizer, 1, wx.RIGHT, 5)
+        main_sizer.Add(self.side_sizer, 1, wx.RIGHT, 5)
 
-        side_sizer.Add(cycle_sizer, 0, wx.ALL, 5)
-        side_sizer.Add(buttons_sizer, 0, wx.ALL, 5)
-        side_sizer.Add(mp_sizer_all, 1, wx.ALL, 5)
-        side_sizer.Add(switch_sizer_all, 1, wx.ALL, 5)
+        self.side_sizer.Add(cycle_sizer, 0, wx.ALL, 5)
+        self.side_sizer.Add(buttons_sizer, 0, wx.ALL, 5)
+        self.side_sizer.Add(mp_sizer_all, 1, wx.ALL, 5)
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
         cycle_sizer.Add(self.spin, 3, wx.LEFT | wx.RIGHT, 5)
@@ -306,19 +307,9 @@ class Gui(wx.Frame):
         mp_sizer_all.Add(self.panel, 1, wx.RIGHT|wx.TOP|wx.EXPAND, 5)
 
         self.panel.SetSizer(self.mp_sizer)
-        self.switchpanel.SetSizer(switch_sizer_container)
-        
-        switch_sizer_all.Add(self.text_switches, 0, wx.RIGHT, 5)
-        switch_sizer_all.Add(self.switchpanel, 1, wx.TOP|wx.RIGHT|wx.EXPAND, 5)
 
-        for i in range(4): #change to range(len(switches)) once functionality implemented
-            switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
-            switch_sizer.Add(wx.StaticText(self.switchpanel, wx.ID_ANY, 'Switch {}'.format(i+1)), 1, wx.ALIGN_CENTRE)
-            button = wx.ToggleButton(self.switchpanel, wx.ID_ANY, 'Off', name='Switch {}'.format(i+1))
-            button.SetBackgroundColour(wx.Colour(255, 130, 130))
-            button.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
-            switch_sizer.Add(button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
-            switch_sizer_container.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)
+        if self.path != None:
+            self.loadNetwork()
 
         self.SetSizeHints(600, 800)
         self.SetSizer(top_sizer)
@@ -338,15 +329,48 @@ class Gui(wx.Frame):
         text = "".join(["New spin control value: ", str(spin_value)])
         self.canvas.render(text)
 
+    def run_network(self, cycles):
+        """Run the network for the specified number of simulation cycles.
+
+        Return True if successful.
+        """
+        for _ in range(cycles):
+            if self.network.execute_network():
+                self.monitors.record_signals()
+            else:
+                print("Error! Network oscillating.")
+                return False
+        self.monitors.display_signals()
+        return True
+
     def on_run_button(self, event):
         """Handle the event when the user clicks the run button."""
         text = "Run button pressed."
         self.canvas.render(text)
 
+        self.cycles_completed = 0
+        cycles = self.spin.GetValue()
+
+        if cycles is not None:
+            self.monitors.reset_monitors()
+            print("".join(["Running for ", str(cycles), " cycles"]))
+            self.devices.cold_startup()
+            if self.run_network(cycles):
+                self.cycles_completed += cycles
+
     def on_continue_button(self, event):
         """Handle the event when the user clicks the continue button."""
         text = "Continue button pressed."
         self.canvas.render(text)
+
+        cycles = self.spin.GetValue()
+        if cycles is not None:
+            if self.cycles_completed == 0:
+                print("Error! Nothing to continue. Run first.")
+            elif self.run_network(cycles):
+                self.cycles_completed += cycles
+                print(" ".join(["Continuing for", str(cycles), "cycles.",
+                                "Total:", str(self.cycles_completed)]))
 
     def on_exit_button(self, event):
         """Handle the event when the user clicks the exit button."""
@@ -405,3 +429,46 @@ class Gui(wx.Frame):
         if textbox.GetValue() == '':
             textbox.SetValue('(ENTER ID)')
         event.Skip()
+
+    def checkFile(self, event):
+        self.path = event.GetEventObject().GetPath()
+        scanner = Scanner(self.path, self.names)
+        parser = Parser(self.names, self.devices, self.network, self.monitors, scanner)
+        if parser.parse_network():
+            self.loadNetwork()
+        else:
+            self.file_picker.SetPath('')
+
+    def loadNetwork(self):
+        if self.file_picker.GetPath() == None:
+            self.file_picker.SetPath(path)
+
+        switch_ids = self.devices.find_devices('SWITCH')
+
+        if switch_ids != []:
+            text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")
+            switchpanel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
+            switchpanel.SetAutoLayout(1)
+            switchpanel.SetupScrolling(False, True)
+
+            switch_sizer_all = wx.BoxSizer(wx.VERTICAL)
+            switch_sizer_container = wx.BoxSizer(wx.VERTICAL)
+
+            self.side_sizer.Add(switch_sizer_all, 1, wx.ALL, 5)
+            
+            switchpanel.SetSizer(switch_sizer_container)
+
+            
+            switch_sizer_all.Add(text_switches, 0, wx.RIGHT, 5)
+            switch_sizer_all.Add(switchpanel, 1, wx.TOP|wx.RIGHT|wx.EXPAND, 5)
+
+            for id in switch_ids:
+                switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
+                switch_sizer.Add(wx.StaticText(switchpanel, wx.ID_ANY, '{}'.format(i)), 1, wx.ALIGN_CENTRE)
+                button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'Off', name='{}'.format(i))
+                button.SetBackgroundColour(wx.Colour(255, 130, 130))
+                button.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
+                switch_sizer.Add(button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
+                switch_sizer_container.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)
+
+            self.Layout()

@@ -3,7 +3,6 @@ DEVICES {
 
 myswitch1: SWITCH, initial 1;
 myclock: CLOCK, period 5;
-mydtype: DTYPE;
 }
 
 

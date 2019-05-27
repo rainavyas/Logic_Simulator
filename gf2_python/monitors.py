@@ -162,6 +162,7 @@ class Monitors:
             monitor_name = self.devices.get_signal_name(device_id, output_id)
             name_length = len(monitor_name)
             signal_list = self.monitors_dictionary[(device_id, output_id)]
+            print(signal_list)
             print(monitor_name + (margin - name_length) * " ", end=": ")
             for signal in signal_list:
                 if signal == self.devices.HIGH:
@@ -175,3 +176,14 @@ class Monitors:
                 if signal == self.devices.BLANK:
                     print(" ", end="")
             print("\n", end="")
+
+    def get_signals(self):
+        """Display the signal trace(s) in the text console."""
+        all_signals = []
+        all_names = []
+        for device_id, output_id in self.monitors_dictionary:
+            monitor_name = self.devices.get_signal_name(device_id, output_id)
+            all_names.append(monitor_name)
+            signal_list = self.monitors_dictionary[(device_id, output_id)]
+            all_signals.append(signal_list)
+        return all_signals, all_names

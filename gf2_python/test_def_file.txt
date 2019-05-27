@@ -1,7 +1,9 @@
 DEVICES {
 # Declare my devices below.
+
 myswitch1: SWITCH, initial 1;
-myswitch2: SWITCH, initial 0;
+myclock: CLOCK, period 5;
+mydtype: DTYPE;
 }
 
 
@@ -9,12 +11,16 @@ CONNECT{
 /* Define any
 connections in
 the space below: */
+myclock = mydtype.CLK;
+myswitch1 =mydtype.DATA;
 }
 
 MONITOR{
 
 myswitch1;
-myswitch2;}
+mydtype.Q;
+}
 
 # End the definition file.
+
 END

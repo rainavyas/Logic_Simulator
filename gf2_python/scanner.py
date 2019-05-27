@@ -140,7 +140,6 @@ class Scanner:
         #  Skip single-line comments.
         if self.current_character == "#":
             self.file.readline()
-            self.skip_spaces()
             self.advance()
 
         #  Skip closed comments.
@@ -159,7 +158,6 @@ class Scanner:
                 #  Comment closed so advance and skip spaces.
                 if self.current_character == "/":
                     self.advance()
-                    self.skip_spaces()
                 #  Comment not closed correctly as "/" is missing.
                 elif not self.current_character == "/":
                     print("""ERROR: Comment terminated incorrectly.
@@ -172,6 +170,7 @@ class Scanner:
             else:
                 print("""Forward slash skipped but adjacent '*' not found
                       (closed comment not started).""")
+        self.skip_spaces()
 
     def location(self):
         """Return the current line and position within the file.
@@ -311,7 +310,7 @@ class Scanner:
         elif self.current_character == "}":
             symbol.type = self.RIGHT_CURLY
             self.advance()
-            
+
         else:  # not a valid character
             self.advance()
 

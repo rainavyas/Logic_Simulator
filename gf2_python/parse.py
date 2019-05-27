@@ -637,16 +637,14 @@ class Parser:
         """Parse the monitor_point syntax"""
 
         if (self.symbol.type == self.scanner.NAME):
-            device_name = self.names.get_name_string(self.symbol.id)
-            device_id = self.names.query(device_name)
+            device_id = self.symbol.id
             self.symbol = self.scanner.get_symbol()
 
             if (self.symbol.type == self.scanner.PERIOD):
                 self.symbol = self.scanner.get_symbol()
 
                 if(self.symbol.type == self.scanner.OUT_PIN):
-                    pin_name = self.names.get_name_string(self.symbol.id)
-                    output_id = self.names.query(pin_name)
+                    output_id = self.symbol.id
                     self.symbol = self.scanner.get_symbol()
                 else:
                     # Error Type: 14: Output pin has to be 'Q' or 'QBAR'

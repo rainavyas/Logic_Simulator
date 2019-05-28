@@ -268,8 +268,8 @@ class Gui(wx.Frame):
         self.exit_button = wx.Button(self, wx.ID_ANY, "Exit")
         self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
         self.add_button = wx.Button(self, wx.ID_ANY, "Add")
-        self.mp_names = wx.TextCtrl(self, wx.ID_ANY, "(ENTER ID)",
-                                    style=wx.TE_PROCESS_ENTER)
+        self.mp_names = wx.Choice(self, wx.ID_ANY, choices=['SELECT'])
+        self.mp_names.SetSelection(0)
         
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
@@ -278,8 +278,6 @@ class Gui(wx.Frame):
         self.continue_button.Bind(wx.EVT_BUTTON, self.on_continue_button)
         self.exit_button.Bind(wx.EVT_BUTTON, self.on_exit_button)
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
-        self.mp_names.Bind(wx.EVT_SET_FOCUS, self.onMpFocus)
-        self.mp_names.Bind(wx.EVT_KILL_FOCUS, self.onMpKillFocus)
         self.file_picker.Bind(wx.EVT_FILEPICKER_CHANGED, self.checkFile)
 
         # Configure sizers for layout
@@ -385,18 +383,21 @@ class Gui(wx.Frame):
 
     def onAddMP(self, event):
         """"""
-        mp_name = self.mp_names.GetValue()
-        mp = mp_name.split('.')
-        if len(mp) == 1:
-            device = self.names.query(mp[0])
-            port = None
-        else:
-            device = self.names.query(mp[0])
-            port = self.names.query(mp[1])
-        monitor_error = self.monitors.make_monitor(device, port, self.cycles_completed)
-                
-        if monitor_error == self.monitors.NO_ERROR:
-            self.mp_names.SetValue('(ENTER ID)')
+        index = self.mp_names.GetSelection()
+        mp_name = self.mp_names.GetString(index)
+        if mp_name != 'SELECT':
+            self.mp_names.Delete(index)
+            mp = mp_name.split('.')
+            if len(mp) == 1:
+                device = self.names.query(mp[0])
+                port = None
+            else:
+                device = self.names.query(mp[0])
+                port = self.names.query(mp[1])
+            monitor_error = self.monitors.make_monitor(device, port, self.cycles_completed)
+                    
+            reset_index = self.mp_names.FindString('SELECT')
+            self.mp_names.SetSelection(reset_index)
             text = "Monitor Point {} added.".format(mp_name)
             self.canvas.render(text)
             self.number_of_mps += 1
@@ -412,6 +413,7 @@ class Gui(wx.Frame):
     def onRemoveMP(self, event):
         """"""
         mp_name = event.GetEventObject().GetName()
+        self.mp_names.Append(mp_name)
         mp = mp_name.split('.')
         if len(mp) == 1:
             device = self.names.query(mp[0])
@@ -445,18 +447,6 @@ class Gui(wx.Frame):
             text = "{} turned off.".format(button.GetName())
             self.canvas.render(text)
 
-    def onMpFocus(self, event):
-        textbox = event.GetEventObject()
-        if textbox.GetValue() == '(ENTER ID)':
-            textbox.SetValue('')
-        event.Skip()
-
-    def onMpKillFocus(self, event):
-        textbox = event.GetEventObject()
-        if textbox.GetValue() == '':
-            textbox.SetValue('(ENTER ID)')
-        event.Skip()
-
     def checkFile(self, event):
         self.names = Names()
         self.devices = Devices(self.names)
@@ -468,7 +458,7 @@ class Gui(wx.Frame):
         if parser.parse_network():
             self.loadNetwork()
         else:
-            self.file_picker.SetPath('')
+            self.clearNetwork()
 
     def loadNetwork(self):
         for i in range(len(self.all_mp_names)-1, -1, -1):
@@ -487,6 +477,11 @@ class Gui(wx.Frame):
 
         signal_list = self.monitors.get_signal_names()
         monitored_signal_list = signal_list[0]
+        unmonitored_signal_list = signal_list[1]
+        self.mp_names.Clear()
+        self.mp_names.Append('SELECT')
+        self.mp_names.SetSelection(0)
+        self.mp_names.Append(unmonitored_signal_list)
             
         device_kind = self.names.query('SWITCH')
         switch_ids = self.devices.find_devices(device_kind)
@@ -549,3 +544,22 @@ class Gui(wx.Frame):
 
             self.loaded_switches = True
             self.Layout()
+
+    def clearNetwork(self):
+        for i in range(len(self.all_mp_names)-1, -1, -1):
+            name = self.all_mp_names[i]
+            self.mp_sizer.Hide(i)
+            self.mp_sizer.Remove(i)
+            self.number_of_mps -= 1
+            self.Layout()
+            self.all_mp_names.remove(name)
+
+        if self.loaded_switches == True:
+            self.side_sizer.Hide(3)
+            self.side_sizer.Remove(3)
+            self.Layout()
+            self.loaded_switches = False
+
+        self.mp_names.Clear()
+        self.mp_names.Append('SELECT')
+        self.mp_names.SetSelection(0)

@@ -65,6 +65,8 @@ class Scanner:
         #  Open the file.
         self.file = open(path)
 
+        self.error_list = []
+
         #  Assign names module for reference.
         self.names = names
 
@@ -138,6 +140,9 @@ class Scanner:
         """Skips single line comments (beginning with '#')
         and closed-comments (of form /* */)
         """
+
+        comment_symbol = Symbol()
+
         #  Skip single-line comments.
         if self.current_character == "#":
             self.file.readline()
@@ -151,8 +156,12 @@ class Scanner:
                 while not self.current_character == "*":
                     #  Check whether EOF reached before comment closed.
                     if self.current_character == "":
-                        print("""ERROR: EOF reached. Comment not closed
-                              correctly. Missing '*'.""")
+                        print("ERROR: EOF reached. Comment not closed correctly. Missing '*'.")
+                        comment_symbol.line = self.location()[0]
+                        comment_symbol.position = self.location()[1]
+                        curr_err = self.print_location(comment_symbol)
+                        curr_err.msg = "ERROR: EOF reached. Comment not close correctly. Missing '*'."
+                        self.error_list.append(curr_err)
                         break
                     self.advance()
                 self.advance()
@@ -161,16 +170,22 @@ class Scanner:
                     self.advance()
                 #  Comment not closed correctly as "/" is missing.
                 elif not self.current_character == "/":
-                    print("""ERROR: Comment terminated incorrectly.
-                          Missing '/'.""")
-                    comment_symbol = Symbol()
+                    print("ERROR: Comment terminated incorrectly. Missing '/'.")
                     comment_symbol.line = self.location()[0]
                     comment_symbol.position = self.location()[1]
-                    self.print_location(comment_symbol)
+                    curr_err = self.print_location(comment_symbol)
+                    curr_err.msg = "ERROR: Comment terminated incorrectly. Missing '/'."
+                    self.error_list.append(curr_err)
+
             #  Closed comment missing "*" to start.
             else:
-                print("""Forward slash skipped but adjacent '*' not found
-                      (closed comment not started).""")
+                print("Forward slash skipped but adjacent '*' not found (closed comment not started).")
+                comment_symbol.line = self.location()[0]
+                comment_symbol.position = self.location()[1]
+                curr_err = self.print_location(comment_symbol)
+                curr_err.msg = "Forward slash skipped but adjacent '*' not found (closed comment not started)."
+                self.error_list.append(curr_err)
+
         self.skip_spaces()
 
     def location(self):

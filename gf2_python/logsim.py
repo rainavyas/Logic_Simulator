@@ -75,7 +75,7 @@ def main(arg_list):
             if parser.parse_network():
                 # Initialise an instance of the gui.Gui() class
                 app = wx.App()
-                gui = Gui("Logic Simulator", names, devices, network, monitors, os.path.abspath(path))
+                gui = Gui("Logic Simulator", names, devices, network, monitors, os.path.abspath(path), scanner, parser)
                 gui.Show(True)
                 app.MainLoop()
 

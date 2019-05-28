@@ -156,11 +156,13 @@ class Scanner:
                 while not self.current_character == "*":
                     #  Check whether EOF reached before comment closed.
                     if self.current_character == "":
-                        print("ERROR: EOF reached. Comment not closed correctly. Missing '*'.")
+                        print("ERROR: EOF reached. Comment not closed "
+                              "correctly. Missing '*'.")
                         comment_symbol.line = self.location()[0]
                         comment_symbol.position = self.location()[1]
                         curr_err = self.print_location(comment_symbol)
-                        curr_err.msg = "ERROR: EOF reached. Comment not close correctly. Missing '*'."
+                        curr_err.msg = ("ERROR: EOF reached. Comment not "
+                                        "closed correctly. Missing '*'.")
                         self.error_list.append(curr_err)
                         break
                     self.advance()
@@ -170,20 +172,24 @@ class Scanner:
                     self.advance()
                 #  Comment not closed correctly as "/" is missing.
                 elif not self.current_character == "/":
-                    print("ERROR: Comment terminated incorrectly. Missing '/'.")
+                    print("ERROR: Comment terminated incorrectly. "
+                          "Missing '/'.")
                     comment_symbol.line = self.location()[0]
                     comment_symbol.position = self.location()[1]
                     curr_err = self.print_location(comment_symbol)
-                    curr_err.msg = "ERROR: Comment terminated incorrectly. Missing '/'."
+                    curr_err.msg = ("ERROR: Comment terminated incorrectly. "
+                                    "Missing '/'.")
                     self.error_list.append(curr_err)
 
             #  Closed comment missing "*" to start.
             else:
-                print("Forward slash skipped but adjacent '*' not found (closed comment not started).")
+                print("Forward slash skipped but adjacent '*' not found "
+                      "(closed comment not started).")
                 comment_symbol.line = self.location()[0]
                 comment_symbol.position = self.location()[1]
                 curr_err = self.print_location(comment_symbol)
-                curr_err.msg = "Forward slash skipped but adjacent '*' not found (closed comment not started)."
+                curr_err.msg = ("Forward slash skipped but adjacent '*' not "
+                                "found (closed comment not started).")
                 self.error_list.append(curr_err)
 
         self.skip_spaces()
@@ -235,24 +241,23 @@ class Scanner:
          below to indicate the final character of the symbol.
         """
 
-        error_object = Error()
-        #  Store the current position.
-        stored_position = self.file.tell()
+        error_object = Error()  # Create an error object for population.
+        stored_position = self.file.tell()  # Store the current position.
 
-        #  Return to the beginning of the file.
-        self.file.seek(0)
+        self.file.seek(0)  # Return to the beginning of the file.
 
-        marker = 0
+        marker = 0  # Set a counter to zero.
 
         #  User wants to print the current symbol's line and position.
         if option is False:
             for line in self.file:
                 marker += 1
                 if marker == symbol.line:
+                    #  store in error object:
                     error_object.line_num = "Line " + str(symbol.line) + ":"
                     error_object.line = line.replace("\n", "")
                     error_object.caret_pos = (symbol.position-2)*" " + "^"
-
+                    #  Print error parameters:
                     print("Line " + str(symbol.line) + ":")
                     print(line.replace("\n", ""))
                     print((symbol.position-2)*" " + "^")
@@ -262,10 +267,12 @@ class Scanner:
             for line in self.file:
                 marker += 1
                 if marker == symbol.prev_line:
-                    error_object.line_num = "Line " + str(symbol.prev_line) + ":"
+                    #  store in error object:
+                    error_object.line_num = ("Line " + str(symbol.prev_line) +
+                                             ":")
                     error_object.line = line.replace("\n", "")
                     error_object.caret_pos = (symbol.prev_position-2)*" " + "^"
-
+                    #  Print error parameters:
                     print("Line " + str(symbol.prev_line) + ":")
                     print(line.replace("\n", ""))
                     print((symbol.prev_position-2)*" " + "^")
@@ -273,7 +280,7 @@ class Scanner:
         #  Return to the stored (current) position.
         self.file.seek(stored_position)
 
-        return error_object
+        return error_object  # Return the error object for use by GUI.
 
     def get_symbol(self):
         """Translate the next sequence of characters into a symbol.
@@ -330,11 +337,11 @@ class Scanner:
         elif self.current_character == ":":  # colon
             symbol.type = self.COLON
             self.advance()
-        elif self.current_character == "{": #  exclamation
+        elif self.current_character == "{":  # left curly
             symbol.type = self.LEFT_CURLY
             self.advance()
 
-        elif self.current_character == "}":
+        elif self.current_character == "}":  # right curly
             symbol.type = self.RIGHT_CURLY
             self.advance()
 

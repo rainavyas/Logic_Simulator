@@ -1,0 +1,19 @@
+DEVICES {
+switch1: SWITCH, initial 0;
+switch2: SWITCH, initial 0;
+switch3: SWITCH, initial 0;
+xor1: XOR;
+xor2: XOR;
+and1: AND, inputs 2;
+and2: AND, inputs 2;
+and3: AND, inputs 2;
+or1: OR, inputs 3;
+clock: CLOCK, period 5;
+dtype: DTYPE;
+}
+
+CONNECT {
+switch1 = xor1.I1;
+switch1 = and2.I2;
+switch1 = and3.I1;
+}

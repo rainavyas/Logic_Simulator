@@ -59,8 +59,8 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         GLUT.glutInit()
         self.init = False
         self.context = wxcanvas.GLContext(self)
-        self.current_signal = None
-        self.current_monitor_points = None
+        self.current_signal = []
+        self.current_monitor_points = []
         self.signal_colours = []
 
         # Initialise variables for panning
@@ -110,7 +110,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         # Draw specified text at position (10, 10)
         self.render_text(text, 10, 10)
 
-        if self.current_signal != None:
+        if self.current_signal != []:
             for j in range(len(self.current_signal)):
                 GL.glColor3f(self.signal_colours[j][0], self.signal_colours[j][1], self.signal_colours[j][2])
                 GL.glBegin(GL.GL_LINE_STRIP)
@@ -271,7 +271,8 @@ class Gui(wx.Frame):
         self.path = path
         self.scanner = scanner
         self.parser = parser
-        
+
+        self.loaded_network = False
         self.number_of_mps = 0
         self.all_mp_names = []
         self.cycles_completed = 0
@@ -380,10 +381,12 @@ class Gui(wx.Frame):
         for _ in range(cycles):
             if self.network.execute_network():
                 self.monitors.record_signals()
+                self.canvas.render('Drawing signal', self.monitors)
             else:
-                print("Error! Network oscillating.")
+                text = "Error! Network oscillating."
+                print(text)
+                self.displayError(text)
                 return False
-        self.canvas.render('Drawing signal', self.monitors)
         return True
 
     def on_run_button(self, event):
@@ -392,14 +395,15 @@ class Gui(wx.Frame):
         text = "Run button pressed."
         self.canvas.render(text)
 
-        self.cycles_completed = 0
-        cycles = self.spin.GetValue()
+        if self.loaded_network:
+            self.cycles_completed = 0
+            cycles = self.spin.GetValue()
 
-        if cycles is not None:
-            self.monitors.reset_monitors()
-            self.devices.cold_startup()
-            if self.run_network(cycles):
-                self.cycles_completed += cycles
+            if cycles is not None:
+                self.monitors.reset_monitors()
+                self.devices.cold_startup()
+                if self.run_network(cycles):
+                    self.cycles_completed += cycles
 
     def on_continue_button(self, event):
         """Handle the event when the user clicks the continue button."""
@@ -407,12 +411,15 @@ class Gui(wx.Frame):
         text = "Continue button pressed."
         self.canvas.render(text)
 
-        cycles = self.spin.GetValue()
-        if cycles is not None:
-            if self.cycles_completed == 0:
-                print("Error! Nothing to continue. Run first.")
-            elif self.run_network(cycles):
-                self.cycles_completed += cycles
+        if self.loaded_network:
+            cycles = self.spin.GetValue()
+            if cycles is not None:
+                if self.cycles_completed == 0:
+                    text = "Error! Nothing to continue. Run first."
+                    print(text)
+                    self.displayError(text)
+                elif self.run_network(cycles):
+                    self.cycles_completed += cycles
 
     def on_exit_button(self, event):
         """Handle the event when the user clicks the exit button."""
@@ -495,7 +502,7 @@ class Gui(wx.Frame):
         if self.parser.parse_network():
             self.loadNetwork()
         else:
-            print(len(self.scanner.error_list))
+            self.displaySyntaxErrors()
             self.clearNetwork()
 
     def loadNetwork(self):
@@ -583,6 +590,8 @@ class Gui(wx.Frame):
             self.loaded_switches = True
             self.Layout()
 
+        self.loaded_network = True
+
     def clearNetwork(self):
         for i in range(len(self.all_mp_names)-1, -1, -1):
             name = self.all_mp_names[i]
@@ -601,3 +610,34 @@ class Gui(wx.Frame):
         self.mp_names.Clear()
         self.mp_names.Append('SELECT')
         self.mp_names.SetSelection(0)
+
+        self.loaded_network = False
+
+    def displaySyntaxErrors(self):
+        error_message = wx.MessageDialog(self, '', caption='ERROR', style=wx.OK|wx.CENTRE|wx.STAY_ON_TOP)
+        error_string = ''
+        font = error_message.GetFont()
+        dc = wx.ScreenDC()
+        dc.SetFont(font)
+        for i in self.scanner.error_list:
+            error_string += i.msg
+            error_string += '\n'
+            error_string += i.line_num
+            error_string += '\n'
+            error_string += i.line
+            error_string += '\n'
+            caret_string = list(i.caret_pos)
+            sub_string = i.line[:len(caret_string)-1]
+            w, h = dc.GetTextExtent(sub_string)
+            space_w, space_h = dc.GetTextExtent(' ')
+            error_string += ' '*round(w/space_w) + '^'
+            error_string += '\n'
+        error_message.SetMessage(error_string)
+        error_message.ShowModal()
+        error_message.Destroy()
+        self.file_picker.SetPath('')
+
+    def displayError(self, text):
+        error_message = wx.MessageDialog(self, text, caption='ERROR', style=wx.OK|wx.CENTRE|wx.STAY_ON_TOP)
+        error_message.ShowModal()
+        error_message.Destroy()

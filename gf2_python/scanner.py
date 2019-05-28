@@ -241,24 +241,23 @@ class Scanner:
          below to indicate the final character of the symbol.
         """
 
-        error_object = Error()
-        #  Store the current position.
-        stored_position = self.file.tell()
+        error_object = Error()  # Create an error object for population.
+        stored_position = self.file.tell()  # Store the current position.
 
-        #  Return to the beginning of the file.
-        self.file.seek(0)
+        self.file.seek(0)  # Return to the beginning of the file.
 
-        marker = 0
+        marker = 0  # Set a counter to zero.
 
         #  User wants to print the current symbol's line and position.
         if option is False:
             for line in self.file:
                 marker += 1
                 if marker == symbol.line:
+                    #  store in error object:
                     error_object.line_num = "Line " + str(symbol.line) + ":"
                     error_object.line = line.replace("\n", "")
                     error_object.caret_pos = (symbol.position-2)*" " + "^"
-
+                    #  Print error parameters:
                     print("Line " + str(symbol.line) + ":")
                     print(line.replace("\n", ""))
                     print((symbol.position-2)*" " + "^")
@@ -268,19 +267,20 @@ class Scanner:
             for line in self.file:
                 marker += 1
                 if marker == symbol.prev_line:
+                    #  store in error object:
                     error_object.line_num = ("Line " + str(symbol.prev_line) +
                                              ":")
                     error_object.line = line.replace("\n", "")
                     error_object.caret_pos = (symbol.prev_position-2)*" " + "^"
-
+                    #  Print error parameters:
                     print("Line " + str(symbol.prev_line) + ":")
                     print(line.replace("\n", ""))
-                    print((symbol.prev_position-2)*" " + "^")
+                    print((symbol.prev_position-2)*"  " + "^")
 
         #  Return to the stored (current) position.
         self.file.seek(stored_position)
 
-        return error_object
+        return error_object  # Return the error object for use by GUI.
 
     def get_symbol(self):
         """Translate the next sequence of characters into a symbol.

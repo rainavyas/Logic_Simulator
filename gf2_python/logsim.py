@@ -58,7 +58,7 @@ def main(arg_list):
             parser = Parser(names, devices, network, monitors, scanner)
             if parser.parse_network():
                 # Initialise an instance of the userint.UserInterface() class
-                userint = UserInterface(names, devices, network, monitors)
+                userint = UserInterface(names, devices, network, monitors, scanner)
                 userint.command_interface()
 
     if not options:  # no option given, use the graphical user interface

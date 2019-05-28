@@ -66,7 +66,7 @@ class UserInterface:
     continue_command(self): Continues a previously run simulation.
     """
 
-    def __init__(self, names, devices, network, monitors):
+    def __init__(self, names, devices, network, monitors, scanner):
         """Initialise variables."""
         self.names = names
         self.devices = devices

@@ -246,6 +246,14 @@ class Parser:
         # Append the error object to scanner's list of errors
         self.scanner.error_list.append(this_err)
 
+        # if len(self.scanner.error_list) > 0:
+        #     print("TEST")
+        #     print(self.scanner.error_list[0].msg)
+        #     print(self.scanner.error_list[0].line_num)
+        #     print(self.scanner.error_list[0].line)
+        #     print(self.scanner.error_list[0].caret_pos)
+
+
         # Return to recovery point for syntax errors
 
         # Define error IDs where punctuation stopping to not be moved on from

@@ -475,7 +475,7 @@ class Parser:
                         # Error: Comma has to be followed by parameter
                         # speficification
                         # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR'
-                        #                   or 'END' KEYWORD
+                        # or 'END' KEYWORD
                         self.error(self.NEED_PARAM, [self.scanner.KEYWORD,
                                                      self.scanner.SEMICOLON,
                                                      self.scanner.RIGHT_CURLY],

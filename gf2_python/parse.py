@@ -110,10 +110,9 @@ class Parser:
         else:
             # Reset all classes for GUI
             self.names = Names()
-            self.devices = Devices()
-            self.network = Network()
-            self.monitors = Monitors()
-            self.scanner = Scanners()
+            self.devices = Devices(self.names)
+            self.network = Network(self.names, self.devices)
+            self.monitors = Monitors(self.names, self.devices, self.network)
 
             return False
 

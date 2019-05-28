@@ -40,8 +40,7 @@ class Parser:
     parse_network(self): Parses the circuit definition file.
 
     error(self, error_ID, stopping_symbols, symbol_IDs = []): Display error and
-                                        and recover to a useful parsing position
-
+                                    and recover to a useful parsing position
     devicelist(self): Parse the devices section
 
     connectlist(self): Parse the connections section
@@ -70,7 +69,7 @@ class Parser:
         # Initialise current symbol
         self.symbol = Symbol()
 
-        #Initisalise a historic symbol for error location reporting
+        # Initisalise a historic symbol for error location reporting
         self.old_symbol = Symbol()
 
         # Initisalise error counter
@@ -109,6 +108,13 @@ class Parser:
         if self.error_count == 0:
             return True
         else:
+            # Reset all classes for GUI
+            self.names = Names()
+            self.devices = Devices()
+            self.network = Network()
+            self.monitors = Monitors()
+            self.scanner = Scanners()
+
             return False
 
     def error(self, error_ID, stopping_symbols, symbol_IDs=[]):
@@ -236,7 +242,7 @@ class Parser:
             msg = "ERROR"
             option = True
 
-        #Display error message
+        # Display error message
         print(msg)
 
         # Display Error position and get error object
@@ -245,7 +251,6 @@ class Parser:
 
         # Append the error object to scanner's list of errors
         self.scanner.error_list.append(this_err)
-
 
         # Return to recovery point for syntax errors
 
@@ -424,7 +429,7 @@ class Parser:
         if (self.symbol.type == self.scanner.NAME):
             device_name = self.names.get_name_string(self.symbol.id)
             device_id = self.names.query(device_name)
-            self.old_symbol = self.symbol # for reporting duplicate devices
+            self.old_symbol = self.symbol  # for reporting duplicate devices
             self.symbol = self.scanner.get_symbol()
             if (self.symbol.type == self.scanner.COLON):
                 self.symbol = self.scanner.get_symbol()
@@ -518,8 +523,10 @@ class Parser:
                 # KEYWORD
                 self.error(
                     err, [
-                        self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                        self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                        self.scanner.RIGHT_CURLY], [
+                        self.scanner.CONNECT_ID, self.scanner.MONITOR_ID,
+                        self.scanner.END_ID])
 
     def logictype(self):
         """Parse the type syntax
@@ -537,8 +544,10 @@ class Parser:
             # KEYWORD
             self.error(
                 self.LOGIC_GATE, [
-                    self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                    self.scanner.CONNECT_ID, self.scanner.MONITOR_ID, self.scanner.END_ID])
+                    self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                    self.scanner.RIGHT_CURLY], [
+                    self.scanner.CONNECT_ID, self.scanner.MONITOR_ID,
+                    self.scanner.END_ID])
             return None
 
     def connection(self):
@@ -547,7 +556,7 @@ class Parser:
         if (self.symbol.type == self.scanner.NAME):
             device_name = self.names.get_name_string(self.symbol.id)
             first_device_id = self.names.query(device_name)
-            self.old_symbol = self.symbol # for undeclared device names
+            self.old_symbol = self.symbol  # for undeclared device names
             self.symbol = self.scanner.get_symbol()
 
             if (self.symbol.type == self.scanner.PERIOD):
@@ -591,50 +600,61 @@ class Parser:
                             if(self.symbol.type == self.scanner.SEMICOLON):
                                 self.symbol = self.scanner.get_symbol()
                             else:
-                                # Error Type: 15: Connection has to be terminated by ';'
+                                # Error: Connection has to be terminated by ';'
                                 # Stopping symbols: NAME, ';', '}' , 'MONITOR'
                                 # or 'END' KEYWORD
                                 self.error(
                                     self.NO_CONNECT_SEMICOLON, [
-                                        self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.NAME, self.scanner.RIGHT_CURLY], [
-                                        self.scanner.MONITOR_ID, self.scanner.END_ID])
+                                        self.scanner.KEYWORD,
+                                        self.scanner.SEMICOLON,
+                                        self.scanner.NAME,
+                                        self.scanner.RIGHT_CURLY], [
+                                        self.scanner.MONITOR_ID,
+                                        self.scanner.END_ID])
                         else:
                             # Error Type: 16: Valid input pin required
                             # Stopping symbols: ';' , '}', 'MONITOR' or 'END'
                             # KEYWORD
                             self.error(
                                 self.INPUT_PIN, [
-                                    self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                                    self.scanner.MONITOR_ID, self.scanner.END_ID])
+                                    self.scanner.KEYWORD,
+                                    self.scanner.SEMICOLON,
+                                    self.scanner.RIGHT_CURLY], [
+                                    self.scanner.MONITOR_ID,
+                                    self.scanner.END_ID])
                     else:
                         # Error Type: 17: Period required to specify input pin
                         # Stopping symbols: ';' , '}', 'MONITOR' or 'END'
                         # KEYWORD
                         self.error(
                             self.PERIOD_INPUT_PIN, [
-                                self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                                self.scanner.MONITOR_ID, self.scanner.END_ID])
+                                self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                                self.scanner.RIGHT_CURLY],
+                                [self.scanner.MONITOR_ID, self.scanner.END_ID])
                 else:
                     # Error Type: 18: Name string of input device required
                     # Stopping symbols: ';' , '}', 'MONITOR' or 'END' KEYWORD
                     self.error(
                         self.NAME_INPUT, [
-                            self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                            self.scanner.MONITOR_ID, self.scanner.END_ID])
+                            self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                            self.scanner.RIGHT_CURLY], [self.scanner.MONITOR_ID,
+                            self.scanner.END_ID])
             else:
                 # Error Type: 19: '=' Assignment operator requried
                 # Stopping symbols: ';' , '}', 'MONITOR' or 'END' KEYWORD
                 self.error(
                     self.ASSIGNMENT, [
-                        self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                        self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                        self.scanner.RIGHT_CURLY], [self.scanner.MONITOR_ID,
+                        self.scanner.END_ID])
         else:
             # Error Type: 20: Valid string name required
             # Stopping symbols: ';' , '}', 'MONITOR' or 'END' KEYWORD
             self.error(
                 self.NAME_STRING, [
-                    self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                    self.scanner.MONITOR_ID, self.scanner.END_ID])
+                    self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                    self.scanner.RIGHT_CURLY], [self.scanner.MONITOR_ID,
+                    self.scanner.END_ID])
 
         # Check for Connection Semantic errors
         if self.error_count == 0:
@@ -645,8 +665,9 @@ class Parser:
                 # Stopping symbols: ';' , '}', 'MONITOR' or 'END' KEYWORD
                 self.error(
                     err, [
-                        self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                        self.scanner.MONITOR_ID, self.scanner.END_ID])
+                        self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                        self.scanner.RIGHT_CURLY], [self.scanner.MONITOR_ID,
+                        self.scanner.END_ID])
 
     def monitor_point(self):
         """Parse the monitor_point syntax"""
@@ -666,8 +687,8 @@ class Parser:
                     # Stopping symbols: '}', ';' or 'END' KEYWORD
                     self.error(
                         self.OUTPUT_PIN, [
-                            self.scanner.KEYWORD, self.scanner.SEMICOLON, self.scanner.RIGHT_CURLY], [
-                            self.scanner.END_ID])
+                            self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                            self.scanner.RIGHT_CURLY], [self.scanner.END_ID])
 
             else:
                 # Device only has one output port

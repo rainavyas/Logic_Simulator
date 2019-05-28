@@ -249,6 +249,10 @@ class Scanner:
             for line in self.file:
                 marker += 1
                 if marker == symbol.line:
+                    error_object.line_num = "Line " + str(symbol.line) + ":"
+                    error_object.line = line.replace("\n", "")
+                    error_object.caret_pos = (symbol.position-2)*" " + "^"
+
                     print("Line " + str(symbol.line) + ":")
                     print(line.replace("\n", ""))
                     print((symbol.position-2)*" " + "^")

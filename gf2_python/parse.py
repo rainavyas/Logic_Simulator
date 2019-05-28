@@ -119,140 +119,125 @@ class Parser:
 
         # Consider Syntax Errors
         if error_ID == self.NO_END:
-            msg = "'END' keyword required at end of file"
+            print("'END' keyword required at end of file")
             option = False
         elif error_ID == self.NO_CURLY_DEVICE:
-            msg = "Expected '{' after 'DEVICE'"
+            print("Expected '{' after 'DEVICE'")
             option = True
         elif error_ID == self.NEED_DEVICE_KEYWORD:
-            msg = "'DEVICES' keyword required"
+            print("'DEVICES' keyword required")
             option = False
         elif error_ID == self.NO_CURLY_CONNECT:
-            msg = "Expected '{' after 'CONNECT'"
+            print("Expected '{' after 'CONNECT'")
             option = True
         elif error_ID == self.NEED_CONNECT_KEYWORD:
-            msg = "'CONNECT' keyword required"
+            print("'CONNECT' keyword required")
             option = True
         elif error_ID == self.NO_CURLY_MONITOR:
-            msg = "Expected '{' after 'MONITOR'"
+            print("Expected '{' after 'MONITOR'")
             option = True
         elif error_ID == self.NEED_MONITOR_KEYWORD:
-            msg = "'MONITOR' keyword required"
+            print("'MONITOR' keyword required")
             option = True
         elif error_ID == self.INTEGER:
-            msg = "Needs to be a positive integer"
+            print("Needs to be a positive integer")
             option = False
         elif error_ID == self.NEED_QUALIFIER:
-            msg = "Parameter has to be 'initial', 'inputs' or 'period'"
+            print("Parameter has to be 'initial', 'inputs' or 'period'")
             option = False
         elif error_ID == self.NEED_PARAM:
-            msg = "Comma has to followed by parameter speficification"
+            print("Comma has to followed by parameter speficification")
             option = False
         elif error_ID == self.NO_DEVICE_SEMICOLON:
-            msg = "Device definition needs to end in ';'"
+            print("Device definition needs to end in ';'")
             option = True
         elif error_ID == self.NO_DEVICE_COLON:
-            msg = "Device name has to be followed by ':'"
+            print("Device name has to be followed by ':'")
             option = True
         elif error_ID == self.DEVICE_NAME:
-            msg = "Valid Device name required"
+            print("Valid Device name required")
             option = False
         elif error_ID == self.LOGIC_GATE:
-            msg = "Valid Logic gate required e.g. 'AND'"
+            print("Valid Logic gate required e.g. 'AND'")
             option = False
         elif error_ID == self.OUTPUT_PIN:
-            msg = "Output pin has to be 'Q' or 'QBAR'"
+            print("Output pin has to be 'Q' or 'QBAR'")
             option = False
         elif error_ID == self.NO_CONNECT_SEMICOLON:
-            msg = "Connection has to be terminated by ';'"
+            print("Connection has to be terminated by ';'")
             option = True
         elif error_ID == self.INPUT_PIN:
-            msg = "Valid input pin required"
+            print("Valid input pin required")
             option = False
         elif error_ID == self.PERIOD_INPUT_PIN:
-            msg = "'.' required to specify input pin"
+            print("'.' required to specify input pin")
             option = True
         elif error_ID == self.NAME_INPUT:
-            msg = "Name string of input device required"
+            print("Name string of input device required")
             option = True
         elif error_ID == self.ASSIGNMENT:
-            msg = "'=' Assignment operator requried"
+            print("'=' Assignment operator requried")
             option = True
         elif error_ID == self.NAME_STRING:
-            msg = "Valid string name required"
+            print("Valid string name required")
             option = False
         elif error_ID == self.NO_MONITOR_SEMICOLON:
-            msg = "Monitor point has to be terminated by ';'"
+            print("Monitor point has to be terminated by ';'")
             option = True
         elif error_ID == self.MISSING_RIGHT_CURLY:
-            msg = "Missing '}'"
+            print("Missing '}'")
             option = True
 
         # Consider Semantic Errors
         # DEVICES
         elif error_ID == self.devices.DEVICE_PRESENT:
-            msg = "Device Name already used"
-            option = False
+            print("Device Name already used")
+            option = True
             self.symbol = self.old_symbol
         elif error_ID == self.devices.NO_QUALIFIER:
-            msg = "Device qualifier required"
+            print("Device qualifier required")
             option = True
         elif error_ID == self.devices.INVALID_QUALIFIER:
-            msg = "Valid device qualifier requried"
+            print("Valid device qualifier requried")
             option = True
         elif error_ID == self.devices.QUALIFIER_PRESENT:
-            msg = "Qualifier already present"
+            print("Qualifier already present")
             option = True
         elif error_ID == self.devices.BAD_DEVICE:
-            msg = "Invalid device declared"
+            print("Invalid device declared")
             option = True
 
         # CONNECTIONS
         elif error_ID == self.network.DEVICE_ABSENT:
-            msg = "Device is not declared"
-            option = False
+            print("Device is not declared")
+            option = True
             self.symbol = self.old_symbol
         elif error_ID == self.network.INPUT_CONNECTED:
-            msg = "Input is already in a connection"
+            print("Input is already in a connection")
             option = True
         elif error_ID == self.network.INPUT_TO_INPUT:
-            msg = "Both ports are inputs"
+            print("Both ports are inputs")
             option = True
         elif error_ID == self.network.PORT_ABSENT:
-            msg = "Port is absent"
+            print("Port is absent")
             option = True
         elif error_ID == self.network.OUTPUT_TO_OUTPUT:
-            msg = "Both ports are outputs"
+            print("Both ports are outputs")
             option = True
 
         # MONITORING
         elif error_ID == self.monitors.NOT_OUTPUT:
-            msg = "Cannot monitor a point that is not an output"
+            print("Cannot monitor a point that is not an output")
             option = True
         elif error_ID == self.monitors.MONITOR_PRESENT:
-            msg = "This point is already being monitored"
+            print("This point is already being monitored")
             option = True
         else:
-            msg = "ERROR"
+            print("ERROR")
             option = True
 
-        #Display error message
-        print(msg)
-
-        # Display Error position and get error object
-        this_err = self.scanner.print_location(self.symbol, option)
-        this_err.msg = msg
-
-        # Append the error object to scanner's list of errors
-        self.scanner.error_list.append(this_err)
-
-        # if len(self.scanner.error_list) > 0:
-        #     print("TEST")
-        #     print(self.scanner.error_list[0].msg)
-        #     print(self.scanner.error_list[0].line_num)
-        #     print(self.scanner.error_list[0].line)
-        #     print(self.scanner.error_list[0].caret_pos)
-
+        # Display Error position
+        self.scanner.print_location(self.symbol, option)
 
         # Return to recovery point for syntax errors
 

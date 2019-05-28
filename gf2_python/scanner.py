@@ -275,7 +275,7 @@ class Scanner:
                     #  Print error parameters:
                     print("Line " + str(symbol.prev_line) + ":")
                     print(line.replace("\n", ""))
-                    print((symbol.prev_position-2)*"  " + "^")
+                    print((symbol.prev_position-2)*" " + "^")
 
         #  Return to the stored (current) position.
         self.file.seek(stored_position)

@@ -192,7 +192,7 @@ class Parser:
         # DEVICES
         elif error_ID == self.devices.DEVICE_PRESENT:
             print("Device Name already used")
-            option = True
+            option = False
             self.symbol = self.old_symbol
         elif error_ID == self.devices.NO_QUALIFIER:
             print("Device qualifier required")

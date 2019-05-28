@@ -259,8 +259,8 @@ class Scanner:
                 marker += 1
                 if marker == symbol.prev_line:
                     error_object.line_num = "Line " + str(symbol.prev_line) + ":"
-                    error_object.line = line
-                    error_object.carat_pos = (symbol.prev_position-2)*" " + "^"
+                    error_object.line = line.replace("\n", "")
+                    error_object.caret_pos = (symbol.prev_position-2)*" " + "^"
 
                     print("Line " + str(symbol.prev_line) + ":")
                     print(line.replace("\n", ""))

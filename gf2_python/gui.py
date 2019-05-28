@@ -115,19 +115,42 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 GL.glColor3f(self.signal_colours[j][0], self.signal_colours[j][1], self.signal_colours[j][2])
                 GL.glBegin(GL.GL_LINE_STRIP)
                 for i in range(len(self.current_signal[j])):
-                    x = (i * 20) + 30
-                    x_next = (i * 20) + 50
+                    x = (i * 20) + 40
+                    x_next = (i * 20) + 60
                     if self.current_signal[j][i] == 0:
-                        y = 75*(j+1)
+                        y = 75*(j+1)+30
                     else:
-                        y = 75*(j+1)+25
+                        y = 75*(j+1)+55
                     GL.glVertex2f(x, y)
                     GL.glVertex2f(x_next, y)
                 GL.glEnd()
-                self.render_text('0', 10, 75*(j+1))
-                self.render_text('1', 10, 75*(j+1)+25)
-                self.render_text(self.current_monitor_points[j], 10, 75*(j+1)-20)
-                self.render_text(self.current_monitor_points[j], 10, 75*(j+1)-20)
+                self.render_text('0', 10, 75*(j+1)+30)
+                self.render_text('1', 10, 75*(j+1)+55)
+                self.render_text(self.current_monitor_points[j], 10, 75*(j+1)+10)
+                self.render_text(self.current_monitor_points[j], 10, 75*(j+1)+10)
+
+            GL.glColor3f(0, 0, 0)
+            GL.glBegin(GL.GL_LINE_STRIP)
+            for i in range(len(self.current_signal[0])):
+                x = (i * 20) + 40
+                x_next = (i * 20) + 60
+                y = 50
+                GL.glVertex2f(x, y)
+                GL.glVertex2f(x_next, y)
+            GL.glEnd()
+            for i in range(len(self.current_signal[0])+1):
+                GL.glColor3f(0, 0, 0)
+                GL.glBegin(GL.GL_LINE_STRIP)
+                x = (i * 20) + 40
+                y_bottom = 45
+                y_top = 55
+                GL.glVertex2f(x, y_bottom)
+                GL.glVertex2f(x, y_top)
+                GL.glEnd()
+            for i in range(len(self.current_signal[0])+1):
+                self.render_text(str(i), (i * 20) + 39, 25)
+            #self.render_text(str(len(self.current_signal[0])), (len(self.current_signal[0]) * 20) + 35, 25)
+            self.render_text('time', 10, 45)
 
         # We have been drawing to the back buffer, flush the graphics pipeline
         # and swap the back buffer to the front
@@ -205,6 +228,13 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 GL.glRasterPos2f(x_pos, y_pos)
             else:
                 GLUT.glutBitmapCharacter(font, ord(character))
+
+    def reset(self):
+        GL.glLoadIdentity()
+        self.pan_x = 0
+        self.pan_y = 0
+        self.zoom = 1
+        
 
 #Do the scanner, parser stuffs
 class Gui(wx.Frame):
@@ -358,6 +388,7 @@ class Gui(wx.Frame):
 
     def on_run_button(self, event):
         """Handle the event when the user clicks the run button."""
+        self.canvas.reset()
         text = "Run button pressed."
         self.canvas.render(text)
 
@@ -372,6 +403,7 @@ class Gui(wx.Frame):
 
     def on_continue_button(self, event):
         """Handle the event when the user clicks the continue button."""
+        self.canvas.reset()
         text = "Continue button pressed."
         self.canvas.render(text)
 

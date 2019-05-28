@@ -16,4 +16,4 @@ class Error:
         self.msg = msg
         self.line_num = line_num
         self.line = line
-        self.carat_pos = carat_pos
+        self.caret_pos = carat_pos

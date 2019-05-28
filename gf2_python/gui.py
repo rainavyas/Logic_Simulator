@@ -495,6 +495,7 @@ class Gui(wx.Frame):
         if self.parser.parse_network():
             self.loadNetwork()
         else:
+            print(len(self.scanner.error_list))
             self.clearNetwork()
 
     def loadNetwork(self):

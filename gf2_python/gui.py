@@ -61,6 +61,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         self.context = wxcanvas.GLContext(self)
         self.current_signal = None
         self.current_monitor_points = None
+        self.signal_colours = []
 
         # Initialise variables for panning
         self.pan_x = 0
@@ -95,6 +96,8 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         """Handle all drawing operations."""
         if monitors != None:
             self.current_signal, self.current_monitor_points = monitors.get_signals()
+            for i in range(len(self.current_monitor_points)):
+                self.signal_colours.append([random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)])
         self.SetCurrent(self.context)
         if not self.init:
             # Configure the viewport, modelview and projection matrices
@@ -109,7 +112,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
 
         if self.current_signal != None:
             for j in range(len(self.current_signal)):
-                GL.glColor3f(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))  # signal trace is blue
+                GL.glColor3f(self.signal_colours[j][0], self.signal_colours[j][1], self.signal_colours[j][2])
                 GL.glBegin(GL.GL_LINE_STRIP)
                 for i in range(len(self.current_signal[j])):
                     x = (i * 20) + 30
@@ -227,7 +230,7 @@ class Gui(wx.Frame):
     on_text_box(self, event): Event handler for when the user enters text.
     """
 
-    def __init__(self, title, names, devices, network, monitors, path=None):
+    def __init__(self, title, names, devices, network, monitors, path=None, scanner=None, parser=None):
         """Initialise widgets and layout."""
         super().__init__(parent=None, title=title, size=(800, 600))
 
@@ -236,6 +239,8 @@ class Gui(wx.Frame):
         self.network = network
         self.monitors = monitors
         self.path = path
+        self.scanner = scanner
+        self.parser = parser
         
         self.number_of_mps = 0
         self.all_mp_names = []
@@ -453,9 +458,9 @@ class Gui(wx.Frame):
         self.network = Network(self.names, self.devices)
         self.monitors = Monitors(self.names, self.devices, self.network)
         self.path = event.GetEventObject().GetPath()
-        scanner = Scanner(self.path, self.names)
-        parser = Parser(self.names, self.devices, self.network, self.monitors, scanner)
-        if parser.parse_network():
+        self.scanner = Scanner(self.path, self.names)
+        self.parser = Parser(self.names, self.devices, self.network, self.monitors, self.scanner)
+        if self.parser.parse_network():
             self.loadNetwork()
         else:
             self.clearNetwork()

@@ -94,10 +94,12 @@ class MyGLCanvas(wxcanvas.GLCanvas):
 
     def render(self, text, monitors=None):
         """Handle all drawing operations."""
-        if monitors != None:
-            self.current_signal, self.current_monitor_points = monitors.get_signals()
+        if monitors is not None:
+            self.current_signal, self.current_monitor_points = (
+                monitors.get_signals())
             for i in range(len(self.current_monitor_points)):
-                self.signal_colours.append([random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)])
+                self.signal_colours.append([random.uniform(0.0, 1.0), (
+                    random.uniform(0.0, 1.0)), random.uniform(0.0, 1.0)])
         self.SetCurrent(self.context)
         if not self.init:
             # Configure the viewport, modelview and projection matrices
@@ -112,7 +114,8 @@ class MyGLCanvas(wxcanvas.GLCanvas):
 
         if self.current_signal != []:
             for j in range(len(self.current_signal)):
-                GL.glColor3f(self.signal_colours[j][0], self.signal_colours[j][1], self.signal_colours[j][2])
+                GL.glColor3f(self.signal_colours[j][0], (
+                    self.signal_colours[j][1]), self.signal_colours[j][2])
                 GL.glBegin(GL.GL_LINE_STRIP)
                 for i in range(len(self.current_signal[j])):
                     x = (i * 20) + 40
@@ -126,8 +129,10 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 GL.glEnd()
                 self.render_text('0', 10, 75*(j+1)+30)
                 self.render_text('1', 10, 75*(j+1)+55)
-                self.render_text(self.current_monitor_points[j], 10, 75*(j+1)+10)
-                self.render_text(self.current_monitor_points[j], 10, 75*(j+1)+10)
+                self.render_text(self.current_monitor_points[j], 10, (
+                    75*(j+1)+10))
+                self.render_text(self.current_monitor_points[j], 10, (
+                    75*(j+1)+10))
 
             GL.glColor3f(0, 0, 0)
             GL.glBegin(GL.GL_LINE_STRIP)
@@ -149,7 +154,6 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 GL.glEnd()
             for i in range(len(self.current_signal[0])+1):
                 self.render_text(str(i), (i * 20) + 39, 25)
-            #self.render_text(str(len(self.current_signal[0])), (len(self.current_signal[0]) * 20) + 35, 25)
             self.render_text('time', 10, 45)
 
         # We have been drawing to the back buffer, flush the graphics pipeline
@@ -234,9 +238,8 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         self.pan_x = 0
         self.pan_y = 0
         self.zoom = 1
-        
 
-#Do the scanner, parser stuffs
+
 class Gui(wx.Frame):
     """Configure the main window and all the widgets.
 
@@ -260,10 +263,12 @@ class Gui(wx.Frame):
     on_text_box(self, event): Event handler for when the user enters text.
     """
 
-    def __init__(self, title, names, devices, network, monitors, path=None, scanner=None, parser=None):
+    def __init__(self, title, names, devices, network,
+                 monitors, path=None, scanner=None, parser=None):
         """Initialise widgets and layout."""
         super().__init__(parent=None, title=title, size=(800, 600))
 
+        # Configure locally global variables
         self.names = names
         self.devices = devices
         self.network = network
@@ -290,10 +295,13 @@ class Gui(wx.Frame):
         self.canvas = MyGLCanvas(self)
 
         # Configure the widgets
-        self.panel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
+        self.panel = scrolled.ScrolledPanel(self, size=wx.Size(250, 250),
+                                            style=wx.SUNKEN_BORDER)
         self.panel.SetAutoLayout(1)
         self.panel.SetupScrolling(False, True)
-        self.file_picker = wx.FilePickerCtrl(self, message='Select Source File', wildcard='Text Files (*.txt)|*.txt')
+        self.file_picker = (
+            wx.FilePickerCtrl(self, message='Select Source File',
+                              wildcard='Text Files (*.txt)|*.txt'))
         self.text_cycles = wx.StaticText(self, wx.ID_ANY, "Cycles:")
         self.text_mps = wx.StaticText(self, wx.ID_ANY, "Monitor Points")
         self.spin = wx.SpinCtrl(self, wx.ID_ANY, "10", min=1)
@@ -306,7 +314,7 @@ class Gui(wx.Frame):
         self.add_button = wx.Button(self, wx.ID_ANY, "Add")
         self.mp_names = wx.Choice(self, wx.ID_ANY, choices=['SELECT'])
         self.mp_names.SetSelection(0)
-        
+
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
         self.spin.Bind(wx.EVT_SPINCTRL, self.on_spin)
@@ -344,17 +352,20 @@ class Gui(wx.Frame):
         buttons_sizer.Add(self.exit_button, 1)
 
         mp_control_sizer.Add(self.mp_names, 1, wx.ALIGN_CENTRE)
-        mp_control_sizer.Add(self.add_button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
+        mp_control_sizer.Add(self.add_button, 1,
+                             wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
 
         mp_sizer_all.Add(self.text_mps, 0, wx.RIGHT, 5)
-        mp_sizer_all.Add(mp_control_sizer, 0, wx.RIGHT|wx.TOP, 5)
-        mp_sizer_all.Add(self.panel, 1, wx.RIGHT|wx.TOP|wx.EXPAND, 5)
+        mp_sizer_all.Add(mp_control_sizer, 0, wx.RIGHT | wx.TOP, 5)
+        mp_sizer_all.Add(self.panel, 1, wx.RIGHT | wx.TOP | wx.EXPAND, 5)
 
         self.panel.SetSizer(self.mp_sizer)
 
-        if self.path != None:
+        # If filepath given in command line, loads network
+        if self.path is not None:
             self.loadNetwork()
 
+        # Sets minimum screen size and frame's sizer
         self.SetSizeHints(600, 800)
         self.SetSizer(top_sizer)
 
@@ -364,8 +375,10 @@ class Gui(wx.Frame):
         if Id == wx.ID_EXIT:
             self.Close(True)
         if Id == wx.ID_ABOUT:
-            wx.MessageBox("Logic Simulator\nCreated by Mojisola Agboola\n2017",
-                          "About Logsim", wx.ICON_INFORMATION | wx.OK)
+            wx.MessageBox(
+                ("Logic Simulator\nCreated by Jonty Page," +
+                 " Vyas Raina and James Crossley\n2019"),
+                "About Logsim", wx.ICON_INFORMATION | wx.OK)
 
     def on_spin(self, event):
         """Handle the event when the user changes the spin control value."""
@@ -376,7 +389,7 @@ class Gui(wx.Frame):
     def run_network(self, cycles):
         """Run the network for the specified number of simulation cycles.
 
-        Return True if successful.
+        If successful, return True. If unsuccessful, display error message.
         """
         for _ in range(cycles):
             if self.network.execute_network():
@@ -426,7 +439,8 @@ class Gui(wx.Frame):
         self.Close()
 
     def onAddMP(self, event):
-        """"""
+        """Handle the event when the user clicks the Add button"""
+        # Finds selected monitor points and adds to monitor object
         index = self.mp_names.GetSelection()
         mp_name = self.mp_names.GetString(index)
         if mp_name != 'SELECT':
@@ -438,26 +452,31 @@ class Gui(wx.Frame):
             else:
                 device = self.names.query(mp[0])
                 port = self.names.query(mp[1])
-            monitor_error = self.monitors.make_monitor(device, port, self.cycles_completed)
-                    
+            monitor_error = self.monitors.make_monitor(
+                device, port, self.cycles_completed)
+
+            # Removes monitor point from drop-down list
             reset_index = self.mp_names.FindString('SELECT')
             self.mp_names.SetSelection(reset_index)
+
+            # Adds monitor point and remove button to GUI
             text = "Monitor Point {} added.".format(mp_name)
             self.canvas.render(text)
             self.number_of_mps += 1
             self.all_mp_names.append(mp_name)
             new_button = wx.Button(self.panel, label='Remove', name=mp_name)
             new_sizer = wx.BoxSizer(wx.HORIZONTAL)
-            new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, mp_name), 1, wx.ALIGN_CENTRE)
+            new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, mp_name),
+                          1, wx.ALIGN_CENTRE)
             new_sizer.Add(new_button, 1, wx.LEFT | wx.RIGHT | wx.TOP, 5)
             new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
             self.mp_sizer.Add(new_sizer, 0, wx.RIGHT, 5)
             self.Layout()
 
     def onRemoveMP(self, event):
-        """"""
+        """Handle the event when the user clicks the remove button"""
+        # Finds selected monitor points and removes from monitor object
         mp_name = event.GetEventObject().GetName()
-        self.mp_names.Append(mp_name)
         mp = mp_name.split('.')
         if len(mp) == 1:
             device = self.names.query(mp[0])
@@ -466,6 +485,11 @@ class Gui(wx.Frame):
             device = self.names.query(mp[0])
             port = self.names.query(mp[1])
         self.monitors.remove_monitor(device, port)
+
+        # Adds monitor point to drop-down list
+        self.mp_names.Append(mp_name)
+
+        # Removes monitor point and remove button from GUI
         index = self.all_mp_names.index(mp_name)
         text = "Monitor Point {} removed.".format(mp_name)
         self.canvas.render(text)
@@ -476,15 +500,18 @@ class Gui(wx.Frame):
         del self.all_mp_names[index]
 
     def onToggleButton(self, event):
+        """Handle the event when the user clicks a switch's toggle button"""
         button = event.GetEventObject()
         switch_id = self.names.query(button.GetName())
         if button.GetValue():
+            # Switch is off, so turn button on and green
             self.devices.set_switch(switch_id, 1)
             button.SetBackgroundColour(wx.Colour(100, 255, 100))
             button.SetLabel('On')
             text = "{} turned on.".format(button.GetName())
             self.canvas.render(text)
         else:
+            # Switch is on, so turn button off and red
             self.devices.set_switch(switch_id, 0)
             button.SetBackgroundColour(wx.Colour(255, 130, 130))
             button.SetLabel('Off')
@@ -492,42 +519,36 @@ class Gui(wx.Frame):
             self.canvas.render(text)
 
     def checkFile(self, event):
+        """Check file selected by filepickerctrl is successfully parsed
+
+        If succesful, load network. If unsuccessful, display error message.
+        """
         self.names = Names()
         self.devices = Devices(self.names)
         self.network = Network(self.names, self.devices)
         self.monitors = Monitors(self.names, self.devices, self.network)
         self.path = event.GetEventObject().GetPath()
         self.scanner = Scanner(self.path, self.names)
-        self.parser = Parser(self.names, self.devices, self.network, self.monitors, self.scanner)
+        self.parser = Parser(self.names, self.devices,
+                             self.network, self.monitors, self.scanner)
         if self.parser.parse_network():
+            # Clear old network and load new
+            self.clearNetwork()
             self.loadNetwork()
         else:
-            self.displaySyntaxErrors()
+            # Clear old network and display error message
             self.clearNetwork()
+            self.displaySyntaxErrors()
 
     def loadNetwork(self):
-        for i in range(len(self.all_mp_names)-1, -1, -1):
-            name = self.all_mp_names[i]
-            self.mp_sizer.Hide(i)
-            self.mp_sizer.Remove(i)
-            self.number_of_mps -= 1
-            self.Layout()
-            self.all_mp_names.remove(name)
-        
-        if self.loaded_switches == True:
-            self.side_sizer.Hide(3)
-            self.side_sizer.Remove(3)
-            self.Layout()
-            self.loaded_switches = False
-
+        """Loads switches and monitoring points from file into GUI"""
+        # Find list of monitored and unmonitored signals
         signal_list = self.monitors.get_signal_names()
         monitored_signal_list = signal_list[0]
         unmonitored_signal_list = signal_list[1]
-        self.mp_names.Clear()
-        self.mp_names.Append('SELECT')
-        self.mp_names.SetSelection(0)
         self.mp_names.Append(unmonitored_signal_list)
-            
+
+        # Find list of switch names
         device_kind = self.names.query('SWITCH')
         switch_ids = self.devices.find_devices(device_kind)
         switch_initials = []
@@ -536,7 +557,8 @@ class Gui(wx.Frame):
             switch = self.devices.get_device(i)
             switch_initials.append(switch.switch_state)
             switch_names.append(self.names.get_name_string(i))
-        
+
+        # Load monitored signals from file to GUI
         if monitored_signal_list != []:
             for i in monitored_signal_list:
                 mp = i.split('.')
@@ -546,46 +568,60 @@ class Gui(wx.Frame):
                 else:
                     device = self.names.query(mp[0])
                     port = self.names.query(mp[1])
-                monitor_error = self.monitors.make_monitor(device, port, self.cycles_completed)
+                monitor_error = self.monitors.make_monitor(
+                    device, port, self.cycles_completed)
                 self.number_of_mps += 1
                 self.all_mp_names.append(i)
                 new_button = wx.Button(self.panel, label='Remove', name=i)
                 new_sizer = wx.BoxSizer(wx.HORIZONTAL)
-                new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, i), 1, wx.ALIGN_CENTRE)
+                new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, i),
+                              1, wx.ALIGN_CENTRE)
                 new_sizer.Add(new_button, 1, wx.LEFT | wx.RIGHT | wx.TOP, 5)
                 new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
                 self.mp_sizer.Add(new_sizer, 0, wx.RIGHT, 5)
             self.Layout()
 
+        # Load switches from file to GUI
         if switch_names != []:
-            text_switches = wx.StaticText(self, wx.ID_ANY, "Initial Switch Values:")
-            switchpanel =scrolled.ScrolledPanel(self, size = wx.Size(250,250), style = wx.SUNKEN_BORDER)
+            text_switches = wx.StaticText(
+                self, wx.ID_ANY, "Initial Switch Values:")
+            switchpanel = scrolled.ScrolledPanel(
+                self, size=wx.Size(250, 250), style=wx.SUNKEN_BORDER)
             switchpanel.SetAutoLayout(1)
             switchpanel.SetupScrolling(False, True)
-            
+
             switch_sizer_container = wx.BoxSizer(wx.VERTICAL)
             switch_sizer_all = wx.BoxSizer(wx.VERTICAL)
 
             self.side_sizer.Add(switch_sizer_all, 1, wx.ALL, 5)
-            
+
             switchpanel.SetSizer(switch_sizer_container)
-            
+
             switch_sizer_all.Add(text_switches, 0, wx.RIGHT, 5)
-            switch_sizer_all.Add(switchpanel, 1, wx.TOP|wx.RIGHT|wx.EXPAND, 5)
+            switch_sizer_all.Add(switchpanel, 1,
+                                 wx.TOP | wx.RIGHT | wx.EXPAND, 5)
 
             for i in range(len(switch_ids)):
                 switch_sizer = wx.BoxSizer(wx.HORIZONTAL)
-                switch_sizer.Add(wx.StaticText(switchpanel, wx.ID_ANY, '{}'.format(switch_names[i])), 1, wx.ALIGN_CENTRE)
+                switch_sizer.Add(wx.StaticText(
+                    switchpanel, wx.ID_ANY, '{}'.format(switch_names[i])),
+                    1, wx.ALIGN_CENTRE)
                 if switch_initials[i] == 1:
-                    button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'On', name='{}'.format(switch_names[i]))
+                    button = wx.ToggleButton(
+                        switchpanel, wx.ID_ANY, 'On',
+                        name='{}'.format(switch_names[i]))
                     button.SetBackgroundColour(wx.Colour(100, 255, 100))
                     button.SetValue(True)
                 else:
-                    button = wx.ToggleButton(switchpanel, wx.ID_ANY, 'Off', name='{}'.format(switch_names[i]))
+                    button = wx.ToggleButton(
+                        switchpanel, wx.ID_ANY, 'Off',
+                        name='{}'.format(switch_names[i]))
                     button.SetBackgroundColour(wx.Colour(255, 130, 130))
                 button.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
-                switch_sizer.Add(button, 1, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
-                switch_sizer_container.Add(switch_sizer, 0, wx.TOP|wx.RIGHT, 5)
+                switch_sizer.Add(button, 1,
+                                 wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 5)
+                switch_sizer_container.Add(switch_sizer, 0,
+                                           wx.TOP | wx.RIGHT, 5)
 
             self.loaded_switches = True
             self.Layout()
@@ -593,6 +629,8 @@ class Gui(wx.Frame):
         self.loaded_network = True
 
     def clearNetwork(self):
+        """Clears the switches and monitoring points from the GUI"""
+        # Clear monitored points from GUI
         for i in range(len(self.all_mp_names)-1, -1, -1):
             name = self.all_mp_names[i]
             self.mp_sizer.Hide(i)
@@ -601,24 +639,30 @@ class Gui(wx.Frame):
             self.Layout()
             self.all_mp_names.remove(name)
 
-        if self.loaded_switches == True:
+        self.mp_names.Clear()
+        self.mp_names.Append('SELECT')
+        self.mp_names.SetSelection(0)
+
+        # Clear switches from GUI
+        if self.loaded_switches is True:
             self.side_sizer.Hide(3)
             self.side_sizer.Remove(3)
             self.Layout()
             self.loaded_switches = False
 
-        self.mp_names.Clear()
-        self.mp_names.Append('SELECT')
-        self.mp_names.SetSelection(0)
-
         self.loaded_network = False
 
     def displaySyntaxErrors(self):
-        error_message = wx.MessageDialog(self, '', caption='ERROR', style=wx.OK|wx.CENTRE|wx.STAY_ON_TOP)
+        """Displays message dialog containing nature of syntax error"""
+        # Create message dialog
+        error_message = wx.MessageDialog(
+            self, '', caption='ERROR',
+            style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_string = ''
         font = error_message.GetFont()
         dc = wx.ScreenDC()
         dc.SetFont(font)
+        # Create error string and ensures correct caret location
         for i in self.scanner.error_list:
             error_string += i.msg
             error_string += '\n'
@@ -638,6 +682,9 @@ class Gui(wx.Frame):
         self.file_picker.SetPath('')
 
     def displayError(self, text):
-        error_message = wx.MessageDialog(self, text, caption='ERROR', style=wx.OK|wx.CENTRE|wx.STAY_ON_TOP)
+        """Displays message dialog containing nature of runtime error"""
+        error_message = wx.MessageDialog(
+            self, text, caption='ERROR',
+            style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_message.ShowModal()
         error_message.Destroy()

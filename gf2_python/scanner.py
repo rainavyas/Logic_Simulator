@@ -63,7 +63,16 @@ class Scanner:
     def __init__(self, path, names):
         """Open specified file and initialise reserved words and IDs."""
         #  Open the file.
-        self.file = open(path)
+
+        if path.endswith(".txt"):
+            try:
+                self.file = open(path)
+            except:
+                print('File does not exist.')
+                sys.exit()
+        else:
+            print("Invalid file type.")
+            sys.exit()
 
         self.error_list = []
 

@@ -10,6 +10,7 @@ Symbol - encapsulates a symbol and stores its properties.
 """
 
 from names import Names
+from errors import Error
 import sys
 import os
 
@@ -219,6 +220,7 @@ class Scanner:
          below to indicate the final character of the symbol.
         """
 
+        error_object = Error()
         #  Store the current position.
         stored_position = self.file.tell()
 
@@ -241,12 +243,18 @@ class Scanner:
             for line in self.file:
                 marker += 1
                 if marker == symbol.prev_line:
+                    error_object.line_num = "Line " + str(symbol.prev_line) + ":"
+                    error_object.line = line
+                    error_object.carat_pos = (symbol.prev_position-2)*" " + "^"
+
                     print("Line " + str(symbol.prev_line) + ":")
                     print(line.replace("\n", ""))
                     print((symbol.prev_position-2)*" " + "^")
 
         #  Return to the stored (current) position.
         self.file.seek(stored_position)
+
+        return error_object
 
     def get_symbol(self):
         """Translate the next sequence of characters into a symbol.

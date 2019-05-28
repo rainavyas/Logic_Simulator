@@ -16,7 +16,7 @@ def new_monitors():
     new_monitors = Monitors(new_names, new_devices, new_network)
 
     [SW1_ID, SW2_ID, OR1_ID, I1, I2] = new_names.lookup(["Sw1", "Sw2", "Or1",
-                                                        "I1", "I2"])
+                                                         "I1", "I2"])
     # Add 2 switches and an OR gate
     new_devices.make_device(SW1_ID, new_devices.SWITCH, 0)
     new_devices.make_device(SW2_ID, new_devices.SWITCH, 0)

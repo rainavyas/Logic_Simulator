@@ -10,6 +10,7 @@ position.
 
 """
 
+
 class Error:
     """Record an error's user message, line number, line and position.
 
@@ -30,7 +31,7 @@ class Error:
 
     """
 
-    def __init__(self, msg = "", line_num = "", line = "", caret_pos = ""):
+    def __init__(self, msg="", line_num="", line="", caret_pos=""):
 
         self.msg = msg
         self.line_num = line_num

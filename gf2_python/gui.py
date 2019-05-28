@@ -296,7 +296,7 @@ class Gui(wx.Frame):
         self.file_picker = wx.FilePickerCtrl(self, message='Select Source File', wildcard='Text Files (*.txt)|*.txt')
         self.text_cycles = wx.StaticText(self, wx.ID_ANY, "Cycles:")
         self.text_mps = wx.StaticText(self, wx.ID_ANY, "Monitor Points")
-        self.spin = wx.SpinCtrl(self, wx.ID_ANY, "10")
+        self.spin = wx.SpinCtrl(self, wx.ID_ANY, "10", min=1)
         self.run_button = wx.Button(self, wx.ID_ANY, "Run")
         self.run_button.SetBackgroundColour(wx.Colour(100, 255, 100))
         self.continue_button = wx.Button(self, wx.ID_ANY, "Continue")

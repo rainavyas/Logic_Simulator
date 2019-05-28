@@ -11,7 +11,7 @@ Error - records the particular errors
 class Error:
     "DOCSTRING stuff"
 
-    def __init__(self, msg, line_num, line, carat_pos):
+    def __init__(self, msg = "", line_num = "", line = "", carat_pos = ""):
 
         self.msg = msg
         self.line_num = line_num

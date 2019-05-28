@@ -70,6 +70,9 @@ class Parser:
         # Initialise current symbol
         self.symbol = Symbol()
 
+        #Initisalise a historic symbol for error location reporting
+        self.old_symbol = Symbol()
+
         # Initisalise error counter
         self.error_count = 0
 
@@ -190,6 +193,7 @@ class Parser:
         elif error_ID == self.devices.DEVICE_PRESENT:
             print("Device Name already used")
             option = True
+            self.symbol = self.old_symbol
         elif error_ID == self.devices.NO_QUALIFIER:
             print("Device qualifier required")
             option = True
@@ -207,6 +211,7 @@ class Parser:
         elif error_ID == self.network.DEVICE_ABSENT:
             print("Device is not declared")
             option = True
+            self.symbol = self.old_symbol
         elif error_ID == self.network.INPUT_CONNECTED:
             print("Input is already in a connection")
             option = True
@@ -411,6 +416,7 @@ class Parser:
         if (self.symbol.type == self.scanner.NAME):
             device_name = self.names.get_name_string(self.symbol.id)
             device_id = self.names.query(device_name)
+            self.old_symbol = self.symbol # for reporting duplicate devices
             self.symbol = self.scanner.get_symbol()
             if (self.symbol.type == self.scanner.COLON):
                 self.symbol = self.scanner.get_symbol()
@@ -533,6 +539,7 @@ class Parser:
         if (self.symbol.type == self.scanner.NAME):
             device_name = self.names.get_name_string(self.symbol.id)
             first_device_id = self.names.query(device_name)
+            self.old_symbol = self.symbol # for undeclared device names
             self.symbol = self.scanner.get_symbol()
 
             if (self.symbol.type == self.scanner.PERIOD):

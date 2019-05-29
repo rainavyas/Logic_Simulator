@@ -1,0 +1,8 @@
+/* my comments
+should
+always be
+
+
+skipped when
+enclosed */
+X

@@ -112,7 +112,9 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         # Draw specified text at position (10, 10)
         self.render_text(text, 10, 10)
 
+        # Draw signals
         if self.current_signal != []:
+            # Draw each signal
             for j in range(len(self.current_signal)):
                 GL.glColor3f(self.signal_colours[j][0], (
                     self.signal_colours[j][1]), self.signal_colours[j][2])
@@ -134,6 +136,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 self.render_text(self.current_monitor_points[j], 10, (
                     75*(j+1)+10))
 
+            # Draw time-step axis
             GL.glColor3f(0, 0, 0)
             GL.glBegin(GL.GL_LINE_STRIP)
             for i in range(len(self.current_signal[0])):
@@ -152,6 +155,8 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 GL.glVertex2f(x, y_bottom)
                 GL.glVertex2f(x, y_top)
                 GL.glEnd()
+
+            # Label time-step axis
             for i in range(len(self.current_signal[0])+1):
                 self.render_text(str(i), (i * 20) + 39, 25)
             self.render_text('time', 10, 45)
@@ -234,6 +239,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 GLUT.glutBitmapCharacter(font, ord(character))
 
     def reset(self):
+        """Resets the canvas to the original viewframe"""
         GL.glLoadIdentity()
         self.pan_x = 0
         self.pan_y = 0
@@ -404,10 +410,12 @@ class Gui(wx.Frame):
 
     def on_run_button(self, event):
         """Handle the event when the user clicks the run button."""
+        # Reset canvas and render notification
         self.canvas.reset()
         text = "Run button pressed."
         self.canvas.render(text)
 
+        # Reset number of cycles and run network as desired
         if self.loaded_network:
             self.cycles_completed = 0
             cycles = self.spin.GetValue()
@@ -420,10 +428,11 @@ class Gui(wx.Frame):
 
     def on_continue_button(self, event):
         """Handle the event when the user clicks the continue button."""
-        self.canvas.reset()
+        # Render notification
         text = "Continue button pressed."
         self.canvas.render(text)
 
+        # Run network for desired cycles continuing from previous point
         if self.loaded_network:
             cycles = self.spin.GetValue()
             if cycles is not None:
@@ -523,14 +532,12 @@ class Gui(wx.Frame):
 
         If succesful, load network. If unsuccessful, display error message.
         """
-        self.names = Names()
-        self.devices = Devices(self.names)
-        self.network = Network(self.names, self.devices)
-        self.monitors = Monitors(self.names, self.devices, self.network)
+        # Run selected file path through scanner and parser
         self.path = event.GetEventObject().GetPath()
         self.scanner = Scanner(self.path, self.names)
         self.parser = Parser(self.names, self.devices,
                              self.network, self.monitors, self.scanner)
+        # Check network definition file is correctly configured
         if self.parser.parse_network():
             # Clear old network and load new
             self.clearNetwork()
@@ -683,6 +690,7 @@ class Gui(wx.Frame):
 
     def displayError(self, text):
         """Displays message dialog containing nature of runtime error"""
+        # Create message dialog with error string
         error_message = wx.MessageDialog(
             self, text, caption='ERROR',
             style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)

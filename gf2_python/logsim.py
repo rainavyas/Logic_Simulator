@@ -43,7 +43,7 @@ def main(arg_list):
         print(usage_message)
         sys.exit()
 
-    #Initialise instances of the four inner simulator classes
+    # Initialise instances of the four inner simulator classes
     names = Names()
     devices = Devices(names)
     network = Network(names, devices)
@@ -75,7 +75,8 @@ def main(arg_list):
             if parser.parse_network():
                 # Initialise an instance of the gui.Gui() class
                 app = wx.App()
-                gui = Gui("Logic Simulator", names, devices, network, monitors, os.path.abspath(path), scanner, parser)
+                gui = Gui("Logic Simulator", names, devices, network,
+                          monitors, os.path.abspath(path), scanner, parser)
                 gui.Show(True)
                 app.MainLoop()
 

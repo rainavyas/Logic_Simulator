@@ -127,7 +127,7 @@ class Parser:
             msg = "'END' keyword required at end of file"
             option = False
         elif error_ID == self.NO_CURLY_DEVICE:
-            msg = "Expected '{' after 'DEVICE'"
+            msg = "Expected '{' after 'DEVICES'"
             option = True
         elif error_ID == self.NEED_DEVICE_KEYWORD:
             msg = "'DEVICES' keyword required"
@@ -137,21 +137,21 @@ class Parser:
             option = True
         elif error_ID == self.NEED_CONNECT_KEYWORD:
             msg = "'CONNECT' keyword required"
-            option = True
+            option = False
         elif error_ID == self.NO_CURLY_MONITOR:
             msg = "Expected '{' after 'MONITOR'"
             option = True
         elif error_ID == self.NEED_MONITOR_KEYWORD:
             msg = "'MONITOR' keyword required"
-            option = True
+            option = False
         elif error_ID == self.INTEGER:
             msg = "Needs to be a positive integer"
             option = False
         elif error_ID == self.NEED_QUALIFIER:
-            msg = "Parameter has to be 'initial', 'inputs' or 'period'"
+            msg = "Expected a parameter: 'initial', 'inputs' or 'period'"
             option = False
         elif error_ID == self.NEED_PARAM:
-            msg = "Comma has to followed by parameter speficification"
+            msg = "Comma has to followed by parameter specification"
             option = False
         elif error_ID == self.NO_DEVICE_SEMICOLON:
             msg = "Device definition needs to end in ';'"
@@ -322,7 +322,7 @@ class Parser:
                         # Bad name terminated devices incorrectly
                         # Error type: Invalid name
                         # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END'
-                        self.error(self.NAME_STRING, [self.scanner.KEYWORD],
+                        self.error(self.DEVICE_NAME, [self.scanner.KEYWORD],
                                    [self.scanner.CONNECT_ID,
                                     self.scanner.MONITOR_ID,
                                     self.scanner.END_ID])
@@ -475,7 +475,7 @@ class Parser:
                         # speficification
                         # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR'
                         # or 'END' KEYWORD
-                        self.error(self.NEED_PARAM, [self.scanner.KEYWORD,
+                        self.error(self.NEED_QUALIFIER, [self.scanner.KEYWORD,
                                                      self.scanner.SEMICOLON,
                                                      self.scanner.RIGHT_CURLY],
                                    [self.scanner.CONNECT_ID,
@@ -579,7 +579,7 @@ class Parser:
                     # KEYWORD
                     self.error(self.OUTPUT_PIN,
                                [self.scanner.KEYWORD,
-                                self.scanner.SEMICOLON. self.scanner.EQUALS,
+                                self.scanner.SEMICOLON, self.scanner.EQUALS,
                                 self.scanner.RIGHT_CURLY],
                                [self.scanner.MONITOR_ID,
                                 self.scanner.END_ID])

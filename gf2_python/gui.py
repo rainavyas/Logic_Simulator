@@ -239,11 +239,19 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 GLUT.glutBitmapCharacter(font, ord(character))
 
     def reset(self):
-        """Resets the canvas to the original viewframe"""
+        """Resets the viewframe to original position"""
         GL.glLoadIdentity()
         self.pan_x = 0
         self.pan_y = 0
         self.zoom = 1
+
+    def clear(self):
+        """Clears the canvas and resets position"""
+        self.reset()
+        self.current_signal = []
+        self.current_monitor_points = []
+        self.signal_colours = []
+        self.render('Canvas Cleared')
 
 
 class Gui(wx.Frame):
@@ -297,28 +305,32 @@ class Gui(wx.Frame):
         menuBar.Append(fileMenu, "&File")
         self.SetMenuBar(menuBar)
 
+        # Create panels for the frame
+        self.main_panel = wx.Panel(self)
+        self.top_panel = wx.Panel(self)
+        self.mp_panel = scrolled.ScrolledPanel(self.main_panel, size=wx.Size(250, 250),
+                                            style=wx.SUNKEN_BORDER)
+        self.mp_panel.SetAutoLayout(1)
+        self.mp_panel.SetupScrolling(False, True)
+
         # Canvas for drawing signals
-        self.canvas = MyGLCanvas(self)
+        self.canvas = MyGLCanvas(self.main_panel)
 
         # Configure the widgets
-        self.panel = scrolled.ScrolledPanel(self, size=wx.Size(250, 250),
-                                            style=wx.SUNKEN_BORDER)
-        self.panel.SetAutoLayout(1)
-        self.panel.SetupScrolling(False, True)
         self.file_picker = (
-            wx.FilePickerCtrl(self, message='Select Source File',
+            wx.FilePickerCtrl(self.top_panel, message='Select Source File',
                               wildcard='Text Files (*.txt)|*.txt'))
-        self.text_cycles = wx.StaticText(self, wx.ID_ANY, "Cycles:")
-        self.text_mps = wx.StaticText(self, wx.ID_ANY, "Monitor Points")
-        self.spin = wx.SpinCtrl(self, wx.ID_ANY, "10", min=1)
-        self.run_button = wx.Button(self, wx.ID_ANY, "Run")
+        self.text_cycles = wx.StaticText(self.main_panel, wx.ID_ANY, "Cycles:")
+        self.text_mps = wx.StaticText(self.main_panel, wx.ID_ANY, "Monitor Points")
+        self.spin = wx.SpinCtrl(self.main_panel, wx.ID_ANY, "10", min=1)
+        self.run_button = wx.Button(self.main_panel, wx.ID_ANY, "Run")
         self.run_button.SetBackgroundColour(wx.Colour(100, 255, 100))
-        self.continue_button = wx.Button(self, wx.ID_ANY, "Continue")
+        self.continue_button = wx.Button(self.main_panel, wx.ID_ANY, "Continue")
         self.continue_button.SetBackgroundColour(wx.Colour(255, 255, 100))
-        self.exit_button = wx.Button(self, wx.ID_ANY, "Exit")
+        self.exit_button = wx.Button(self.main_panel, wx.ID_ANY, "Exit")
         self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
-        self.add_button = wx.Button(self, wx.ID_ANY, "Add")
-        self.mp_names = wx.Choice(self, wx.ID_ANY, choices=['SELECT'])
+        self.add_button = wx.Button(self.main_panel, wx.ID_ANY, "Add")
+        self.mp_names = wx.Choice(self.main_panel, wx.ID_ANY, choices=['SELECT'])
         self.mp_names.SetSelection(0)
 
         # Bind events to widgets
@@ -331,7 +343,8 @@ class Gui(wx.Frame):
         self.file_picker.Bind(wx.EVT_FILEPICKER_CHANGED, self.checkFile)
 
         # Configure sizers for layout
-        top_sizer = wx.BoxSizer(wx.VERTICAL)
+        frame_sizer = wx.BoxSizer(wx.VERTICAL)
+        top_sizer = wx.BoxSizer(wx.HORIZONTAL)
         main_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.side_sizer = wx.BoxSizer(wx.VERTICAL)
         cycle_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -340,8 +353,13 @@ class Gui(wx.Frame):
         mp_sizer_all = wx.BoxSizer(wx.VERTICAL)
         mp_control_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
+        frame_sizer.Add(self.top_panel, 1, wx.EXPAND)
+        frame_sizer.Add(self.main_panel, 10, wx.EXPAND)
+
+        self.main_panel.SetSizer(main_sizer)
+        self.top_panel.SetSizer(top_sizer)
+
         top_sizer.Add(self.file_picker, 1, wx.EXPAND | wx.ALL, 5, 10)
-        top_sizer.Add(main_sizer, 10, wx.EXPAND)
 
         main_sizer.Add(self.canvas, 5, wx.EXPAND | wx.ALL, 5)
         main_sizer.Add(self.side_sizer, 1, wx.RIGHT, 5)
@@ -363,9 +381,9 @@ class Gui(wx.Frame):
 
         mp_sizer_all.Add(self.text_mps, 0, wx.RIGHT, 5)
         mp_sizer_all.Add(mp_control_sizer, 0, wx.RIGHT | wx.TOP, 5)
-        mp_sizer_all.Add(self.panel, 1, wx.RIGHT | wx.TOP | wx.EXPAND, 5)
+        mp_sizer_all.Add(self.mp_panel, 1, wx.RIGHT | wx.TOP | wx.EXPAND, 5)
 
-        self.panel.SetSizer(self.mp_sizer)
+        self.mp_panel.SetSizer(self.mp_sizer)
 
         # If filepath given in command line, loads network
         if self.path is not None:
@@ -373,7 +391,7 @@ class Gui(wx.Frame):
 
         # Sets minimum screen size and frame's sizer
         self.SetSizeHints(600, 800)
-        self.SetSizer(top_sizer)
+        self.SetSizer(frame_sizer)
 
     def on_menu(self, event):
         """Handle the event when the user selects a menu item."""
@@ -473,9 +491,9 @@ class Gui(wx.Frame):
             self.canvas.render(text)
             self.number_of_mps += 1
             self.all_mp_names.append(mp_name)
-            new_button = wx.Button(self.panel, label='Remove', name=mp_name)
+            new_button = wx.Button(self.mp_panel, label='Remove', name=mp_name)
             new_sizer = wx.BoxSizer(wx.HORIZONTAL)
-            new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, mp_name),
+            new_sizer.Add(wx.StaticText(self.mp_panel, wx.ID_ANY, mp_name),
                           1, wx.ALIGN_CENTRE)
             new_sizer.Add(new_button, 1, wx.LEFT | wx.RIGHT | wx.TOP, 5)
             new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
@@ -533,19 +551,25 @@ class Gui(wx.Frame):
         If succesful, load network. If unsuccessful, display error message.
         """
         # Run selected file path through scanner and parser
+        self.names = Names()
+        self.devices = Devices(self.names)
+        self.network = Network(self.names, self.devices)
+        self.monitors = Monitors(self.names, self.devices, self.network)
         self.path = event.GetEventObject().GetPath()
         self.scanner = Scanner(self.path, self.names)
         self.parser = Parser(self.names, self.devices,
                              self.network, self.monitors, self.scanner)
         # Check network definition file is correctly configured
         if self.parser.parse_network():
-            # Clear old network and load new
+            # Clear old network, load new and reset file picker colour
+            self.top_panel.SetBackgroundColour(wx.NullColour)
             self.clearNetwork()
             self.loadNetwork()
         else:
-            # Clear old network and display error message
+            # Clear old network, display error message and change file picker colour to red
             self.clearNetwork()
             self.displaySyntaxErrors()
+            self.top_panel.SetBackgroundColour(wx.Colour(255, 130, 130))
 
     def loadNetwork(self):
         """Loads switches and monitoring points from file into GUI"""
@@ -579,9 +603,9 @@ class Gui(wx.Frame):
                     device, port, self.cycles_completed)
                 self.number_of_mps += 1
                 self.all_mp_names.append(i)
-                new_button = wx.Button(self.panel, label='Remove', name=i)
+                new_button = wx.Button(self.mp_panel, label='Remove', name=i)
                 new_sizer = wx.BoxSizer(wx.HORIZONTAL)
-                new_sizer.Add(wx.StaticText(self.panel, wx.ID_ANY, i),
+                new_sizer.Add(wx.StaticText(self.mp_panel, wx.ID_ANY, i),
                               1, wx.ALIGN_CENTRE)
                 new_sizer.Add(new_button, 1, wx.LEFT | wx.RIGHT | wx.TOP, 5)
                 new_button.Bind(wx.EVT_BUTTON, self.onRemoveMP)
@@ -591,9 +615,9 @@ class Gui(wx.Frame):
         # Load switches from file to GUI
         if switch_names != []:
             text_switches = wx.StaticText(
-                self, wx.ID_ANY, "Initial Switch Values:")
+                self.main_panel, wx.ID_ANY, "Initial Switch Values:")
             switchpanel = scrolled.ScrolledPanel(
-                self, size=wx.Size(250, 250), style=wx.SUNKEN_BORDER)
+                self.main_panel, size=wx.Size(250, 250), style=wx.SUNKEN_BORDER)
             switchpanel.SetAutoLayout(1)
             switchpanel.SetupScrolling(False, True)
 
@@ -657,13 +681,16 @@ class Gui(wx.Frame):
             self.Layout()
             self.loaded_switches = False
 
+        # Clears canvas of previous signals
+        self.canvas.clear()
+
         self.loaded_network = False
 
     def displaySyntaxErrors(self):
         """Displays message dialog containing nature of syntax error"""
         # Create message dialog
         error_message = wx.MessageDialog(
-            self, '', caption='ERROR',
+            self, '', caption='ERROR - FILE INVALID',
             style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_string = ''
         font = error_message.GetFont()
@@ -692,7 +719,7 @@ class Gui(wx.Frame):
         """Displays message dialog containing nature of runtime error"""
         # Create message dialog with error string
         error_message = wx.MessageDialog(
-            self, text, caption='ERROR',
+            self, text, caption='RUNTIME ERROR',
             style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_message.ShowModal()
         error_message.Destroy()

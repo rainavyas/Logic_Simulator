@@ -11,6 +11,7 @@ Gui - configures the main window and all the widgets.
 import wx
 import wx.lib.scrolledpanel as scrolled
 import random
+import os
 import wx.glcanvas as wxcanvas
 from OpenGL import GL, GLUT
 
@@ -387,10 +388,13 @@ class Gui(wx.Frame):
 
         # If filepath given in command line, loads network
         if self.path is not None:
+            abs_path = os.path.abspath(self.path)
+            self.file_picker.SetPath(abs_path)
+            self.file_picker.Update()
             self.loadNetwork()
 
         # Sets minimum screen size and frame's sizer
-        self.SetSizeHints(600, 800)
+        self.SetSizeHints(800, 800)
         self.SetSizer(frame_sizer)
 
     def on_menu(self, event):

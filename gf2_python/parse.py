@@ -127,7 +127,7 @@ class Parser:
             msg = "'END' keyword required at end of file"
             option = False
         elif error_ID == self.NO_CURLY_DEVICE:
-            msg = "Expected '{' after 'DEVICE'"
+            msg = "Expected '{' after 'DEVICES'"
             option = True
         elif error_ID == self.NEED_DEVICE_KEYWORD:
             msg = "'DEVICES' keyword required"
@@ -151,7 +151,7 @@ class Parser:
             msg = "Parameter has to be 'initial', 'inputs' or 'period'"
             option = False
         elif error_ID == self.NEED_PARAM:
-            msg = "Comma has to followed by parameter speficification"
+            msg = "Comma has to followed by parameter specification"
             option = False
         elif error_ID == self.NO_DEVICE_SEMICOLON:
             msg = "Device definition needs to end in ';'"
@@ -579,7 +579,7 @@ class Parser:
                     # KEYWORD
                     self.error(self.OUTPUT_PIN,
                                [self.scanner.KEYWORD,
-                                self.scanner.SEMICOLON. self.scanner.EQUALS,
+                                self.scanner.SEMICOLON, self.scanner.EQUALS,
                                 self.scanner.RIGHT_CURLY],
                                [self.scanner.MONITOR_ID,
                                 self.scanner.END_ID])

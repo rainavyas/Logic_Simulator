@@ -1,0 +1,6 @@
+{
+  "test_names.py::test_unique_error_codes_raises_exceptions": true,
+  "test_scanner.py::test_get_symbol": true,
+  "test_scanner.py::test_print_location_false": true,
+  "test_scanner.py::test_print_location_true": true
+}

@@ -72,7 +72,7 @@ def test_lookup_raises_exceptions(used_names):
     with pytest.raises(TypeError):
         used_names.lookup("hey")
     with pytest.raises(TypeError):
-        used_names.lookup(["Yo James", "hi Jonty", 3])
+        used_names.lookup(["Yo James", "hi Vyas", 3])
 
 
 @pytest.mark.parametrize("name_ids, expected_string_list", [
@@ -87,3 +87,20 @@ def test_lookup(used_names, new_names, name_ids, expected_string_list):
     # all ids absent
     assert len(new_names.lookup(expected_string_list))\
         == len(expected_string_list)
+
+def test_unique_error_codes(new_names):
+    """Test that unique_error_codes returns unique codes"""
+    codes = new_names.unique_error_codes(10)
+    numbers = []
+    for i in codes:
+        numbers.append(i)
+    assert numbers == list(set(numbers))
+
+def test_unique_error_codes_raises_exceptions(new_names):
+    """Test that unique_error_codes raises expected exceptions"""
+    with pytest.raises(TypeError):
+        new_names.unique_error_codes('Hello')
+    with pytest.raises(TypeError):
+        new_names.unique_error_codes(1.5)
+    with pytest.raises(ValueError):
+        new_names.unique_error_codes(-1)

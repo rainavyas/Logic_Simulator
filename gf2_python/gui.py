@@ -619,7 +619,7 @@ class Gui(wx.Frame):
         # Load switches from file to GUI
         if switch_names != []:
             text_switches = wx.StaticText(
-                self.main_panel, wx.ID_ANY, "Initial Switch Values:")
+                self.main_panel, wx.ID_ANY, "Switch Values:")
             switchpanel = scrolled.ScrolledPanel(
                 self.main_panel, size=wx.Size(250, 250), style=wx.SUNKEN_BORDER)
             switchpanel.SetAutoLayout(1)

@@ -137,18 +137,18 @@ class Parser:
             option = True
         elif error_ID == self.NEED_CONNECT_KEYWORD:
             msg = "'CONNECT' keyword required"
-            option = True
+            option = False
         elif error_ID == self.NO_CURLY_MONITOR:
             msg = "Expected '{' after 'MONITOR'"
             option = True
         elif error_ID == self.NEED_MONITOR_KEYWORD:
             msg = "'MONITOR' keyword required"
-            option = True
+            option = False
         elif error_ID == self.INTEGER:
             msg = "Needs to be a positive integer"
             option = False
         elif error_ID == self.NEED_QUALIFIER:
-            msg = "Parameter has to be 'initial', 'inputs' or 'period'"
+            msg = "Expected a parameter: 'initial', 'inputs' or 'period'"
             option = False
         elif error_ID == self.NEED_PARAM:
             msg = "Comma has to followed by parameter specification"
@@ -475,7 +475,7 @@ class Parser:
                         # speficification
                         # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR'
                         # or 'END' KEYWORD
-                        self.error(self.NEED_PARAM, [self.scanner.KEYWORD,
+                        self.error(self.NEED_QUALIFIER, [self.scanner.KEYWORD,
                                                      self.scanner.SEMICOLON,
                                                      self.scanner.RIGHT_CURLY],
                                    [self.scanner.CONNECT_ID,

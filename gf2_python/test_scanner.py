@@ -83,7 +83,7 @@ def test_print_location_false(file_path_list):
     symb = test_scanner.get_symbol()
     symb = test_scanner.get_symbol()
     err = test_scanner.print_location(symb)
-    assert err.line_num == ("Line " + str(3) + ":")
+    assert err.line_num == ("Line " + str(2) + ":")
 
 
 def test_print_location_true(file_path_list):
@@ -93,7 +93,7 @@ def test_print_location_true(file_path_list):
     symb = test_scanner.get_symbol()
     symb = test_scanner.get_symbol()
     err = test_scanner.print_location(symb, True)
-    assert err.line_num == ("Line " + str(2)+":")
+    assert err.line_num == ("Line " + str(1)+":")
 
 
 def test_get_symbol(file_path_list):
@@ -103,4 +103,4 @@ def test_get_symbol(file_path_list):
     symb = test_scanner.get_symbol()
     symb = test_scanner.get_symbol()
     assert symb.type == test_scanner.NUMBER
-    assert symb.line == 3
+    assert symb.line == 2

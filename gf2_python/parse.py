@@ -322,7 +322,7 @@ class Parser:
                         # Bad name terminated devices incorrectly
                         # Error type: Invalid name
                         # Stopping Symbols: 'CONNECT', 'MONITOR' or 'END'
-                        self.error(self.NAME_STRING, [self.scanner.KEYWORD],
+                        self.error(self.DEVICE_NAME, [self.scanner.KEYWORD],
                                    [self.scanner.CONNECT_ID,
                                     self.scanner.MONITOR_ID,
                                     self.scanner.END_ID])

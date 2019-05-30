@@ -113,8 +113,10 @@ class Devices:
          self.BAD_DEVICE, self.QUALIFIER_PRESENT,
          self.DEVICE_PRESENT] = self.names.unique_error_codes(6)
 
+        [self.LOW, self.HIGH, self.RISING,
+            self.FALLING, self.BLANK] = range(5)
         self.signal_types = [self.LOW, self.HIGH, self.RISING,
-                             self.FALLING, self.BLANK] = range(5)
+                             self.FALLING, self.BLANK]
         self.gate_types = [self.AND, self.OR, self.NAND, self.NOR,
                            self.XOR] = self.names.lookup(gate_strings)
         self.device_types = [self.CLOCK, self.SWITCH,

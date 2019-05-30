@@ -558,8 +558,8 @@ class Parser:
         # Increment input pin counter by number of pins on new device
         device_name_string = self.names.get_name_string(device_kind)
         if device_name_string == "DTYPE":
-            self.num_input_pin += 3
-        elif device_name_string == "AND" or "OR" or "NAND" or "NOR":
+            self.num_input_pin += 4
+        elif device_name_string in ["AND", "OR", "NAND", "NOR"]:
             self.num_input_pin += device_property
         elif device_name_string == "XOR":
             self.num_input_pin += 2

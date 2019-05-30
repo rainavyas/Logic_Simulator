@@ -1,0 +1,33 @@
+DEVICES{
+switch1: SWITCH, initial 0;
+switch2: SWITCH, initial 0;
+switch3: SWITCH, initial 0;
+and1: AND, inputs 3;
+and2: AND, inputs 2;
+nand1: NAND, inputs 2;
+nand2: NAND, inputs 2;
+or: OR, inputs 2;
+nor: NOR, inputs 2;
+}
+
+CONNECT{
+switch1 = and1.I1;
+switch1 = and2.I1;
+switch2 = and1.I2;
+switch2 = nand1.I1;
+switch2 = nand1.I2;
+switch3 = and1.I3;
+switch3 = nand2.I1;
+switch3 = nand2.I2;
+nand1 = or.I1;
+nand2 = or.I2;
+or = and2.I2;
+and2 = nor.I2;
+and1 = nor.I1;
+}
+
+MONITOR{
+nor;
+}
+
+END

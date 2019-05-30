@@ -1,0 +1,442 @@
+commit 00c502fc2eb38e4086f38fc8099fd0ecd51c2132
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:38:37 2019 +0100
+
+    Renaming EBNF file
+
+commit a490f185f6f75499ac2795ef0990706db62012d7
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:38:00 2019 +0100
+
+    Removing more files
+
+commit 0860c4a1a11929dedcd16167dbf19cc28c99e56c
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:37:11 2019 +0100
+
+    Removing redundant file
+
+commit 9858dd171baed658ea1f8a7bec836cc8fe610436
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:32:06 2019 +0100
+
+    Removing redundant file
+
+commit 06bbfb455ffaadcb345e8ef78af114d006cc55c3
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:31:34 2019 +0100
+
+    Moving files
+
+commit 375ad17e1b5c8038e09a9f8bfc873ac3c258dd25
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:27:22 2019 +0100
+
+    Moving more files
+
+commit 05a88fef2ca666e65b40335051c8b944879739b9
+Merge: 0a95245 bb824b1
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:26:17 2019 +0100
+
+    Moving files
+
+commit 0a95245895a1577513f24df78453fabfdfbb3db5
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:24:25 2019 +0100
+
+    Moving files
+
+commit f57e99585dc598f0362559b6363d36b412a6ac0f
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:23:19 2019 +0100
+
+    Moving files
+
+commit 9dd4f35a258d93b75d5e75309d03389f80c806e3
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 12:38:58 2019 +0100
+
+    Added third example circuit diagram
+
+commit 9acaed71e2e34b140a35a96b6ab13a3eebd580c4
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 12:33:29 2019 +0100
+
+    Adding final circuit diagrams
+
+commit 6485b828254a23b1bd5b3027b474b60bde32a9f1
+Merge: 2aa7782 8aeb45c
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 11:55:42 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 2aa7782edf28d613ed8c2488bf0fec24ae0aa859
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 11:55:33 2019 +0100
+
+    Fixed bug with continue button
+
+commit 992f9d832c4f073ae129f5918739ec4113ce9ab5
+Author: jontypage <jontypage@gmail.com>
+Date:   Wed May 29 15:39:30 2019 +0100
+
+    Changing intial switch values to switch values
+
+commit f09182ec6669f6a62e1a23f9c8a4f9ffd5243882
+Merge: c041838 b9b6fbc
+Author: jontypage <jontypage@gmail.com>
+Date:   Wed May 29 15:22:21 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit c041838a5f5d3758faa01f9906d874b1b990fc43
+Author: jontypage <jontypage@gmail.com>
+Date:   Wed May 29 15:22:11 2019 +0100
+
+    File path updater added
+
+commit 939f0d6993d56329378d22a7f5b2436a7833ddc6
+Author: jontypage <jontypage@gmail.com>
+Date:   Wed May 29 13:48:25 2019 +0100
+
+    Added names.py pytests
+
+commit 52365aceae965f20f26052d4a86887edd9ab9a74
+Author: jontypage <jontypage@gmail.com>
+Date:   Wed May 29 13:10:23 2019 +0100
+
+    Added colour notification of invalid file and clearing of canvas upon loading of a new file
+
+commit e9bcb549aeff852d671bc154fd56252112c15112
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 17:38:23 2019 +0100
+
+    Added comments and docstrings
+
+commit 435425ee61f05ed515d76df89debe09b81493703
+Merge: 94f9226 d6a4f79
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 17:12:20 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 94f9226a8b3efd8128ec3227d020012342a04393
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 17:12:09 2019 +0100
+
+    GUI conforms to pep8
+
+commit 0c44454fcfb416a145b86273f519c7847af8f2d2
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 16:47:06 2019 +0100
+
+    Removing pycache
+
+commit 0aa35ae79855e385722054a2ffe36473714d67e8
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 16:21:20 2019 +0100
+
+    Completed GUI
+
+commit 2813b1d3477e49e49bdcb9aa2e76c9b17c4d570c
+Merge: 48f9d30 794807a
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 16:01:18 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 48f9d3063d64a529aa577e359e36304c5ea30f1c
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 16:01:07 2019 +0100
+
+    Error reporting complete
+
+commit 0e32bb6d8faf0fbe98bc10bfe4f0c59fd2f251c7
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 14:07:00 2019 +0100
+
+    Starting error message development
+
+commit 1b1266dc88bd46e3a7d4c4bac77d934dfb6f7e78
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 11:58:07 2019 +0100
+
+    GL canvas time bar and reset on run/continue
+
+commit 00aca063ab8236bea97c56672c373a1ca14e99bd
+Merge: aae4e52 4e54f0d
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 11:57:52 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit aae4e52a35092d1868fc56ff689cd5dcef27c983
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 11:57:40 2019 +0100
+
+    GL canvas time bar and reset on run/continue
+
+commit 3249919631f39120a75375e176188ff8baa13c77
+Merge: 1526fd2 7d17506
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 11:06:43 2019 +0100
+
+    Added access to scanner and parser objects from within gui is commmand line argument is parsed
+
+commit 1526fd2d60cdc105d6a9fd73fe9e144ec557deeb
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 11:06:11 2019 +0100
+
+    Added access to scanner and parser objects from within gui is commmand line argument is parsed
+
+commit 8a2cf18965654cb28f0d3ad35f1e7142ed99a3a2
+Merge: 4c5bedc caa7c0b
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 10:02:46 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 4c5bedcfae046bdab2a2b5f68de1d2650afd2937
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 28 10:02:27 2019 +0100
+
+    Added dropdown menu for mp entry instead of textbox
+
+commit 0bcb2a28a6a4f57ff727014d4ff2be2240ccaf7f
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 21:18:36 2019 +0100
+
+    New test_def_file and minor bug fixes
+
+commit 14a4a17c176c97ae7a4e20fb209aa65161a084c4
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 21:12:42 2019 +0100
+
+    Adding removing mps working, switch toggles working
+
+commit 9578e5ac07fa1b89fbca3d84c90980239859435b
+Merge: 07a8004 484fdc9
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 20:14:52 2019 +0100
+
+    Added loading of monitoring points
+
+commit 07a80047a5e1666c7c2f0c47af98d0aa432a784f
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 20:14:11 2019 +0100
+
+    Added loading of monitoring points
+
+commit bc44b273da1ca16e1234177e9da96b8a11ba3479
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 18:17:44 2019 +0100
+
+    Starting opengl rendering of signal
+
+commit ee8453dd46947d53e7fd449e855e298fd5ed4c1c
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 16:09:11 2019 +0100
+
+    Sorting out loading network
+
+commit d7cf5ffe719879c1ed63f194893bbf39a76128e3
+Merge: ad50ef3 752f88c
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 16:02:59 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit ad50ef361ed4e3aca21d9112a270927b0c75d0e1
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 16:02:48 2019 +0100
+
+    Added functionality to file picker
+
+commit eb119395ff05496f6428a7a48a3839ca8d66f10d
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon May 27 14:41:24 2019 +0100
+
+    Fixed indentation issue in UserInt
+
+commit bfb4d418a79d86a40ab11db3c68b838ed6f45ead
+Author: jontypage <jontypage@gmail.com>
+Date:   Sun May 26 18:10:05 2019 +0100
+
+    Moving scanner/parser location
+
+commit dbff06d0c8b2d8d276b9c1ad5add262b09c962dd
+Author: jontypage <jontypage@gmail.com>
+Date:   Sun May 26 17:55:19 2019 +0100
+
+    Beginning integration of GUI with Parser and Scanner
+
+commit a4eb7f081d1a00ae4fafa388b71d52538a28acf9
+Merge: a8bd734 b70849e
+Author: jontypage <jontypage@gmail.com>
+Date:   Sun May 26 16:48:36 2019 +0100
+
+    Added textctrl EVT_KILL_FOCUS reset
+
+commit a8bd7343398d8706fb1eb8464e5c9c2d9a1c459a
+Author: jontypage <jontypage@gmail.com>
+Date:   Sun May 26 16:47:55 2019 +0100
+
+    Added textctrl EVT_KILL_FOCUS reset
+
+commit 9beb849782c9bae664de2ab317228e520d8762dc
+Author: jontypage <jontypage@gmail.com>
+Date:   Sun May 26 16:47:37 2019 +0100
+
+    Added textctrl EVT_KILL_FOCUS reset
+
+commit 4b855f1e8d09719dcd4a273c84553c6e5a5dd6e6
+Merge: 6af390e 415b77b
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 24 18:58:50 2019 +0100
+
+    Added Scroll box to switches, added text prompt for most actions, added automatic removal of (ENTER ID) on click and other small bug fixes
+
+commit 6af390eea097fae92c0e8f998a3e3e601a8d0d23
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 24 18:57:19 2019 +0100
+
+    Added Scroll box to switches, added text prompt for most actions, added automatic removal of (ENTER ID) on click and other small bug fixes
+
+commit 9347f969fdd7f1d333315daf60f6197ae95aede7
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 24 18:56:28 2019 +0100
+
+    Added Scroll box to switches, added text prompt for most actions, added automatic removal of (ENTER ID) on click and other small bug fixes
+
+commit 51a6dc8d7b3b17872bd805c7452f1d7073922a51
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 24 13:01:59 2019 +0100
+
+    Added Exit Button Functionality
+
+commit 56dd1abea78a90c8830aaeffaea53762f0d07bd5
+Merge: 055b22c 0b4fe08
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 24 12:58:44 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 055b22c38ff98b2aae6e64ae5a759fd4213db5fd
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 24 12:58:32 2019 +0100
+
+    TextCtrl clears upon MP add
+
+commit adcecd91050ee01ac29730fa000ac2dc7dcdae80
+Merge: a2bafa1 f4a505d
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 24 12:09:11 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit a2bafa131898f6ac77fe6b41a750fc27bb2a8642
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 24 12:07:22 2019 +0100
+
+    Scrolling Panel for list of monitoring points added
+
+commit fbcd88b3f1e15f54db51e0748ea0b4bf1707d680
+Merge: 5471e52 fd3d79c
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 21 16:02:10 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 5471e52c2bfc8bed76d0ebff2dc61b2307d6a551
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 21 16:01:44 2019 +0100
+
+    Starting to add scollbar to MPs - Compiles but not yet functional
+
+commit 544aa1f8fe88c0c98ddcab9948a7e8acbe4e4dd0
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 21 10:59:42 2019 +0100
+
+    Added colour to GUI and moved Run/Continue/Exit buttons
+
+commit a3c5880ecf206aecfa07ba9c54236e589cbcdb14
+Author: Jonty Page <jontypage@gmail.com>
+Date:   Fri May 17 12:06:21 2019 +0100
+
+    Delete semanticerrors.txt
+
+commit b977ee1c52bf949ff47e236ca0d09a82e2467d92
+Author: Jonty Page <jontypage@gmail.com>
+Date:   Fri May 17 12:06:08 2019 +0100
+
+    Delete Gantt_chart.PNG
+
+commit 8b159970bb786cdaa81f485cb7580cb6dfdf9e74
+Author: Jonty Page <jontypage@gmail.com>
+Date:   Fri May 17 12:06:00 2019 +0100
+
+    Delete Example Logic Circuit 2 Diagram.png
+
+commit ba70796ac15d79290e4aa7bd351e86fc663b7454
+Author: Jonty Page <jontypage@gmail.com>
+Date:   Fri May 17 12:05:52 2019 +0100
+
+    Delete Example Logic Circuit 2 Description
+
+commit 791f556d079de0a4c4e2e793cf1a9140d582e9bd
+Author: Jonty Page <jontypage@gmail.com>
+Date:   Fri May 17 12:05:43 2019 +0100
+
+    Delete Example Logic Circuit 1 Diagram.png
+
+commit 003c88d1c7c358eefa139ccb472cbda39437a3ff
+Author: Jonty Page <jontypage@gmail.com>
+Date:   Fri May 17 12:05:31 2019 +0100
+
+    Delete Example Logic Circuit 1 Description
+
+commit 72be2bfa28d3426fabe32fe05e062a706e8b2905
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 17 12:03:46 2019 +0100
+
+    tidy
+
+commit 0fbb54286ec8c5103372ad1dbf8491027815164b
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 17 12:01:55 2019 +0100
+
+    source code mk3
+
+commit 35c42d5aab205be3ee087466997f646b7f626876
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 17 12:00:21 2019 +0100
+
+    source code mk2
+
+commit a9f94769b399b93fe3741977b1825f125118858b
+Merge: 8f455da 2e402e0
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 17 11:21:51 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 8f455da75d6789da64995c590d4f7696cbfcd854
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 17 11:21:43 2019 +0100
+
+    adding source code
+
+commit af3da45616fea90d9129b21132edcd9f1eef6020
+Merge: 8a63c43 dd3ccd3
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 14 15:25:18 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 8a63c4322f3241ac08f2107a700828becbd21f9d
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue May 14 15:25:14 2019 +0100
+
+    EBNF changes plus logic circuit examples

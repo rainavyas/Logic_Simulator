@@ -1,0 +1,1107 @@
+commit 91c6fed8a6c3386be71455eb4309402bd07316b7
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 14:31:21 2019 +0100
+
+    Final test file of Dtype construction finished
+
+commit 690a5356a3d584053ddd35c7272ba388ad3cae13
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 14:00:16 2019 +0100
+
+    new final test file for combinational circuits
+
+commit 26594dcf588fb94c81291821b0c7fded65d80b9f
+Merge: d5b4e04 9dd4f35
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 12:43:17 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit d5b4e049f78cff7841b96f28f0c53a6fda6cddff
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 12:43:06 2019 +0100
+
+    final test file for shift register
+
+commit 0b7e21eeb01f642b5a52513772bfa4ba78b66cd3
+Merge: 1a169c2 9d92404
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 12:25:18 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 1a169c29dcb68d90455acbdb84d94cea7df070ba
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 12:20:52 2019 +0100
+
+    Final fuller adder test file created
+
+commit 8aeb45c46031f45c93be3dbf3c45151acf6ac328
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 11:25:06 2019 +0100
+
+    Fixed bug with counting pins
+
+commit 38fcf70729b9a8c5c26dd71c1e47e95d6164fa5d
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 08:24:35 2019 +0100
+
+    Pep8 conforming
+
+commit 93b7b5eda9fcf37f1e26010ae02acaf21f188969
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 08:20:34 2019 +0100
+
+    Improved check for floating input pins
+
+commit 77ec0da416cd5458e86c9ad8064cc450ccc3e593
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 30 08:03:41 2019 +0100
+
+    Added functionality to check for floating input pins
+
+commit b9b6fbcc01993fabc93595970943b75ed693e25b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Wed May 29 15:12:59 2019 +0100
+
+    Updated parser check for invalid device name
+
+commit 4875befd882eac2630b1b1e713a731254f6d7561
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Wed May 29 15:03:32 2019 +0100
+
+    Updated parser error messages to comply with pytests
+
+commit ac1d72b673881ad1951739ee4c650e70f62ec01a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Wed May 29 14:46:43 2019 +0100
+
+    Corrected bug in connect due to typo
+
+commit 8a3477250fde21b64c61d11309ead690a98ca26a
+Merge: 6aec9b3 e0d2dc1
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Wed May 29 14:21:52 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 6aec9b3de640b9afa59172746b3cb840b3d0a021
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Wed May 29 14:21:34 2019 +0100
+
+    Added value error check for unique_error_codes method
+
+commit 42c037db30877515f07935164c086f4e43819d9b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 21:32:40 2019 +0100
+
+    Added test file for full adder circuit
+
+commit 025752a42c4d03baa2dca1ae9b215d70def85b6e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 20:57:53 2019 +0100
+
+    Added basic functional unit tests of scanner module
+
+commit 4795e77eb793dad1038ddcc35df9d1e40f68b9bb
+Merge: 429f03c 5f84973
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 19:26:13 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 429f03cd129cfb9f951c82d6ffa0bb99f9c998fb
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 19:25:51 2019 +0100
+
+    scanner test definition files
+
+commit f84e610c3d8a381243d951f447c015fcfdf8fcc3
+Merge: df3bce0 0c44454
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 16:48:30 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit df3bce0a20d689628c31779b3583896433e0f384
+Merge: 0d52c09 0aa35ae
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 16:43:54 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 0d52c09830a2e5f15518461487e23d96606ca938
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 16:43:10 2019 +0100
+
+    updated avoiding pycache
+
+commit a1a216a11228b100d129d58b94b2eb437130da6f
+Merge: 46c36f6 2813b1d
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 16:07:16 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 46c36f60a7d19d06325a4536136688c7f452a953
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 16:07:02 2019 +0100
+
+    Updated class cleaning when parser fails
+
+commit 794807afd8fd207d625bdb387d1f8b20c2edfea3
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 15:37:20 2019 +0100
+
+    Further pep8 changes
+
+commit 72079d0e94c6a3558f9e7a7c26d3cc7a750b4bd8
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 15:31:14 2019 +0100
+
+    parser conforms to pep8
+
+commit c8c69d60f1f961731a065b9f6dbd32d034d7fb06
+Merge: e028511 f791b7c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 15:16:53 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit e0285112d59f3024dc9bd32c21780b6c761a496b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 15:16:36 2019 +0100
+
+    Clear all classes if returning false
+
+commit 884596ee56347e3078cf7ea8897ca6a98878b25b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 13:49:13 2019 +0100
+
+    Added scanner to userint class
+
+commit 79c64efb369acf36b1cf738a9803fb67a78a61bb
+Merge: d4e3ad4 1da63bf
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 13:40:46 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit d4e3ad41df329ebb1aa969371f560cad9c091088
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 13:40:19 2019 +0100
+
+    To stop passing around pycache
+
+commit 3d01f855563073bab2e39d1ae8bc241e93132064
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 11:38:54 2019 +0100
+
+    Added integration with errors class
+
+commit 46180e556a43bf704d92b57e7435279ae71cfb95
+Merge: 244f22e 5f288af
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 11:30:35 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 244f22e296f605ca2bd91e09668354551d09118c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 11:30:17 2019 +0100
+
+    Attributes passed are optional
+
+commit 6623101a99cfcdc0e20815b3d38374e0df265e74
+Merge: 0635a54 3249919
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 11:10:50 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 0635a54d728fafa16f2d1e6fa3557de9e144738e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 11:10:14 2019 +0100
+
+    Created errors class to store all errors
+
+commit caa7c0b8c749be3b31da89629133bd6dce3dd2ad
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 09:36:23 2019 +0100
+
+    Updated error location pointing for duplicate device
+
+commit bdeab0a89c2fc818258fd927ed231beffc805a15
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 28 09:33:15 2019 +0100
+
+    Added facility to store old symbols for error reporting
+
+commit a2ccafdf6bac1d6370c66d53b6fe5b564a458fe1
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 23:16:06 2019 +0100
+
+    Simplified device id passing
+
+commit 3246f6cebf7cb039f71b5edc78af0df8e08e0e5e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 23:15:32 2019 +0100
+
+    Updated test file to valid Dtype circuit
+
+commit d7fd9cb9d2913da254227cc2a08486d9273c6ac5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 21:29:46 2019 +0100
+
+    Removed rough testing section of parser
+
+commit cb6360d6e2c2ec6fc75ee49f0c079d073d7bec32
+Merge: acd7f31 0bcb2a2
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 21:22:01 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit acd7f3194f90c61ba414d270e2c65d563fd21043
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 21:21:46 2019 +0100
+
+    Parser error options updated to point at correct location
+
+commit 484fdc98c30b0f0ccac97ac78836c08cb32d219b
+Merge: 6e1a459 fb542cd
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 19:57:57 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 6e1a459f2f239aa419760da50bc0893441f4d544
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 19:57:27 2019 +0100
+
+    Updated test def file
+
+commit 014de33b2521fed215ff9eb06450eec38ca8d7b5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 19:40:54 2019 +0100
+
+    Updated test definition file to new syntax
+
+commit 93e2a290a55a0a57b6368a4a73d8d72dfa490285
+Merge: 7d23c96 bc44b27
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 19:20:37 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 7d23c965b0496173a444ed54e22c0639f5a11475
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 19:20:20 2019 +0100
+
+    pycache changed
+
+commit 752f88cfddfdb07fa80ce701ad8ce82d292d678b
+Merge: 3f01bbd eb11939
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 16:00:51 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 3f01bbd128a7bbfaff1665fb2772f8e8a08beecd
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 27 16:00:18 2019 +0100
+
+    Updated test def file
+
+commit d08067d4056c55fe22c2b38761ac0d934f05a767
+Merge: c31fc02 bfb4d41
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 18:25:38 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit c31fc02560788f1359944281ab88de0a691b8a14
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 18:25:23 2019 +0100
+
+    Made test def file only a switch
+
+commit ffb99fac371e2f7653d9926f56e86182614e7664
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 17:53:20 2019 +0100
+
+    Commented out syntax error of running parser
+
+commit eba0c3398980753180b76bbc3a95e7ee45efd0ad
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 17:51:14 2019 +0100
+
+    Commented out rough testing section of parser
+
+commit 87e4a60ccab6440ceb0327a3579cf3789a3f5eef
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 17:46:30 2019 +0100
+
+    Changed test_def file to be monitor switch output
+
+commit 88567a01432aa882da59d0bd6baee2b230086eef
+Merge: 7346a9d a4eb7f0
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 17:33:08 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 7346a9d969ae084509d4f7d25c43c578e54f2eb9
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 16:57:29 2019 +0100
+
+    Wrapped long python lines to next line
+
+commit 7b035a338b0b529c6083c126f1f45f68580e1a63
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 16:31:09 2019 +0100
+
+    Added appropriate doc strings to parse class
+
+commit b70849e3cbe4d6e25ebdccf598671549039c699f
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 13:03:17 2019 +0100
+
+    Updated number of unique error codes in parser initialisation
+
+commit cdee94408f56200e33ffcae098a0d9d60495c9bb
+Merge: af702bc f547f2a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 13:01:23 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit af702bc612b22c0f642d4836e15f774054675560
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 13:00:33 2019 +0100
+
+    Added checks for RIGHT_CURLY termination for monitors block
+
+commit cfa5e4fb9c42a5cb0cdbc843e0b7c706a3f94353
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 12:54:09 2019 +0100
+
+    Added checks for RIGHT_CURLY termination for connections block
+
+commit feb5371dd63f2e2b23f92e466945ebdfe29b3dce
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 12:48:43 2019 +0100
+
+    Added '}' as stopping symbol for logic type error
+
+commit d0295fed9b52b665c395b358342d4f7d17c39866
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 12:47:39 2019 +0100
+
+    Added checks for RIGHT_CURLY termination for device block
+
+commit 1039828d917994931bf06dab3e40e23e1a9ec713
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 11:54:11 2019 +0100
+
+    Updated parser to look for left curly bracket at beginning of each section
+
+commit 4c1966e61975299ac9b410070f3e13d6178747d7
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 11:46:04 2019 +0100
+
+    Updated test_def file to use new EBNF syntax
+
+commit 4ab51f677bc201899bd5797663149bfd3abe02b7
+Merge: 4c0d227 3615249
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 11:45:11 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 4c0d2272fd7f253e58e7d2053d566b99f20083fb
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun May 26 11:44:57 2019 +0100
+
+    Added {} to each section in EBNF syntax
+
+commit d1505c5a070e5a07aea357cb810c3a3c428532fc
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 20:41:28 2019 +0100
+
+    Updated file to test different syntax & semantic errors
+
+commit 0a87da42bd2f57e89f481d07b0057a49e5d0d3d5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 20:40:51 2019 +0100
+
+    Updated return of parser to return false if any errors
+
+commit ffe65184ffb4de91f79f5e75ee1d86fb60e9b2fa
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 19:45:12 2019 +0100
+
+    Corrected Logic error in defining device_property in device method for semantic check
+
+commit 3a878e59b338a7d1e981369512427ec3ff3274c5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 19:36:58 2019 +0100
+
+    Corrected Logic_Type device kind id determination
+
+commit a0191aff134c8b9ca022da2e9d7e27b057d97d3b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 19:29:17 2019 +0100
+
+    Updated rough testing section to pass correct arguments
+
+commit eabb086910ee6ec196a9f83bfc3a828995581c15
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 18:28:35 2019 +0100
+
+    Rough testing code added at end of parser
+
+commit f46cc2d92473048586cd701670f6e9fc15161c1c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 18:24:38 2019 +0100
+
+    Error msgs for monitoring semantic errors added
+
+commit a523826880028d285584dddc7198903e77529e80
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 18:13:50 2019 +0100
+
+    Monitor Semantic checking structure in place in parser class
+
+commit 2379b6226e4698ff3776dc196742110085f63589
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 17:58:34 2019 +0100
+
+    Updated monitor_point to ensure name_string at start
+
+commit d78ddef3bf3856c6efaf683f330ccf40a89e0593
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 17:51:48 2019 +0100
+
+    Error msgs for Connections semantic checks added
+
+commit 9b425ba41eb82a4145881725a4272678f4f987dc
+Merge: 31cd3d0 4b855f1
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 17:45:09 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 31cd3d0ffdea65df48378787002c9dc7289a3fb1
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 17:44:24 2019 +0100
+
+    Structure in place to check for Connections semantic errors
+
+commit 5271f7d20679c271a76b6cffe24d953cc8193bf2
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 17:16:08 2019 +0100
+
+    Appropriate error messages added for devices semantic errors
+
+commit 097a139cda62ebf64a9b1197118965ee80c9995c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 17:10:27 2019 +0100
+
+    Logic in place for device semantic error checks
+
+commit 30809a867dca7eec9edbd5a3d3a840ba364b832c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 16:55:05 2019 +0100
+
+    Initialised error counter in parser class
+
+commit 59c43269af4bef1ac70a43d717a3857fa06fbae2
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 09:33:36 2019 +0100
+
+    Updated error function calls with readable arguments
+
+commit 411978694c9b94d8194a1253ae0494ff2369921e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 25 00:11:59 2019 +0100
+
+    Cleaned up syntax error referencing in parser
+
+commit e710c6785047a64223f6673d9fcc1249f0f7f84d
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 16:34:02 2019 +0100
+
+    Parser integration testing changes
+
+commit fcbdb7c6c3b920f3a83ee50dc775ae729afe4827
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 16:18:24 2019 +0100
+
+    Error ID 13 added to list of not moving when punctuation terminates
+
+commit f696272f8e8b00c730cb188c381af8b764e84851
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 16:16:19 2019 +0100
+
+    Error ID 7 added to list of not moving when punctuation terminates
+
+commit 771c43e74dc86a889b0fe1145e535ed5ee6f4f10
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 16:04:39 2019 +0100
+
+    Increased error method readability with list of dont_move_err_IDS
+
+commit aa48a0e266532cea362f0ca1e74892f76982aa9f
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:52:53 2019 +0100
+
+    Changed Error method to only progress after stopping punctuation for certain error types
+
+commit d2e71eb05fe1eb0013d7783c74b5882894bf2265
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:42:23 2019 +0100
+
+    Investigate missing 'CONNECt'
+
+commit 887b81ac154a97d366656307cda8b014dfdfa908
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:41:57 2019 +0100
+
+    Pass empty list from END error call
+
+commit 1e98555d418818122242227428071009a8ae37b0
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:32:44 2019 +0100
+
+    Syntax error removed from error method of parser
+
+commit be2b87c3b997ffdc0bc5c89f9bb8ff463cd6d25f
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:28:44 2019 +0100
+
+    Errors for monitor_point calls error method correctly
+
+commit bab37ae72aa53914a2f83bd1e7ade038811bc1a1
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:26:38 2019 +0100
+
+    Up to error 20 calls error method correctly
+
+commit 06d21415f97dcf3151a51e617b5966958901d8ca
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:15:52 2019 +0100
+
+    Error 14 calls error method correctly
+
+commit dd673abbf2b3ef0823bc3aa22634f3bc5fcf4b54
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:13:41 2019 +0100
+
+    Error 13 calls error method correctly
+
+commit e44c5c4d946c6f534a753cbd553c2df3948cd5ea
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:11:39 2019 +0100
+
+    Errors 11 & 12 call error method correctly
+
+commit beed2ceb8d5f03ccf962193668afe2f62da29926
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:08:32 2019 +0100
+
+    Errors 9 & 10 call error method correctly
+
+commit db32c2d69f035e5095a12ab66d53f06ff5abd8e3
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 15:03:55 2019 +0100
+
+    Error 8 call error method correctly
+
+commit ab870f37de5825816fb7809ba3928157fba0876f
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 14:42:35 2019 +0100
+
+    Error 5 & 6 call error method correctly
+
+commit ce2d31f3724e3d40ad99485967fb246d844d2a52
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 14:40:55 2019 +0100
+
+    Error 4 calls error method correctly
+
+commit 2c7102a0ef683dee75306b809f22ebc210e702e7
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 14:40:13 2019 +0100
+
+    Error 3 calls error method correctly
+
+commit 8afe03082fd70633b7227e8aa3a6605d2a0cceda
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 14:38:13 2019 +0100
+
+    Error 2 calls error method correctly
+
+commit 7edc6846f44047e1c78c7866cfe941188584d8cb
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 14:34:31 2019 +0100
+
+    Error 1 calls error method correctly
+
+commit f1957c2d8c869dab98dc6c39d5db2e1be0ca6d17
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 14:30:03 2019 +0100
+
+    Error method symbol_IDS argument made optional
+
+commit f326013053639c834c2fac79c6b68fdaae0d6a47
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 14:26:13 2019 +0100
+
+    Updated error method to deal with specific Keyword stopping symbols
+
+commit 8508ab3ff1d6f46f5066367f3c5761bfeeac09cb
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 14:02:36 2019 +0100
+
+    Changed error method function definition
+
+commit 0084e24d3c64c45a31ad8d13355da2feb3688e66
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 13:49:10 2019 +0100
+
+    Error method rewritten to display error and recover to correct position
+
+commit 0b4fe0894507b80ef1918f19b9172e42d5a8d825
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 12:54:45 2019 +0100
+
+    List of all error msgs created as attribute of parser class
+
+commit abff2d589428206ffd1055ad5f922c9df3e39d9f
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 12:44:13 2019 +0100
+
+    Half of error mesgs added to parser class
+
+commit 86246b31a062ccca03b4bfc0ecd55c2d813ee1e5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 12:41:27 2019 +0100
+
+    Wider Box
+
+commit 77d785e014801f94ac86187334629a0d2be0a4ea
+Merge: b145513 adcecd9
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 12:10:40 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit b14551336a08d81ce621735ff306701ab72462d8
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 11:49:53 2019 +0100
+
+    Rough testing of parser in place
+
+commit 7160cca5f91a996346af6083e5974dc08531e672
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 11:29:22 2019 +0100
+
+    Simple integration testing of parser and scanner
+
+commit 6eafe20270356ec75dc813c1a2e740fe15a2979c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 11:17:35 2019 +0100
+
+    Comments added to test def file
+
+commit 20db02c146064cc117c8c358b9949acc72eb43ef
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 11:16:03 2019 +0100
+
+    Simple test definition file written
+
+commit 468e7e16a4eaba69d33d586e60565785ce695c7e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 11:09:04 2019 +0100
+
+    Test definition file created
+
+commit facdfa1fed2349af5b098b78b9afefe38ae2351a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 00:49:43 2019 +0100
+
+    monitor_point method of parser class structure complete
+
+commit 581c1d5ae5193519815df4fd1763b7aaa57b1a8e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 00:42:19 2019 +0100
+
+    Created method for parsing monitor point in parser
+
+commit 7202fb779522eba17c5749b216562f5018a5c3af
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 00:40:30 2019 +0100
+
+    Structure of monitorlist method of parser in place
+
+commit 095c21498eccacaad20929cfd91c2f30d59f4a6a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 00:33:46 2019 +0100
+
+    connection method structure of parser complete
+
+commit 5fbd1b0c032f5d4f6fbab705524bb2d79b9fc011
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 24 00:03:37 2019 +0100
+
+    Change while loop to look for device and connection whilst symbol type is NAME
+
+commit d009ae6ddf45cf5d015fd6bbeb68d1a898f74859
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 23 23:59:02 2019 +0100
+
+    Created connection method for parser class
+
+commit 48b47e65b6144250bd02ea4e34a88fae62a8c638
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 23 22:37:07 2019 +0100
+
+    Structure of connectlist method of parser class in place
+
+commit 61ee5645b26f4b4a4db469b1c9fa49c0485bedd9
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Thu May 23 21:48:11 2019 +0100
+
+    Structure of Logictype method of parser written
+
+commit cb9638acdcdafbde8b4e3c051910c3788db04a21
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 17:30:56 2019 +0100
+
+    Indicating comments added to each Errors function call in parser class
+
+commit 9638e6d9131a5c1e74cf0d5727568662aa0c9194
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 17:27:28 2019 +0100
+
+    Updated EBNF v3 devices section to make parsing easier
+
+commit 51671c144e8d3b3dd8955b00fb65deb088d1d572
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 17:16:12 2019 +0100
+
+    Main structure of device method of parser class complete
+
+commit d5ed12b757331555bf72f4dedaf83c49c4741fa3
+Merge: a0bf9db fbcd88b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 16:53:25 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit a0bf9db5e189030a934d914448fab0c84ee8d0df
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 16:21:32 2019 +0100
+
+    Changed EBNF v3 device syntax to prevent device semantic error - now syntax error
+
+commit 0cc3d96cfc32a1f1cd12334eba1f4b0e3b10c802
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 16:07:44 2019 +0100
+
+    basic setup of device method of parser class in place
+
+commit 2e6c374fe8e88469df8f02d5c5b304ea2144e95f
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 15:35:26 2019 +0100
+
+    Main structure of devicelist method of parser class in place
+
+commit 716c178fa0dd493975344d2acb9faff95ed18b1d
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 14:58:48 2019 +0100
+
+    Changed 'to' to '=' in EBNF v3
+
+commit 7efed11ecb0ac00b938dfcf1eebf613c21a5207c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 14:55:48 2019 +0100
+
+    Main structure of parse_network method of parser class in place
+
+commit e607a1d317780415abdab98d576c5a047cda31f9
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 14:40:08 2019 +0100
+
+    Added methods definitions for parsing each section
+
+commit 3bc5ac9ff8a681bc3a5f2acaf7024cf4c1d3e425
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 14:34:59 2019 +0100
+
+    Dummy error method added to parser class
+
+commit a24ba02cfbc0375f42f11417b100ebf176581af9
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 14:21:06 2019 +0100
+
+    Initialised symbol class in parser constructor
+
+commit 99dffd624b848d076452f5ea7ff7d9d48b0ad4da
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 14:11:53 2019 +0100
+
+    Initialised parameters in constructor of parser class
+
+commit 6c3cfde468bd3aad5c40a0375906189b43a468a4
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 21 14:07:53 2019 +0100
+
+    Updated EBNF v3 by creating separate section lists
+
+commit 2fafd72d55a7bd7b03ed3f8c3d20634bc29f128a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 15:49:19 2019 +0100
+
+    altered first report error handling section
+
+commit b88108725e120cc484256a2169ddd319a6f40a76
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 15:18:56 2019 +0100
+
+    removed syntax error from test_names.py
+
+commit 5f5fd242ab13b9035f00251a39e0cb657171612a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 15:15:23 2019 +0100
+
+    pep8 formatted names.py and test_names.py
+
+commit 5c8beb199bb8016a438ad48a51a69cae326a3527
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 13:35:12 2019 +0100
+
+    Lookup method functionality test added for names class
+
+commit 85ccb07a8454a3eb744ddf61f13a46a25c4fd934
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 13:21:59 2019 +0100
+
+    Added test for lookup method raising exceptions
+
+commit ddd8786d7a195c8261d240970de1169b546ded5c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 13:12:10 2019 +0100
+
+    Added Type check to lookup method in names class to ensure list is passed
+
+commit 946fa976f9b792fbf24d16474b72fa7bc5de1a5e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 13:04:00 2019 +0100
+
+    Added test for query method raising exceptions
+
+commit 61066794b230b902621473188ae084e84d7cfd28
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:56:42 2019 +0100
+
+    Added test for get_name_string returns expected string for names class
+
+commit c15a704b718b9492d30d8e4bce7503b8ac1546c3
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:45:51 2019 +0100
+
+    Updated test for get_name_string method of names class
+
+commit 296a1f1ade8770ed0243ffb4183ca78f2df7840a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:43:18 2019 +0100
+
+    Made lookup method of names class more pythonic
+
+commit e137aea5aef440b41ca90caebdfef838977ab1c6
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:41:38 2019 +0100
+
+    Corrected TypeError in lookup method of names class
+
+commit d71abefbbd23940cc6201536c56a97dd26ae9dc8
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:32:50 2019 +0100
+
+    added test for get_names_string method of names class
+
+commit bb7bc5c5202375d26a0c29246a22033edb70c79a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:29:48 2019 +0100
+
+    Added pytest fixtures to test_names
+
+commit 8f98e666446404bd720d214ad2d3fc9d6a27f6a6
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:20:10 2019 +0100
+
+    Created python file to test names module
+
+commit cba4cfe3daa83fa38e5d09c244489db4399b89cf
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:13:41 2019 +0100
+
+    Written get_name_string method for names class
+
+commit 18caa6a2a19838d77683474f4e4f2f1ae6415f5a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:09:43 2019 +0100
+
+    Written lookup method for names class
+
+commit 120275e6dd50a7fe9dd955733bdec15adb55912a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 12:01:21 2019 +0100
+
+    Written query method for names class
+
+commit bd58141cad8b0c5a5506a4a2cb842d07bb645e6e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 11:58:04 2019 +0100
+
+    initialised names list for names class
+
+commit 40176b6311d75b4541bc13b2a89bcc03dd839d74
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sat May 18 10:48:20 2019 +0100
+
+    final update to report
+
+commit 96db353cbb095b5d4a170fdf594b0782b74b222e
+Author: rainavyas <42746548+rainavyas@users.noreply.github.com>
+Date:   Sat May 18 10:25:08 2019 +0100
+
+    in wrong directory
+
+commit 470d2167e05770c9907b30828a5e368502a70b66
+Author: rainavyas <42746548+rainavyas@users.noreply.github.com>
+Date:   Sat May 18 10:24:48 2019 +0100
+
+    file in wrong folder
+
+commit 1a77315f4c98cd92b144ac50dbb9bf4eeb2e85b8
+Author: rainavyas <42746548+rainavyas@users.noreply.github.com>
+Date:   Sat May 18 10:24:26 2019 +0100
+
+    duplicate file
+
+commit 98c267f76a5e1ccda0777b4dd560e1d2aefaf286
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 17 23:04:47 2019 +0100
+
+    updated first report
+
+commit 2989f2cf9e4905eda163cf392bd989fa08e880a4
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 17 17:50:30 2019 +0100
+
+    first report added
+
+commit 501ea34218028f42375f0fb7b9b11b91fcfa7bc0
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 17 15:49:02 2019 +0100
+
+     more formatting
+
+commit 3821167983b6b3e99d5335c01229c16dfaec687a
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 17 15:48:18 2019 +0100
+
+    formatted EBNF_v2
+
+commit a37e0a1ba8f5a9b0a484e380629865e94c387741
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 17 15:16:40 2019 +0100
+
+    v2 EBNF completed
+
+commit 163aa0982d7e2766e656eff8aec34bb96bcfd47f
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 17 15:00:18 2019 +0100
+
+    Added improved EBNF definition file
+
+commit d9d86f8e8092ee6af1fddf7b19f8340c2d826ae3
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 17 12:40:52 2019 +0100
+
+    Added top down design image
+
+commit 85cffacc329dc977fbb9638268f3548c54a7c075
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 14 15:36:06 2019 +0100
+
+    added Gantt chart
+
+commit 94de9669cda9805565b93b882574378bf9cc8ce7
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue May 14 00:09:23 2019 +0100
+
+    pep8 formatted
+
+commit 7eed0b5351439dcf802289d7abd9fbbc41596b0b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 23:51:41 2019 +0100
+
+    prelim ex 8 complete
+
+commit 0bab7528792fef40f31811aebde2c867b57f1453
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 19:08:11 2019 +0100
+
+    prelim ex 7 complete
+
+commit cd228d104d0ef26c9c3cc937f5fca3c4901b3070
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 18:19:37 2019 +0100
+
+    prelim ex 6 complete
+
+commit 44e69a465f6afaad89a93fac9785430d17e12a26
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 18:01:26 2019 +0100
+
+    prelim ex 5 complete
+
+commit f4c883f71488f6442489c7ab7f27e4bbbf13fa53
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 17:25:33 2019 +0100
+
+    prelim ex 4 complete
+
+commit 1e788d288885c99c4239938d35a64cf1b60bc9d7
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 17:13:20 2019 +0100
+
+    prelim ex 3 complete
+
+commit e8da778f6d65eb97969969a1ea140b0a3a2250e8
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 16:50:59 2019 +0100
+
+    prelim ex 2 complete
+
+commit 27237e598dd02d294b6f05a139e3acadaa8ae90c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 16:19:25 2019 +0100
+
+    unzipped moodle python files
+
+commit d9858e508701c6365b9acfb6667b9e13c5e8f498
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 15:56:23 2019 +0100
+
+    renamed prelim file
+
+commit bba0cbc9b9e73588db1e9132687587e424e4ad1b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon May 13 15:51:05 2019 +0100
+
+    created repo

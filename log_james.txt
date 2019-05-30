@@ -1,0 +1,449 @@
+commit bf96629e9bae4e74642516780090fa911416480e
+Merge: 13b47a8 690a535
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Thu May 30 14:07:22 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 13b47a88b7860721be9d759625d46619ac2a091f
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Thu May 30 14:07:14 2019 +0100
+
+    Added images for two of the test definition files.
+
+commit fb62e1befb77dafa26e5a36b99bef1d9e1d17431
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Thu May 30 13:47:43 2019 +0100
+
+    Added images for two of the test definition files.
+
+commit 9d9240476c66e09bd8defcaabb4229e5b4cd3a54
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Thu May 30 12:03:12 2019 +0100
+
+    Finished all parser pytests, ensured PEP8 compliance and added appropriate documentation.
+
+commit 0d0dd6ae58ae673b75baf82542740b4e408b056a
+Merge: c9c7bc8 38fcf70
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Thu May 30 08:46:31 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit c9c7bc834b42fd64c6113165be8289b43f523c58
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Thu May 30 08:46:20 2019 +0100
+
+    Added all test files for parser and completed parser pytests.
+
+commit e28fd0ba4da73c6ef7c4941b2232cfc36be63cac
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Wed May 29 08:47:25 2019 +0100
+
+    Updated parser pytest file 'test_parse.py'.
+
+commit b847e99ed8b9d25dd903cbaae36c6d3d2a4e9850
+Merge: 1885b9c e1f330f
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Wed May 29 08:45:58 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 1885b9cf8c27d1aa08a95a76f81a92114cf3ce5e
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Wed May 29 08:45:24 2019 +0100
+
+    Added test definition file for parser pytests.
+
+commit 5f84973b9bed583abf0fe8bdd43303b898819e82
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 17:54:43 2019 +0100
+
+    First parser tests working and 'test_def_file.txt' errors corrected.
+
+commit d6a4f79962bd3543bea0c3a98a1f5218aa4b6258
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 16:52:20 2019 +0100
+
+    No cache.
+
+commit 3b891801864ad9eb98a1eaae9b77df8ae7621250
+Merge: 6f60f71 0c44454
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 16:51:08 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 6f60f7151016419ff98aaa2a81c8d9c6d9b7da61
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 16:49:39 2019 +0100
+
+    Added test text file.
+
+commit e3a35826d45d0175a766483ffe8a5ae3f3d0c076
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 16:39:21 2019 +0100
+
+    Added folder for parser test files.
+
+commit e9e0331b5b8542cf55ad7c0ee145d151d75d4645
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 16:38:52 2019 +0100
+
+    Added pytests for parser.
+
+commit 570b43b76caf8d443d0db2a729dc533918187de2
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 16:36:54 2019 +0100
+
+    Altered scanner to only accept text files.
+
+commit f791b7c36cb611946c0f9699215302d8548bbaba
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 15:01:39 2019 +0100
+
+    Reverted scanner caret printing.
+
+commit 1e20556d07c4de22afc5268d4562dac3e70f4223
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 15:00:34 2019 +0100
+
+    Changed scanner caret printing.
+
+commit 11a135b4fa3418ffaa11859b2d534e3e33590cbf
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 14:40:32 2019 +0100
+
+    Updated scanner to PEP8 compliance.
+
+commit 0aaf0a6dc3707f22acf75b4c1af074b9edcfb6cf
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 14:28:47 2019 +0100
+
+    Error collection for GUI.
+
+commit 314e064906e66eb0cf7bbd7ee69308e3018dfa1b
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 13:42:58 2019 +0100
+
+    Added 'errors.py' docstrings and removed print tests from the parser.
+
+commit 1da63bf4adf9e4075938de8e8aa4f3be829c653e
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 13:01:48 2019 +0100
+
+    Added print tests in parser to check error object creation. Updated 'carat' spelling to 'caret'.
+
+commit 4e54f0db34af7d807644c9c60e855a780f18b0e8
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 11:50:56 2019 +0100
+
+    Created error objects for each of the comment errors and appended them to the error list.
+
+commit 5f288af08f5da76ef373a9dd1b29339e1e8221b9
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 11:28:04 2019 +0100
+
+    Implemented error object in scanner for passing to the parser.
+
+commit 7c21e9dd63375562e5b08576b1639c5b4975a2a9
+Merge: 63276d3 6623101
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 11:16:53 2019 +0100
+
+    erge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 63276d3fc5d2f691c2ce73aa4001896fb6245924
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 11:16:38 2019 +0100
+
+    Added 'Hamlet' text file for testing.
+
+commit 7d17506e4a68eec0f426a04d89ad3741ae7657a1
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 28 10:25:14 2019 +0100
+
+    Altered 'text_def_file_James' to contain a different random text excerpt.
+
+commit 03aaa906bfb379e6dcc1a420ba9a742bd558302f
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Mon May 27 20:28:57 2019 +0100
+
+    Removed DTYPE connection.
+
+commit 3d99a1f0b0b5465c604e6499449cc9d02926d2bc
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Mon May 27 20:27:39 2019 +0100
+
+    Removed DTYPE monitoring point.
+
+commit b91b9d95a7c09bea49c803349692cac4c1acb3ea
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Mon May 27 20:26:28 2019 +0100
+
+    Removed faulty DTYPE from definition file.
+
+commit fb542cd8e46a04352fda418d3867671a083070e4
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Mon May 27 19:45:43 2019 +0100
+
+    Fixed bug: not removing blank lines after a comment (scanner).
+
+commit f547f2acda435766cda4d1229f266084c9e010da
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sun May 26 12:57:46 2019 +0100
+
+    Removed exclamation symbol and added 'left curly', 'right curly' to scanner types.
+
+commit 3615249fb8fa43291a740002a81bc61474337ad8
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sun May 26 09:56:22 2019 +0100
+
+    Added exclamation symbol to scanner types.
+
+commit 788ae1b70e07bd119aaf87a12fb34d8ee4046398
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sat May 25 20:43:38 2019 +0100
+
+    Updated scanner with more complete documentation and altered to conform with pep8 standard.
+
+commit e811c54cd73f07d38c25d30b40e2fc5600ba33cb
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sat May 25 19:24:27 2019 +0100
+
+    Enclosed 'symbol.id' within the scanner with square brackets for correct syntax.
+
+commit 0db7b7afb6fb1c5a667484c86cf44792fc42d512
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sat May 25 19:18:40 2019 +0100
+
+    Enclosed lookup arguments within the scanner with square brackets.
+
+commit af5b788b2f2fe813995db1496d9f6dfe80640202
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sat May 25 19:10:20 2019 +0100
+
+    Corrected symbol id assignment for numbers in scanner.
+
+commit 2b1cfdd8147d19c3cd4b541ebaa2c28bf72e5bb4
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sat May 25 18:51:46 2019 +0100
+
+    Printing to the current or previous symbol using 'print_location' added within scanner. Added example use within duplicate parser.
+
+commit 415b77b0313e20d3ae03985339be40819fed9a53
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 16:42:28 2019 +0100
+
+    Added my own test definition file for testing.
+
+commit bcb376f826cc67330a337eeee4050b0c8d5dbc82
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 16:26:31 2019 +0100
+
+    Updated test definition file.
+
+commit 25dd215c5fcd19fbe7b0cdba139ad6c5d7e20a44
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 15:54:02 2019 +0100
+
+    Scanner's 'print_location' method now includes the line number.
+
+commit 91c7e1574c6e6c52640e0aac866a70f33b6eab33
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 15:33:55 2019 +0100
+
+    Removed print statements from scanner not required.
+
+commit a2d5ea1209459102c0bf9783a7bed7d91832b58e
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 15:30:25 2019 +0100
+
+    Added more comprehensive test file for scanner/parser.
+
+commit 8e25024657ff4a70afdc71bf9dd5a7b20d588106
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 12:46:05 2019 +0100
+
+    Added error-detection to 'skip_comment' within the scanner.
+
+commit f4a505d19a4560287ab3d5106cd5372e40b3f47a
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 11:36:30 2019 +0100
+
+    Improved multi-line comment skipping in the scanner.
+
+commit 06683e8efc9aaa6be1570e9f60fc3632a61bef1d
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 11:30:15 2019 +0100
+
+    Removed print statements in scanner's 'get_symbol' method.
+
+commit fe48cafd918763567e363564e020d90785722912
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 24 11:10:58 2019 +0100
+
+    Removed additional print statements (not required) from scanner module.
+
+commit 6f6c016d0467f57a050f27d2923ceedcc052cc77
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 18:22:01 2019 +0100
+
+    Scanner now correctly prints the symbol line and (end) position when scanner.location() is called.
+
+commit fd3d79caa8542dc515089f4dc51bf2dcf19d02ea
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 15:58:10 2019 +0100
+
+    Corrected syntax error (alignment of line 78) in scanner).
+
+commit adf73349b8a832996eafef96c9ede61bf08348cc
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 15:52:53 2019 +0100
+
+    Added 'logic_type', 'input_pin' and 'output_pin' lists and types to Scanner. Added 'colon' type. Improved 'location' scanner method.
+
+commit 93ffd50d92504a719b2ecf9cd0e96caf5bab2ed8
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 13:34:11 2019 +0100
+
+    Updated EBNF_v3 to allow for LL(1) parsing.
+
+commit ce6457c12a6ee0cd94ff3ac7d2cb6727b928423e
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 13:20:49 2019 +0100
+
+    Updated EBNF_v3 to allow for LL(1) parsing.
+
+commit 0a9265ed27a3f82c0d393bc342ec9eb70ed82859
+Merge: 1d2561b 544aa1f
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 11:00:12 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 1d2561be79d18d9074b67582b3203b7b7606ad38
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 10:59:51 2019 +0100
+
+    Updated EBNF_v3 to conform with LL(1).
+
+commit 0c03f43d6e0c16e57953633e13d20077dcd23b31
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 09:31:12 2019 +0100
+
+    Removed closed comment removal from scanner.
+
+commit bebe4ff9f0378b99d114f5fc560f1a2b43aded01
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 09:29:03 2019 +0100
+
+    Updated scanner module again.
+
+commit ea1d443e9f35e85323d33a343e90d3f65e41a090
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 21 09:26:22 2019 +0100
+
+    Updated scanner module.
+
+commit da6ccbca279217def95ec7578d08686b94a4ab4a
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sun May 19 15:37:31 2019 +0100
+
+    Scanner now conforms to PEP8, PEP257.
+
+commit b2bd0d54ac3763ee60eb865243ecb3191153ba64
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sun May 19 10:30:38 2019 +0100
+
+    Completed scanner
+
+commit 90c626519dfda926e1f66be22d56ee057209debc
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sun May 19 09:49:26 2019 +0100
+
+    Completed scanner (currently debugging).
+
+commit 5ba86684f1b391f3e28e01f9c354dd33727ff9e9
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sat May 18 18:00:10 2019 +0100
+
+    Scanner near completion.
+
+commit 8f0c4707111ffc911df5e8e8b676927fc53223d8
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sat May 18 10:46:00 2019 +0100
+
+    Added scanner test files with partially complete scanner.
+
+commit edca169f583ec34018dcc7cc33de334e0e054354
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sat May 18 08:04:10 2019 +0100
+
+    Corrected mistakes in Error_handling.txt.
+
+commit 7825a331c88821f98011f7f47c8103f4a1cd4d30
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 17 13:22:45 2019 +0100
+
+    Uploaded file 'Error_handling.txt' for adding to the report.
+
+commit 48970e7479a0bd6c230e829cfd4efd680fed518e
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 17 12:12:21 2019 +0100
+
+    More semantic errors and handling.
+
+commit 2e402e0e1449ae1331e3ed6d8a674f8514f372f0
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 17 10:30:23 2019 +0100
+
+    More semantic errors and handling.
+
+commit d2fe5c4fa50f13af510f88ae4c3f256879235e88
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 14 16:00:49 2019 +0100
+
+    Updated error handling & added ';' where missing in EBNF.
+
+commit 48bd80822d978a39a950e8abb27a404273463375
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 14 15:50:45 2019 +0100
+
+    Added error-handling procedures.
+
+commit 68ca2e96e74b943ec8c67d81b352a9ba25bdda22
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 14 15:40:11 2019 +0100
+
+    Added error handling for semantic errors.
+
+commit dd3ccd33a5df879055232a36b91c1e3279a4ce26
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 14 15:14:55 2019 +0100
+
+    Updated with further semantic errors.
+
+commit 029e6b096cf4d32d08effc07692a62efcddfbfce
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 14 14:52:41 2019 +0100
+
+    Added semantic errors document.
+
+commit 9ac37d85d3b71bb5d0a41747a4b74e2afa95af1e
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 14 10:52:18 2019 +0100
+
+    Added my preliminary files.
+
+commit 57dab7feafe0e54bf93e8ead4d39f2b8d4ec2233
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 14 10:29:46 2019 +0100
+
+    Removed test
+
+commit e2ca4f5b913caf1a3ca20a6037cef337d3b999c7
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue May 14 10:28:38 2019 +0100
+
+    Test

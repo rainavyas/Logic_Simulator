@@ -2,13 +2,11 @@
 import pytest
 
 from parse import Parser
-from scanner import Symbol
 from names import Names
 from scanner import Scanner
 from monitors import Monitors
 from devices import Devices
 from network import Network
-import sys
 
 
 @pytest.fixture
@@ -123,7 +121,7 @@ def test_error(names, devices, network, monitors, file_list, file, error_line,
     scanner = Scanner(path, names)
     parse = Parser(names, devices, network, monitors, scanner)
     # Parse the given file.
-    parsed = parse.parse_network()
+    parse.parse_network()
     # Initially expect the returned message to be incorrect.
     correct_message = False
 

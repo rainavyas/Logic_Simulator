@@ -9,10 +9,8 @@ Scanner - reads definition file and translates characters into symbols.
 Symbol - encapsulates a symbol and stores its properties.
 """
 
-from names import Names
 from errors import Error
 import sys
-import os
 
 
 class Symbol:
@@ -75,9 +73,10 @@ class Scanner:
                                           current or previous symbol's line
                                           number, the line itself and symbol
                                           position, indicated by a caret under
-                                          its final character on the line below.
-                                          Create an error object and add to it
-                                          this information for use by the GUI.
+                                          its final character on the line
+                                          below. Create an error object and add
+                                          to it this information for use
+                                          by the GUI.
 
     get_symbol(self): Translates the next sequence of characters into a symbol
                       and returns the symbol.
@@ -90,7 +89,7 @@ class Scanner:
         if path.endswith(".txt"):
             try:
                 self.file = open(path)
-            except:
+            except FileNotFoundError:
                 print('File does not exist.')
                 sys.exit()
         else:
@@ -132,7 +131,6 @@ class Scanner:
         character in current_character.
         """
         name = []
-        lis = []
 
         if self.current_character.isalpha():
             while self.current_character.isalnum():
@@ -229,7 +227,6 @@ class Scanner:
     def close_file(self):
         """closes the current file open in the scanner."""
         self.file.close()
-
 
     def location(self):
         """Return the current line and position within the file.

@@ -1,0 +1,28 @@
+DEVICES{
+switch: SWITCH, initial 0;
+clock: CLOCK, period 5;
+nand1: NAND, inputs 2;
+nand2: NAND, inputs 2;
+nand3: NAND, inputs 2;
+nand4: NAND, inputs 2;
+nand5: NAND, inputs 2;
+}
+
+CONNECT{
+clock = nand2.I2;
+clock = nand1.I2;
+switch = nand1.I1;
+switch = nand5.I1;
+switch = nand5.I2;
+nand5 = nand2.I1;
+nand1 = nand3.I1;
+nand2 = nand4.I2;
+nand3 = nand4.I1;
+nand4 = nand3.I2;
+}
+
+MONITOR{
+nand3;
+nand4;
+}
+END

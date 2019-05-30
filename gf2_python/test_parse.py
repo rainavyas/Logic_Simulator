@@ -42,10 +42,10 @@ def file_list():
                  "Example.txt",
                  # Syntax error files:
                  "Error1.txt", "Error2.txt", "Error3.txt", "Error4.txt",
-                 "Error5.txt", "Error6.txt", "Error7.txt","Error8.txt",
-                 "Error9.txt", "Error10.txt", "Error11.txt","Error12.txt",
-                 "Error13.txt", "Error14.txt", "Error15.txt","Error16.txt",
-                 "Error17.txt", "Error18.txt", "Error19.txt","Error20.txt",
+                 "Error5.txt", "Error6.txt", "Error7.txt", "Error8.txt",
+                 "Error9.txt", "Error10.txt", "Error11.txt", "Error12.txt",
+                 "Error13.txt", "Error14.txt", "Error15.txt", "Error16.txt",
+                 "Error17.txt", "Error18.txt", "Error19.txt", "Error20.txt",
                  "Error21.txt", "Error22.txt", "Error23.txt",
                  # Semantic error files (devices):
                  "Error24.txt", "Error25.txt", "Error26.txt", "Error27.txt",
@@ -64,14 +64,15 @@ def file_list():
 def test_parse_network(names, devices, network, monitors, file_list):
     """Asserts whether files expected to parse or not do so"""
     #  Assert whether parsing each file returns true/false.
-    for n in range(len(file_list)):
+    for n in range(len(file_list)-1):
         path = "parse_test_files/" + file_list[n]
         scanner = Scanner(path, names)
         parse = Parser(names, devices, network, monitors, scanner)
         if n == 0:
-            assert parse.parse_network() == True
+            assert parse.parse_network() is True
         else:
-            assert parse.parse_network() == False
+            assert parse.parse_network() is False
+
 
 @pytest.mark.parametrize("file,error_line,expected_msg", [
     # Syntax errors:
@@ -114,12 +115,9 @@ def test_parse_network(names, devices, network, monitors, file_list):
     (34, "Line 31:", "Output pin has to be 'Q' or 'QBAR'"),
     (35, "Line 32:", "This point is already being monitored")
 ])
-
-
 def test_error(names, devices, network, monitors, file_list, file, error_line,
                expected_msg):
     """Ensures all errors are correctly reported and stored for use by GUI"""
-
     # Create scanner and parse objects for given file.
     path = "parse_test_files/" + file_list[file]
     scanner = Scanner(path, names)
@@ -142,25 +140,27 @@ def test_error(names, devices, network, monitors, file_list, file, error_line,
                 correct_message = True
 
     # Assert that the line and message were returned correctly.
-    assert correct_message == True
+    assert correct_message is True
     # Close the current file to prevent a large number of open files.
     scanner.close_file()
 
 
 @pytest.mark.parametrize("device_number,device_name,device_type,device_inputs,"
                          "connected_to", [
-    # Known devices with their device types, inputs and expected connections.
-    (0, "clock1", "CLOCK", [], []),
-    (1, "clock2", "CLOCK", [], []),
-    (2, "clock3", "CLOCK", [], []),
-    (3, "switch1", "SWITCH", [], []),
-    (4, "switch2", "SWITCH", [], []),
-    (5, "nand", "NAND", ["I1", "I2"], ["dtype.Q", "switch2"]),
-    (6, "xor", "XOR", ["I1", "I2"], ["nand", "switch2"]),
-    (7, "dtype", "DTYPE", ["SET","DATA","CLK","CLEAR"], ["clock1", "clock2",
-                                                         "clock3", "switch1"])
-])
-
+                                          (0, "clock1", "CLOCK", [], []),
+                                          (1, "clock2", "CLOCK", [], []),
+                                          (2, "clock3", "CLOCK", [], []),
+                                          (3, "switch1", "SWITCH", [], []),
+                                          (4, "switch2", "SWITCH", [], []),
+                                          (5, "nand", "NAND", ["I1", "I2"],
+                                           ["dtype.Q", "switch2"]),
+                                          (6, "xor", "XOR", ["I1", "I2"],
+                                           ["nand", "switch2"]),
+                                          (7, "dtype", "DTYPE",
+                                           ["SET", "DATA", "CLK", "CLEAR"],
+                                           ["clock1", "clock2", "clock3",
+                                            "switch1"])
+                                        ])
 def test_devices_and_connections(names, devices, network, monitors, file_list,
                                  device_number, device_name, device_type,
                                  device_inputs, connected_to):
@@ -169,8 +169,8 @@ def test_devices_and_connections(names, devices, network, monitors, file_list,
     """
     # Create scanner and parse objects for given file:
     path = "parse_test_files/" + file_list[36]
-    scanner  = Scanner(path, names)
-    parse  = Parser(names, devices, network, monitors, scanner)
+    scanner = Scanner(path, names)
+    parse = Parser(names, devices, network, monitors, scanner)
     # Parse the given file:
     parse.parse_network()
     # Assert correct number of devices created:
@@ -184,14 +184,14 @@ def test_devices_and_connections(names, devices, network, monitors, file_list,
     # Depending on the device, assert connections are correct:
     for input in device_inputs:
         if connected_to[n].endswith("Q"):
-            assert (device.inputs.get(names.query(input))[0]
-                    == names.query(connected_to[n][:-2]))
+            assert (device.inputs.get(names.query(input))[0] ==
+                    names.query(connected_to[n][:-2]))
         elif connected_to[n].endswith("QBAR"):
-            assert (device.inputs.get(names.query(input))[0]
-                    == names.query(connected_to[n][:-5]))
+            assert (device.inputs.get(names.query(input))[0] ==
+                    names.query(connected_to[n][:-5]))
         else:
-            assert (device.inputs.get(names.query(input))[0]
-                    == names.query(connected_to[n]))
+            assert (device.inputs.get(names.query(input))[0] ==
+                    names.query(connected_to[n]))
         n += 1
 
 
@@ -204,23 +204,22 @@ def test_devices_and_connections(names, devices, network, monitors, file_list,
     (4, "dtype.QBAR"),
     (5, "dtype.Q")
 ])
-
 def test_monitors(names, devices, network, monitors, file_list, monitor_num,
                   monitor_name):
     """Tests whether monitoring points have been created correctly."""
     # Create scanner and parse objects for given file:
     path = "parse_test_files/" + file_list[36]
-    scanner  = Scanner(path, names)
-    parse  = Parser(names, devices, network, monitors, scanner)
+    scanner = Scanner(path, names)
+    parse = Parser(names, devices, network, monitors, scanner)
     # Parse the given file:
     parse.parse_network()
     # Assert correct monitoring points created:
     if monitor_name.endswith("Q"):
-        assert (list(monitors.monitors_dictionary.items())[monitor_num][0][1]
-                == devices.dtype_output_ids[0])
+        assert(list(monitors.monitors_dictionary.items())[monitor_num][0][1] ==
+               devices.dtype_output_ids[0])
     elif monitor_name.endswith("QBAR"):
-        assert (list(monitors.monitors_dictionary.items())[monitor_num][0][1]
-                == devices.dtype_output_ids[1])
+        assert(list(monitors.monitors_dictionary.items())[monitor_num][0][1] ==
+               devices.dtype_output_ids[1])
     else:
-        assert (list(monitors.monitors_dictionary.items())[monitor_num][0][0]
-                == names.query(monitor_name))
+        assert(list(monitors.monitors_dictionary.items())[monitor_num][0][0] ==
+               names.query(monitor_name))

@@ -496,8 +496,8 @@ class Parser:
                         # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR'
                         # or 'END' KEYWORD
                         self.error(self.NEED_QUALIFIER, [self.scanner.KEYWORD,
-                                                     self.scanner.SEMICOLON,
-                                                     self.scanner.RIGHT_CURLY],
+                                   self.scanner.SEMICOLON,
+                                   self.scanner.RIGHT_CURLY],
                                    [self.scanner.CONNECT_ID,
                                     self.scanner.MONITOR_ID,
                                     self.scanner.END_ID])
@@ -563,7 +563,6 @@ class Parser:
             self.num_input_pin += device_property
         elif device_name_string == "XOR":
             self.num_input_pin += 2
-
 
     def logictype(self):
         """Parse the type syntax

@@ -1,0 +1,68 @@
+\documentclass{article}					%Define the document type (book, report, article, etc.)
+\usepackage[margin=1in]{geometry}
+\geometry{a4paper}
+\usepackage[backend=bibtex]{biblatex}
+\usepackage[utf8]{inputenc}
+\usepackage{mdframed}					%These are a few packages we need for extra formatting.
+\usepackage{graphicx}					%I've included some helpful packages, but you can add more as needed.
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{subcaption}
+\usepackage[titletoc, title]{appendix}
+\usepackage[table,xcdraw,dvipsnames]{xcolor}
+\usepackage{verbatim}
+
+
+
+					%Start the document. Everything before this is formatting.
+\title{GF2 Software - Second Interim Report}
+
+\author{Jonty Page\\ Pembroke College, University of Cambridge}
+\begin{document}
+\maketitle
+
+\section{Example Definition Files and Circuits}
+\subsection{Example 1 - Full Adder Circuit}
+\subsubsection{Full Adder Circuit Diagram}
+\begin{figure}[h!]
+\begin{centering}
+  \includegraphics[scale=0.3]{{"../FINAL_example_circuits/FINAL_test_file1_full_adder"}.png}
+\caption{Full Adder Circuit Diagram}
+\end{centering}
+\end{figure}
+\subsubsection{Full Adder Circuit Definition File}
+\verbatiminput{../FINAL_example_circuits/FINAL_test_file1_full_adder.txt}
+
+\subsection{Example 2 - Shift Register}
+\subsubsection{Shift Register Circuit Diagram}
+\begin{figure}[h!]
+\begin{centering}
+  \includegraphics[scale=0.3]{{"../FINAL_example_circuits/FINAL_test_file2_shift_register"}.png}
+\caption{Shift Register Circuit Diagram}
+\end{centering}
+\end{figure}
+\subsubsection{Shift Register Circuit Definition File}
+\verbatiminput{../FINAL_example_circuits/FINAL_test_file2_shift_register.txt}
+
+\subsection{Example 3 - Combinational Circuit}
+\subsubsection{Combinational Circuit Diagram}
+\begin{figure}[h!]
+\begin{centering}
+  \includegraphics[scale=0.3]{{"../FINAL_example_circuits/FINAL_test_file3_combinational"}.png}
+\caption{Shift Register Circuit Diagram}
+\end{centering}
+\end{figure}
+\subsubsection{Combinational Circuit Definition File}
+\verbatiminput{../FINAL_example_circuits/FINAL_test_file3_combinational.txt}
+
+\subsection{Example 4 - dtype Circuit}
+\subsubsection{dtype Circuit Diagram}
+\begin{figure}[h!]
+\begin{centering}
+  \includegraphics[scale=0.3]{{"../FINAL_example_circuits/FINAL_test_file4_dtype"}.png}
+\caption{dtype Circuit Diagram}
+\end{centering}
+\end{figure}
+\subsubsection{dtype Circuit Definition File}
+\verbatiminput{../FINAL_example_circuits/FINAL_test_file4_dtype.txt}
+\end{document}							%End of the document.

@@ -1,5 +1,1 @@
-{
-  "test_parse.py::test_error[12-Line 4:-Device name has to be followed by ':']": true,
-  "test_parse.py::test_error[14-Line 7:-Valid Logic gate required e.g. 'AND']": true,
-  "test_parse.py::test_parse_network": true
-}
+{}

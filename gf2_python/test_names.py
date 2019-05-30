@@ -88,6 +88,7 @@ def test_lookup(used_names, new_names, name_ids, expected_string_list):
     assert len(new_names.lookup(expected_string_list))\
         == len(expected_string_list)
 
+
 def test_unique_error_codes(new_names):
     """Test that unique_error_codes returns unique codes"""
     codes = new_names.unique_error_codes(10)
@@ -95,6 +96,7 @@ def test_unique_error_codes(new_names):
     for i in codes:
         numbers.append(i)
     assert numbers == list(set(numbers))
+
 
 def test_unique_error_codes_raises_exceptions(new_names):
     """Test that unique_error_codes raises expected exceptions"""

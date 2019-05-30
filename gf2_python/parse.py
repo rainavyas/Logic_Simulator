@@ -11,7 +11,6 @@ Parser - parses the definition file and builds the logic network.
 
 from scanner import Symbol
 from names import Names
-from scanner import Scanner
 from monitors import Monitors
 from devices import Devices
 from network import Network
@@ -104,8 +103,8 @@ class Parser:
         self.connectlist()
         self.monitorlist()
 
-        if not (self.symbol.type == self.scanner.KEYWORD
-                and self.symbol.id == self.scanner.END_ID):
+        if not (self.symbol.type == self.scanner.KEYWORD and
+                self.symbol.id == self.scanner.END_ID):
             # Error Type: 0: 'END' keyword required at end of file
             self.error(self.NO_END, [])
 
@@ -278,9 +277,9 @@ class Parser:
         else:
             move_on = self.symbol.type not in stopping_symbols and \
                 self.symbol.type != self.scanner.EOF
-            if ((not move_on) and (self.symbol.type != self.scanner.NAME and
-                                   self.symbol.type
-                                   != self.scanner.RIGHT_CURLY)):
+            if ((not move_on) and (
+                    self.symbol.type != self.scanner.NAME and
+                    self.symbol.type != self.scanner.RIGHT_CURLY)):
                 # Move on once more after terminating punctuation
                 # Only move on for certain error types
                 if error_ID not in dont_move_err_IDS:
@@ -495,9 +494,10 @@ class Parser:
                         # speficification
                         # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR'
                         # or 'END' KEYWORD
-                        self.error(self.NEED_QUALIFIER, [self.scanner.KEYWORD,
-                                   self.scanner.SEMICOLON,
-                                   self.scanner.RIGHT_CURLY],
+                        self.error(self.NEED_QUALIFIER,
+                                   [self.scanner.KEYWORD,
+                                    self.scanner.SEMICOLON,
+                                    self.scanner.RIGHT_CURLY],
                                    [self.scanner.CONNECT_ID,
                                     self.scanner.MONITOR_ID,
                                     self.scanner.END_ID])

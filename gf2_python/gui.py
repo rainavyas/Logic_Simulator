@@ -309,8 +309,9 @@ class Gui(wx.Frame):
         # Create panels for the frame
         self.main_panel = wx.Panel(self)
         self.top_panel = wx.Panel(self)
-        self.mp_panel = scrolled.ScrolledPanel(self.main_panel, size=wx.Size(250, 250),
-                                            style=wx.SUNKEN_BORDER)
+        self.mp_panel = scrolled.ScrolledPanel(self.main_panel,
+                                               size=wx.Size(250, 250),
+                                               style=wx.SUNKEN_BORDER)
         self.mp_panel.SetAutoLayout(1)
         self.mp_panel.SetupScrolling(False, True)
 
@@ -322,16 +323,19 @@ class Gui(wx.Frame):
             wx.FilePickerCtrl(self.top_panel, message='Select Source File',
                               wildcard='Text Files (*.txt)|*.txt'))
         self.text_cycles = wx.StaticText(self.main_panel, wx.ID_ANY, "Cycles:")
-        self.text_mps = wx.StaticText(self.main_panel, wx.ID_ANY, "Monitor Points")
+        self.text_mps = wx.StaticText(self.main_panel, wx.ID_ANY,
+                                      "Monitor Points")
         self.spin = wx.SpinCtrl(self.main_panel, wx.ID_ANY, "10", min=1)
         self.run_button = wx.Button(self.main_panel, wx.ID_ANY, "Run")
         self.run_button.SetBackgroundColour(wx.Colour(100, 255, 100))
-        self.continue_button = wx.Button(self.main_panel, wx.ID_ANY, "Continue")
+        self.continue_button = wx.Button(self.main_panel, wx.ID_ANY,
+                                         "Continue")
         self.continue_button.SetBackgroundColour(wx.Colour(255, 255, 100))
         self.exit_button = wx.Button(self.main_panel, wx.ID_ANY, "Exit")
         self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
         self.add_button = wx.Button(self.main_panel, wx.ID_ANY, "Add")
-        self.mp_names = wx.Choice(self.main_panel, wx.ID_ANY, choices=['SELECT'])
+        self.mp_names = wx.Choice(self.main_panel, wx.ID_ANY,
+                                  choices=['SELECT'])
         self.mp_names.SetSelection(0)
 
         # Bind events to widgets
@@ -483,7 +487,7 @@ class Gui(wx.Frame):
             else:
                 device = self.names.query(mp[0])
                 port = self.names.query(mp[1])
-            monitor_error = self.monitors.make_monitor(
+            self.monitors.make_monitor(
                 device, port, self.cycles_completed)
 
             # Removes monitor point from drop-down list
@@ -570,7 +574,7 @@ class Gui(wx.Frame):
             self.clearNetwork()
             self.loadNetwork()
         else:
-            # Clear old network, display error message and change file picker colour to red
+            # Clear old network, display error message and change colour
             self.clearNetwork()
             self.displaySyntaxErrors()
             self.top_panel.SetBackgroundColour(wx.Colour(255, 130, 130))
@@ -603,7 +607,7 @@ class Gui(wx.Frame):
                 else:
                     device = self.names.query(mp[0])
                     port = self.names.query(mp[1])
-                monitor_error = self.monitors.make_monitor(
+                self.monitors.make_monitor(
                     device, port, self.cycles_completed)
                 self.number_of_mps += 1
                 self.all_mp_names.append(i)
@@ -621,7 +625,8 @@ class Gui(wx.Frame):
             text_switches = wx.StaticText(
                 self.main_panel, wx.ID_ANY, "Switch Values:")
             switchpanel = scrolled.ScrolledPanel(
-                self.main_panel, size=wx.Size(250, 250), style=wx.SUNKEN_BORDER)
+                self.main_panel, size=wx.Size(250, 250),
+                style=wx.SUNKEN_BORDER)
             switchpanel.SetAutoLayout(1)
             switchpanel.SetupScrolling(False, True)
 

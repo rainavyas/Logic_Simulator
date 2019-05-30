@@ -16,4 +16,24 @@ CONNECT {
 switch1 = xor1.I1;
 switch1 = and2.I2;
 switch1 = and3.I1;
+switch2 = and1.I2;
+switch2 = xor1.I2;
+switch2 = and3.I2;
+clock = dtype.CLK;
+xor1 = xor2.I1;
+and1 = or1.I1;
+and2 = or1.I2;
+and3 = or1.I3;
+or1 = dtype.DATA;
+switch3 = dtype.SET;
+switch3 = dtype.CLEAR;
+dtype.Q = xor2.I2;
+dtype.Q = and1.I1;
+dtype.Q = and2.I1;
 }
+
+MONITOR{
+xor2;
+or1;
+}
+END

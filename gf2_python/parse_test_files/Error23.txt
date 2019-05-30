@@ -9,7 +9,7 @@ switch2: SWITCH, initial 1;
 nand: NAND, inputs 2;
 xor: XOR;
 dtype: DTYPE;
-}
+
 
 
 CONNECT{
@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

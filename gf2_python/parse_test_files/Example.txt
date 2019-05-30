@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

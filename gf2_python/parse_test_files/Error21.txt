@@ -27,7 +27,9 @@ switch2 = xor.I2;
 }
 
 MONITOR{
-clock1;
+3clock1;
 }
 
 # End the definition file.
+
+END

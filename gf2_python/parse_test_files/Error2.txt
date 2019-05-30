@@ -1,4 +1,4 @@
-DEVICES {
+DEVICES 
 # Declare my devices below.
 
 clock1: CLOCK, period 8;
@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

@@ -23,7 +23,7 @@ switch1 = dtype.CLEAR;
 dtype.Q = nand.I1;
 switch2 = nand.I2;
 nand = xor.I1;
-switch2 = xor.I2;
+switch2  xor.I2;
 }
 
 MONITOR{
@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

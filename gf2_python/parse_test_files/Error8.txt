@@ -1,7 +1,7 @@
 DEVICES {
 # Declare my devices below.
 
-clock1: CLOCK, period 8;
+clock1: CLOCK, period -8;
 clock2: CLOCK, period 10;
 clock3: CLOCK, period 10;
 switch1: SWITCH, initial 0;
@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

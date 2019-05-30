@@ -12,7 +12,7 @@ dtype: DTYPE;
 }
 
 
-CONNECT{
+CONNECT
 /* Define any
 connections in
 the space below: */
@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

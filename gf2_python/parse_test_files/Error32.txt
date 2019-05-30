@@ -21,7 +21,7 @@ clock2 = dtype.DATA;
 clock3 = dtype.CLK;
 switch1 = dtype.CLEAR;
 dtype.Q = nand.I1;
-switch2 = nand.I2;
+switch2 = nand. ;
 nand = xor.I1;
 switch2 = xor.I2;
 }
@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

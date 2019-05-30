@@ -17,7 +17,7 @@ CONNECT{
 connections in
 the space below: */
 clock1 = dtype.SET;
-clock2 = dtype.DATA;
+clock2 = .DATA;
 clock3 = dtype.CLK;
 switch1 = dtype.CLEAR;
 dtype.Q = nand.I1;
@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

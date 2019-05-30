@@ -4,7 +4,7 @@ DEVICES {
 clock1: CLOCK, period 8;
 clock2: CLOCK, period 10;
 clock3: CLOCK, period 10;
-switch1: SWITCH, initial 0;
+switch1: banana, initial 0;
 switch2: SWITCH, initial 1;
 nand: NAND, inputs 2;
 xor: XOR;
@@ -31,3 +31,5 @@ clock1;
 }
 
 # End the definition file.
+
+END

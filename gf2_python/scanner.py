@@ -56,6 +56,29 @@ class Scanner:
 
     Public methods
     -------------
+    get_name(self): Return the next name string in the file.
+
+    get_number(self): Return the next number in the file.
+
+    advance(self): Read the next character of the input file and place it
+                   in current_character.
+
+    skip_spaces(self): Advance until the current character is not whitespace.
+
+    skip_comment(self): Skip any single-line or multi-line comments.
+
+    close_file(self): Close the file currently in use by the scanner.
+
+    location(self): Return the current line and position within the file.
+
+    print_location(self, symbol, option): Given a symbol, print either the
+                                          current or previous symbol's line
+                                          number, the line itself and symbol
+                                          position, indicated by a caret under
+                                          its final character on the line below.
+                                          Create an error object and add to it
+                                          this information for use by the GUI.
+
     get_symbol(self): Translates the next sequence of characters into a symbol
                       and returns the symbol.
     """
@@ -202,6 +225,11 @@ class Scanner:
                 self.error_list.append(curr_err)
 
         self.skip_spaces()
+
+    def close_file(self):
+        """closes the current file open in the scanner."""
+        self.file.close()
+
 
     def location(self):
         """Return the current line and position within the file.

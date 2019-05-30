@@ -688,6 +688,9 @@ class Gui(wx.Frame):
         # Clears canvas of previous signals
         self.canvas.clear()
 
+        # Clears cycles completed
+        self.cycles_completed = 0
+
         self.loaded_network = False
 
     def displaySyntaxErrors(self):

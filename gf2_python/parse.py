@@ -75,6 +75,9 @@ class Parser:
         # Initisalise error counter
         self.error_count = 0
 
+        # Initialise an input pin counter
+        self.num_input_pin = 0
+
         # Define all Syntax Errors
         [self.NO_END, self.NO_CURLY_DEVICE,
          self.NEED_DEVICE_KEYWORD, self.NO_CURLY_CONNECT,
@@ -87,7 +90,8 @@ class Parser:
          self.INPUT_PIN, self.PERIOD_INPUT_PIN,
          self.NAME_INPUT, self.ASSIGNMENT,
          self.NAME_STRING, self.MISSING_RIGHT_CURLY,
-         self.NO_MONITOR_SEMICOLON] = self.names.unique_error_codes(23)
+         self.NO_MONITOR_SEMICOLON,
+         self.FLOATING_INPUT_PIN] = self.names.unique_error_codes(24)
 
     def parse_network(self):
         """Parse the circuit definition file."""
@@ -237,6 +241,12 @@ class Parser:
         elif error_ID == self.monitors.MONITOR_PRESENT:
             msg = "This point is already being monitored"
             option = True
+
+        # Floating input pins
+        elif error_ID == self.FLOATING_INPUT_PIN:
+            msg = "All input pins haven't been connected"
+            option = True
+
         else:
             msg = "ERROR"
             option = True
@@ -351,6 +361,8 @@ class Parser:
 
                 while (self.symbol.type == self.scanner.NAME):
                     self.connection()
+                    # Each connection decrements pin count by one
+                    self.num_input_pin -= 1
 
                 # Check right curly bracket ends connections block
                 if (self.symbol.type == self.scanner.RIGHT_CURLY):
@@ -382,6 +394,14 @@ class Parser:
             # Stopping Symbols: MONITOR' or 'END' KEYWORD
             self.error(self.NEED_CONNECT_KEYWORD, [self.scanner.KEYWORD],
                        [self.scanner.MONITOR_ID, self.scanner.END_ID])
+
+        # Check all input pins have been connected
+        if self.error_count == 0:
+            if self.num_input_pin != 0:
+                # Error: Floating inputs pins
+                # Stopping Symbols: MONITOR' or 'END' KEYWORD
+                self.error(self.FLOATING_INPUT_PIN, [self.scanner.KEYWORD],
+                           [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def monitorlist(self):
         """Parse the monitoring section"""
@@ -476,8 +496,8 @@ class Parser:
                         # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR'
                         # or 'END' KEYWORD
                         self.error(self.NEED_QUALIFIER, [self.scanner.KEYWORD,
-                                                     self.scanner.SEMICOLON,
-                                                     self.scanner.RIGHT_CURLY],
+                                   self.scanner.SEMICOLON,
+                                   self.scanner.RIGHT_CURLY],
                                    [self.scanner.CONNECT_ID,
                                     self.scanner.MONITOR_ID,
                                     self.scanner.END_ID])
@@ -535,10 +555,19 @@ class Parser:
                         self.scanner.CONNECT_ID, self.scanner.MONITOR_ID,
                         self.scanner.END_ID])
 
+        # Increment input pin counter by number of pins on new device
+        device_name_string = self.names.get_name_string(device_kind)
+        if device_name_string == "DTYPE":
+            self.num_input_pin += 4
+        elif device_name_string in ["AND", "OR", "NAND", "NOR"]:
+            self.num_input_pin += device_property
+        elif device_name_string == "XOR":
+            self.num_input_pin += 2
+
     def logictype(self):
         """Parse the type syntax
 
-        Retrun the device type of the current device"""
+        Return the device type of the current device"""
 
         if (self.symbol.type == self.scanner.LOGIC_TYPE):
             device_kind_string = self.names.get_name_string(self.symbol.id)

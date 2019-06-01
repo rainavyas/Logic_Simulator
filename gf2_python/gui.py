@@ -383,7 +383,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
             for i in range(len(self.current_monitor_points)):
                 self.signal_colours.append([random.uniform(0.0, 1.0), (
                     random.uniform(0.0, 1.0)), random.uniform(0.0, 1.0)])
-        
+
         if not self.init:
             # Configure the OpenGL rendering context
             self.init_gl()
@@ -619,6 +619,7 @@ class Gui(wx.Frame):
         self.exit_button = wx.Button(self.main_panel, wx.ID_ANY, "Exit")
         self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
         self.add_button = wx.Button(self.main_panel, wx.ID_ANY, "Add")
+        self.canvas_button = wx.Button(self.main_panel, wx.ID_ANY, 'Switch to 2D Traces')
         self.mp_names = wx.Choice(self.main_panel, wx.ID_ANY,
                                   choices=['SELECT'])
         self.mp_names.SetSelection(0)
@@ -631,11 +632,12 @@ class Gui(wx.Frame):
         self.exit_button.Bind(wx.EVT_BUTTON, self.on_exit_button)
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
         self.file_picker.Bind(wx.EVT_FILEPICKER_CHANGED, self.checkFile)
+        self.canvas_button.Bind(wx.EVT_BUTTON, self.switchCanvas)
 
         # Configure sizers for layout
         frame_sizer = wx.BoxSizer(wx.VERTICAL)
         top_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        main_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.main_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.side_sizer = wx.BoxSizer(wx.VERTICAL)
         cycle_sizer = wx.BoxSizer(wx.HORIZONTAL)
         buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -646,17 +648,18 @@ class Gui(wx.Frame):
         frame_sizer.Add(self.top_panel, 1, wx.EXPAND)
         frame_sizer.Add(self.main_panel, 10, wx.EXPAND)
 
-        self.main_panel.SetSizer(main_sizer)
+        self.main_panel.SetSizer(self.main_sizer)
         self.top_panel.SetSizer(top_sizer)
 
         top_sizer.Add(self.file_picker, 1, wx.EXPAND | wx.ALL, 5, 10)
 
-        main_sizer.Add(self.canvas, 5, wx.EXPAND | wx.ALL, 5)
-        main_sizer.Add(self.side_sizer, 1, wx.RIGHT, 5)
+        self.main_sizer.Add(self.canvas, 5, wx.EXPAND | wx.ALL, 5)
+        self.main_sizer.Add(self.side_sizer, 1, wx.RIGHT, 5)
 
         self.side_sizer.Add(cycle_sizer, 0, wx.ALL, 5)
         self.side_sizer.Add(buttons_sizer, 0, wx.ALL, 5)
         self.side_sizer.Add(mp_sizer_all, 1, wx.ALL, 5)
+        self.side_sizer.Add(self.canvas_button, 0, wx.ALL | wx.ALIGN_CENTER, 5)
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
         cycle_sizer.Add(self.spin, 3, wx.LEFT | wx.RIGHT, 5)
@@ -1021,3 +1024,20 @@ class Gui(wx.Frame):
             style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_message.ShowModal()
         error_message.Destroy()
+
+    def switchCanvas(self, event):
+        button = event.GetEventObject()
+        if button.GetLabel() == 'Switch to 2D Traces':
+            self.main_sizer.Hide(0)
+            self.main_sizer.Remove(0)
+            self.canvas = MyGLCanvas(self.main_panel)
+            self.main_sizer.Insert(0, self.canvas, 5, wx.EXPAND | wx.ALL, 5)
+            button.SetLabel('Switch to 3D Traces')
+            self.Layout()
+        else:
+            self.main_sizer.Hide(0)
+            self.main_sizer.Remove(0)
+            self.canvas = My3DGLCanvas(self.main_panel)
+            self.main_sizer.Insert(0, self.canvas,5, wx.EXPAND | wx.ALL, 5)
+            button.SetLabel('Switch to 2D Traces')
+            self.Layout()

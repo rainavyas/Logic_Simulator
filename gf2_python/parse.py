@@ -222,6 +222,9 @@ class Parser:
         elif error_ID == self.devices.BAD_DEVICE:
             msg = "Invalid device declared"
             option = True
+        elif error_ID == self.devices.EXCESS_QUALIFIER:
+            msg = "Too many qualifiers"
+            option = True
 
         # CONNECTIONS
         elif error_ID == self.network.DEVICE_ABSENT:
@@ -573,19 +576,19 @@ class Parser:
                     self.scanner.END_ID])
 
         # Check for device semantic errors
-        # if self.error_count == 0:
-        #     # Only check for semantic errors if no errors so far
-        #     err = self.devices.make_device(
-        #         device_id, device_kind, device_property_list)
-        #     if err != self.devices.NO_ERROR:
-        #         # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR' or 'END'
-        #         # KEYWORD
-        #         self.error(
-        #             err, [
-        #                 self.scanner.KEYWORD, self.scanner.SEMICOLON,
-        #                 self.scanner.RIGHT_CURLY], [
-        #                 self.scanner.CONNECT_ID, self.scanner.MONITOR_ID,
-        #                 self.scanner.END_ID])
+        if self.error_count == 0:
+            # Only check for semantic errors if no errors so far
+            err = self.devices.make_device(
+                device_id, device_kind, device_property_list)
+            if err != self.devices.NO_ERROR:
+                # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR' or 'END'
+                # KEYWORD
+                self.error(
+                    err, [
+                        self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                        self.scanner.RIGHT_CURLY], [
+                        self.scanner.CONNECT_ID, self.scanner.MONITOR_ID,
+                        self.scanner.END_ID])
 
         # Increment input pin counter by number of pins on new device
         if self.error_count == 0:
@@ -726,18 +729,18 @@ class Parser:
                                                 self.scanner.END_ID])
 
         # Check for Connection Semantic errors
-        # if self.error_count == 0:
-        #     # Only check for semantic errors if no errors so far
-        #     err = self.network.make_connection(
-        #         first_device_id, first_port_id,
-        #         second_device_id, second_port_id)
-        #     if err != self.network.NO_ERROR:
-        #         # Stopping symbols: ';' , '}', 'MONITOR' or 'END' KEYWORD
-        #         self.error(
-        #             err, [
-        #                 self.scanner.KEYWORD, self.scanner.SEMICOLON,
-        #                 self.scanner.RIGHT_CURLY], [self.scanner.MONITOR_ID,
-        #                                             self.scanner.END_ID])
+        if self.error_count == 0:
+            # Only check for semantic errors if no errors so far
+            err = self.network.make_connection(
+                first_device_id, first_port_id,
+                second_device_id, second_port_id)
+            if err != self.network.NO_ERROR:
+                # Stopping symbols: ';' , '}', 'MONITOR' or 'END' KEYWORD
+                self.error(
+                    err, [
+                        self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                        self.scanner.RIGHT_CURLY], [self.scanner.MONITOR_ID,
+                                                    self.scanner.END_ID])
 
     def monitor_point(self):
         """Parse the monitor_point syntax"""
@@ -786,14 +789,14 @@ class Parser:
                        [self.scanner.END_ID])
 
         # Check for Monitor Semantic errors
-        # if self.error_count == 0:
-        #     # Only check for semantic errors if no errors so far
-        #     err = self.monitors.make_monitor(device_id, output_id)
-        #     if err != self.monitors.NO_ERROR:
-        #         # Stopping symbols: 'NAME', '}', ';' or 'END' KEYWORD
-        #         self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON,
-        #                          self.scanner.NAME, self.scanner.RIGHT_CURLY],
-        #                    [self.scanner.END_ID])
+        if self.error_count == 0:
+            # Only check for semantic errors if no errors so far
+            err = self.monitors.make_monitor(device_id, output_id)
+            if err != self.monitors.NO_ERROR:
+                # Stopping symbols: 'NAME', '}', ';' or 'END' KEYWORD
+                self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON,
+                                 self.scanner.NAME, self.scanner.RIGHT_CURLY],
+                           [self.scanner.END_ID])
 
 
 a = Names()

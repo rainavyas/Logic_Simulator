@@ -9,7 +9,7 @@ connectlist = 'CONNECT', '{', {connection}, '}';
 monitorlist = 'MONITOR', '{', monitor_point, {monitor_point}, '}';
 
 
-device = name, ':', type, [ ',', ( 'initial' | 'inputs' | 'period' ), number ], ';';
+device = name, ':', type, [ ',', ( 'initial' | 'inputs' | 'period' | 'sequence' ), number, {',', with_zero_digit} ], ';';
 
 connection = name, ['.',output_pin] '=', name, '.', input_pin, ';';
 
@@ -17,7 +17,7 @@ monitor_point = name, ['.', output_pin], ';';
 
 name = alpha, {alphanum};
 
-type = 'CLOCK'| 'SWITCH'| 'AND'| 'NAND'| 'OR'| 'NOR'| 'DTYPE'| 'XOR' ;
+type = 'CLOCK'| 'SWITCH'| 'AND'| 'NAND'| 'OR'| 'NOR'| 'DTYPE'| 'XOR' | 'SIGGEN' ;
 
 output_pin = 'Q'| 'QBAR';
 

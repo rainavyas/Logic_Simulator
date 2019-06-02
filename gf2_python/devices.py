@@ -105,19 +105,19 @@ class Devices:
         self.devices_list = []
 
         gate_strings = ["AND", "OR", "NAND", "NOR", "XOR"]
-        device_strings = ["CLOCK", "SWITCH", "DTYPE"]
+        device_strings = ["CLOCK", "SWITCH", "DTYPE", "SIGGEN"]
         dtype_inputs = ["CLK", "SET", "CLEAR", "DATA"]
         dtype_outputs = ["Q", "QBAR"]
 
         [self.NO_ERROR, self.INVALID_QUALIFIER, self.NO_QUALIFIER,
          self.BAD_DEVICE, self.QUALIFIER_PRESENT,
-         self.DEVICE_PRESENT] = self.names.unique_error_codes(6)
+         self.DEVICE_PRESENT, self.EXCESS_QUALIFIER] = self.names.unique_error_codes(7)
 
         self.signal_types = [self.LOW, self.HIGH, self.RISING,
                              self.FALLING, self.BLANK] = range(5)
         self.gate_types = [self.AND, self.OR, self.NAND, self.NOR,
                            self.XOR] = self.names.lookup(gate_strings)
-        self.device_types = [self.CLOCK, self.SWITCH,
+        self.device_types = [self.CLOCK, self.SWITCH, self.SIGGEN,
                              self.D_TYPE] = self.names.lookup(device_strings)
         self.dtype_input_ids = [self.CLK_ID, self.SET_ID, self.CLEAR_ID,
                                 self.DATA_ID] = self.names.lookup(dtype_inputs)
@@ -291,20 +291,37 @@ class Devices:
             # Device property is the switch initial state: 0(LOW) or 1(HIGH)
             if device_property is None:
                 error_type = self.NO_QUALIFIER
-            elif device_property not in [self.LOW, self.HIGH]:
-                error_type = self.INVALID_QUALIFIER
+            elif len(device_property) == 1:
+                if device_property[0] not in [self.LOW, self.HIGH]:
+                    error_type = self.INVALID_QUALIFIER
+                else:
+                    self.make_switch(device_id, device_property[0])
+                    error_type = self.NO_ERROR
             else:
-                self.make_switch(device_id, device_property)
-                error_type = self.NO_ERROR
+                error_type = self.EXCESS_QUALIFIER
 
         elif device_kind == self.CLOCK:
             # Device property is the clock half period > 0
             if device_property is None:
                 error_type = self.NO_QUALIFIER
-            elif device_property <= 0:
+            elif len(device_property) == 1:
+                if device_property[0] <= 0:
+                    error_type = self.INVALID_QUALIFIER
+                else:
+                    self.make_clock(device_id, device_property[0])
+                    error_type = self.NO_ERROR
+            else:
+                error_type = self.EXCESS_QUALIFIER
+        
+        elif device_kind == self.SIGGEN:
+            # Device property is a list of binary signal values
+            if device_property is None:
+                error_type = self.NO_QUALIFIER
+            if not (set(device_property) <= set([self.LOW, self.HIGH])):
+                # Qualifier is not '0' or '1' as requried
                 error_type = self.INVALID_QUALIFIER
             else:
-                self.make_clock(device_id, device_property)
+                self.make_siggen(device_id, device_property)
                 error_type = self.NO_ERROR
 
         elif device_kind in self.gate_types:
@@ -318,11 +335,15 @@ class Devices:
             else:  # other gates
                 if device_property is None:
                     error_type = self.NO_QUALIFIER
-                elif device_property not in range(1, 17):  # between 1 and 16
-                    error_type = self.INVALID_QUALIFIER
+                elif len(device_property) == 1:
+                    elif device_property not in range(1, 17):  # between 1 and 16
+                        error_type = self.INVALID_QUALIFIER
+                    else:
+                        self.make_gate(device_id, device_kind, device_property)
+                        error_type = self.NO_ERROR
                 else:
-                    self.make_gate(device_id, device_kind, device_property)
-                    error_type = self.NO_ERROR
+                    error_type = self.EXCESS_QUALIFIER
+
 
         elif device_kind == self.D_TYPE:
             if device_property is not None:
@@ -333,5 +354,6 @@ class Devices:
 
         else:
             error_type = self.BAD_DEVICE
+        
 
         return error_type

@@ -177,7 +177,6 @@ class MyGLCanvas(wxcanvas.GLCanvas):
             self.init_gl()
             self.init = True
 
-        size = self.GetClientSize()
         text = ""
         self.render(text)
 
@@ -315,7 +314,6 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
         self.Bind(wx.EVT_PAINT, self.on_paint)
         self.Bind(wx.EVT_SIZE, self.on_size)
         self.Bind(wx.EVT_MOUSE_EVENTS, self.on_mouse)
-
 
     def init_gl(self):
         """Configure and initialise the OpenGL context."""
@@ -643,7 +641,8 @@ class Gui(wx.Frame):
         self.exit_button = wx.Button(self.main_panel, wx.ID_ANY, "Exit")
         self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
         self.add_button = wx.Button(self.main_panel, wx.ID_ANY, "Add")
-        self.canvas_button = wx.Button(self.main_panel, wx.ID_ANY, 'Switch to 2D Traces')
+        self.canvas_button = wx.Button(self.main_panel,
+                                       wx.ID_ANY, 'Switch to 2D Traces')
         self.mp_names = wx.Choice(self.main_panel, wx.ID_ANY,
                                   choices=['SELECT'])
         self.mp_names.SetSelection(0)
@@ -1025,7 +1024,8 @@ class Gui(wx.Frame):
         # Create message dialog
         error_message = wx.MessageDialog(
             self, '',
-            'ERROR - FILE INVALID - {} Errors'.format(str(len(self.scanner.error_list))),
+            'ERROR - FILE INVALID - {} Errors'.format(
+                str(len(self.scanner.error_list))),
             style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_string = ''
         font = error_message.GetFont()
@@ -1072,7 +1072,7 @@ class Gui(wx.Frame):
             self.main_sizer.Hide(0)
             self.main_sizer.Remove(0)
             self.canvas = My3DGLCanvas(self.main_panel)
-            self.main_sizer.Insert(0, self.canvas,5, wx.EXPAND | wx.ALL, 5)
+            self.main_sizer.Insert(0, self.canvas, 5, wx.EXPAND | wx.ALL, 5)
             button.SetLabel('Switch to 2D Traces')
             self.Layout()
 

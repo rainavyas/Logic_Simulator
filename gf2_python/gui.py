@@ -398,8 +398,8 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
 
                 self.render_text('0', -25, j*30 - 7, 0)
                 self.render_text('1', -25, j*30 + 5, 0)
-                self.render_text(self.current_monitor_points[j],-45, j*30, 0)
-                self.render_text(self.current_monitor_points[j],-45, j*30, 0)
+                self.render_text(self.current_monitor_points[j], -45, j*30, 0)
+                self.render_text(self.current_monitor_points[j], -45, j*30, 0)
 
             # Draw time-step axis
             GL.glColor3f(0, 0, 0)
@@ -637,7 +637,8 @@ class Gui(wx.Frame):
         self.continue_button = wx.Button(self.main_panel, wx.ID_ANY,
                                          "Continue")
         self.continue_button.SetBackgroundColour(wx.Colour(255, 255, 100))
-        self.pos_reset_button = wx.Button(self.main_panel, wx.ID_ANY, "Reset Position")
+        self.pos_reset_button = wx.Button(self.main_panel, wx.ID_ANY,
+                                          "Reset Position")
         self.exit_button = wx.Button(self.main_panel, wx.ID_ANY, "Exit")
         self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
         self.add_button = wx.Button(self.main_panel, wx.ID_ANY, "Add")
@@ -646,7 +647,6 @@ class Gui(wx.Frame):
         self.mp_names = wx.Choice(self.main_panel, wx.ID_ANY,
                                   choices=['SELECT'])
         self.mp_names.SetSelection(0)
-
 
         # Bind events to widgets
         self.Bind(wx.EVT_MENU, self.on_menu)
@@ -669,6 +669,7 @@ class Gui(wx.Frame):
         self.mp_sizer = wx.BoxSizer(wx.VERTICAL)
         mp_sizer_all = wx.BoxSizer(wx.VERTICAL)
         mp_control_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        control_buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         frame_sizer.Add(self.top_panel, 1, wx.EXPAND)
         frame_sizer.Add(self.main_panel, 10, wx.EXPAND)
@@ -682,14 +683,15 @@ class Gui(wx.Frame):
         self.main_sizer.Add(self.side_sizer, 1, wx.RIGHT, 5)
 
         self.side_sizer.Add(cycle_sizer, 0, wx.ALL, 5)
-        self.side_sizer.Add(buttons_sizer, 0, wx.ALL, 5)
+        self.side_sizer.Add(buttons_sizer, 0, wx.ALL | wx.EXPAND, 5)
+        self.side_sizer.Add(control_buttons_sizer, 0, wx.ALL | wx.EXPAND, 5)
         self.side_sizer.Add(mp_sizer_all, 1, wx.ALL, 5)
-        self.side_sizer.Add(self.canvas_button, 0, wx.ALL | wx.LEFT, 5)
-        self.side_sizer.Add(self.pos_reset_button, 0, wx.ALL |wx.RIGHT, 5)
-
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
         cycle_sizer.Add(self.spin, 3, wx.LEFT | wx.RIGHT, 5)
+
+        control_buttons_sizer.Add(self.canvas_button, 1)
+        control_buttons_sizer.Add(self.pos_reset_button, 1)
 
         buttons_sizer.Add(self.run_button, 1)
         buttons_sizer.Add(self.continue_button, 1)

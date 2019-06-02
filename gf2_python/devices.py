@@ -41,6 +41,8 @@ class Device:
         self.clock_counter = None
         self.switch_state = None
         self.dtype_memory = None
+        self.siggen_signal = None
+        self.siggen_counter = None
 
 
 class Devices:
@@ -125,6 +127,7 @@ class Devices:
             self.Q_ID, self.QBAR_ID] = self.names.lookup(dtype_outputs)
 
         self.max_gate_inputs = 16
+
 
     def get_device(self, device_id):
         """Return the Device object corresponding to device_id."""
@@ -241,6 +244,22 @@ class Devices:
         device.clock_half_period = clock_half_period
         self.cold_startup()  # clock initialised to a random point in its cycle
 
+    
+    def make_siggen(self, device_id, signal):
+        # TODO docstring
+
+        self.add_device(device_id, self.SIGGEN)
+        device = self.get_device(device_id)
+        device.siggen_signal = signal
+        device.clock_half_period = 1
+        siggen_start_signal = signal[0]
+        device.siggen_counter = 0
+
+        self.add_output(device.device_id, output_id=None,
+                                signal=siggen_start_signal)
+        # TODO add comment
+        device.clock_counter = random.randrange(device.clock_half_period)
+
     def make_gate(self, device_id, device_kind, no_of_inputs):
         """Make logic gates with the specified number of inputs."""
         self.add_device(device_id, device_kind)
@@ -280,7 +299,7 @@ class Devices:
 
     def make_device(self, device_id, device_kind, device_property=None):
         """Create the specified device.
-
+        
         Return self.NO_ERROR if successful. Return corresponding error if not.
         """
         # Device has already been added to the devices_list
@@ -317,8 +336,9 @@ class Devices:
             # Device property is a list of binary signal values
             if device_property is None:
                 error_type = self.NO_QUALIFIER
-            if not (set(device_property) <= set([self.LOW, self.HIGH])):
+            elif not (set(device_property) <= set([self.LOW, self.HIGH])):
                 # Qualifier is not '0' or '1' as requried
+                
                 error_type = self.INVALID_QUALIFIER
             else:
                 self.make_siggen(device_id, device_property)
@@ -336,10 +356,10 @@ class Devices:
                 if device_property is None:
                     error_type = self.NO_QUALIFIER
                 elif len(device_property) == 1:
-                    elif device_property not in range(1, 17):  # between 1 and 16
+                    if device_property[0] not in range(1, 17):  # between 1 and 16
                         error_type = self.INVALID_QUALIFIER
                     else:
-                        self.make_gate(device_id, device_kind, device_property)
+                        self.make_gate(device_id, device_kind, device_property[0])
                         error_type = self.NO_ERROR
                 else:
                     error_type = self.EXCESS_QUALIFIER

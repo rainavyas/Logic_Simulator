@@ -18,9 +18,9 @@ def new_monitors():
     [SW1_ID, SW2_ID, OR1_ID, I1, I2] = new_names.lookup(["Sw1", "Sw2", "Or1",
                                                          "I1", "I2"])
     # Add 2 switches and an OR gate
-    new_devices.make_device(SW1_ID, new_devices.SWITCH, 0)
-    new_devices.make_device(SW2_ID, new_devices.SWITCH, 0)
-    new_devices.make_device(OR1_ID, new_devices.OR, 2)
+    new_devices.make_device(SW1_ID, new_devices.SWITCH, [0])
+    new_devices.make_device(SW2_ID, new_devices.SWITCH, [0])
+    new_devices.make_device(OR1_ID, new_devices.OR, [2])
 
     # Make connections
     new_network.make_connection(SW1_ID, None, OR1_ID, I1)
@@ -61,7 +61,7 @@ def test_make_monitor_gives_errors(new_monitors):
                                      None) == network.DEVICE_ABSENT
 
     # Make a new switch device
-    devices.make_device(SW3_ID, SWITCH_ID, 0)
+    devices.make_device(SW3_ID, SWITCH_ID, [0])
 
     assert new_monitors.make_monitor(SW3_ID, None) == new_monitors.NO_ERROR
 

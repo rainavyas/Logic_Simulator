@@ -308,7 +308,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
         self.zoom = 1
 
         # Offset between viewpoint and origin of the scene
-        self.depth_offset = 1000
+        self.depth_offset = 500
 
         # Bind events to the canvas
         self.Bind(wx.EVT_PAINT, self.on_paint)

@@ -20,9 +20,9 @@ def devices_with_items():
 
     [AND1_ID, NOR1_ID, SW1_ID] = new_names.lookup(["And1", "Nor1", "Sw1"])
 
-    new_devices.make_device(AND1_ID, new_devices.AND, 2)
-    new_devices.make_device(NOR1_ID, new_devices.NOR, 16)
-    new_devices.make_device(SW1_ID, new_devices.SWITCH, 0)
+    new_devices.make_device(AND1_ID, new_devices.AND, [2])
+    new_devices.make_device(NOR1_ID, new_devices.NOR, [16])
+    new_devices.make_device(SW1_ID, new_devices.SWITCH, [0])
 
     return new_devices
 
@@ -58,9 +58,9 @@ def test_make_device(new_devices):
 
     [NAND1_ID, CLOCK1_ID, D1_ID, I1_ID,
      I2_ID] = names.lookup(["Nand1", "Clock1", "D1", "I1", "I2"])
-    new_devices.make_device(NAND1_ID, new_devices.NAND, 2)  # 2-input NAND
+    new_devices.make_device(NAND1_ID, new_devices.NAND, [2])  # 2-input NAND
     # Clock half period is 5
-    new_devices.make_device(CLOCK1_ID, new_devices.CLOCK, 5)
+    new_devices.make_device(CLOCK1_ID, new_devices.CLOCK, [5])
     new_devices.make_device(D1_ID, new_devices.D_TYPE)
 
     nand_device = new_devices.get_device(NAND1_ID)
@@ -140,7 +140,7 @@ def test_set_switch(new_devices):
     names = new_devices.names
     # Make a switch
     [SW1_ID] = names.lookup(["Sw1"])
-    new_devices.make_device(SW1_ID, new_devices.SWITCH, 1)
+    new_devices.make_device(SW1_ID, new_devices.SWITCH, [1])
     switch_object = new_devices.get_device(SW1_ID)
 
     assert switch_object.switch_state == new_devices.HIGH

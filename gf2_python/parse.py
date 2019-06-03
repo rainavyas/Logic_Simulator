@@ -90,7 +90,8 @@ class Parser:
          self.NAME_INPUT, self.ASSIGNMENT,
          self.NAME_STRING, self.MISSING_RIGHT_CURLY,
          self.NO_MONITOR_SEMICOLON,
-         self.FLOATING_INPUT_PIN] = self.names.unique_error_codes(24)
+         self.FLOATING_INPUT_PIN,
+         self.SIGGEN_QUALIFIER] = self.names.unique_error_codes(25)
 
     def parse_network(self):
         """Parse the circuit definition file."""
@@ -196,6 +197,9 @@ class Parser:
         elif error_ID == self.MISSING_RIGHT_CURLY:
             msg = "Missing '}'"
             option = True
+        elif error_ID == self.SIGGEN_QUALIFIER:
+            msg = "SIGGEN signal values can only be '0' or '1'"
+            option = False
 
         # Consider Semantic Errors
         # DEVICES
@@ -268,7 +272,7 @@ class Parser:
 
         # Define error IDs where punctuation stopping to not be moved on from
         dont_move_err_IDS = [self.INTEGER, self.NEED_PARAM, self.LOGIC_GATE,
-                             self.NEED_QUALIFIER]
+                             self.NEED_QUALIFIER, self.SIGGEN_QUALIFIER]
 
         # Define a move_on Boolean state
         move_on = True
@@ -471,18 +475,46 @@ class Parser:
                             device_property_list = []
 
                             if(self.symbol.type == self.scanner.NUMBER):
-                                device_property_list.append(int(
-                                    self.names.get_name_string(self.symbol.id)))
-                                self.symbol = self.scanner.get_symbol()
+                                number_val = int(self.names.get_name_string(self.symbol.id))
+                                if device_kind == self.names.query("SIGGEN"):
+                                    if (number_val == 0 or number_val == 1):
+                                        device_property_list.append(number_val)
+                                        self.symbol = self.scanner.get_symbol()
+                                    else:
+                                        # Error: Siggen signal value has to be '0' or '1'
+                                        # Stop symbs:';','}','CONNECT','MONITOR', END
+                                        self.error(
+                                            self.SIGGEN_QUALIFIER, [
+                                                self.scanner.KEYWORD,
+                                                self.scanner.SEMICOLON,
+                                                self.scanner.RIGHT_CURLY], [
+                                                self.scanner.CONNECT_ID,
+                                                self.scanner.MONITOR_ID,
+                                                self.scanner.END_ID])
+                                else:
+                                    # Not a SIGGEN
+                                    device_property_list.append(number_val)
+                                    self.symbol = self.scanner.get_symbol()
 
                                 # Extract sequence of numbers for SIGGEN
                                 while (self.symbol.type == self.scanner.COMMA):
                                     self.symbol = self.scanner.get_symbol()
                                     if(self.symbol.type == self.scanner.NUMBER):
-                                        device_property_list.append(int(
-                                                self.names.get_name_string(self.symbol.id)))
-                                        self.symbol = self.scanner.get_symbol()
-                                    
+                                        number_val = int(self.names.get_name_string(self.symbol.id))
+                                        if (number_val == 0 or number_val == 1):
+                                            device_property_list.append(number_val)
+                                            self.symbol = self.scanner.get_symbol()
+                                        else:
+                                            # Error: Signal value has to be '0' or '1'
+                                            # Stop symbs:';','}','CONNECT','MONITOR', END
+                                            self.error(
+                                                self.SIGGEN_QUALIFIER, [
+                                                    self.scanner.KEYWORD,
+                                                    self.scanner.SEMICOLON,
+                                                    self.scanner.RIGHT_CURLY], [
+                                                    self.scanner.CONNECT_ID,
+                                                    self.scanner.MONITOR_ID,
+                                                    self.scanner.END_ID])
                                     else:
                                         # Error: Needs to be an integer
                                         # Stop symbs:';','}','CONNECT','MONITOR', END

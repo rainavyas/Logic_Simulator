@@ -1,6 +1,6 @@
 DEVICES {
     nan1: NAND, inputs 1;
-    siggy: SIGGEN, sequence 0,10,0;
+    siggy: SIGGEN, sequence 5,1,0;
 }
 
 CONNECT {

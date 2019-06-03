@@ -24,9 +24,9 @@ def network_with_devices():
     [SW1_ID, SW2_ID, OR1_ID] = new_names.lookup(["Sw1", "Sw2", "Or1"])
 
     # Add devices
-    new_devices.make_device(SW1_ID, new_devices.SWITCH, 0)
-    new_devices.make_device(SW2_ID, new_devices.SWITCH, 0)
-    new_devices.make_device(OR1_ID, new_devices.OR, 2)
+    new_devices.make_device(SW1_ID, new_devices.SWITCH, [0])
+    new_devices.make_device(SW2_ID, new_devices.SWITCH, [0])
+    new_devices.make_device(OR1_ID, new_devices.OR, [2])
 
     return new_network
 
@@ -189,8 +189,8 @@ def test_execute_xor(new_network):
 
     # Make devices
     devices.make_device(XOR1_ID, devices.XOR)
-    devices.make_device(SW1_ID, devices.SWITCH, 0)
-    devices.make_device(SW2_ID, devices.SWITCH, 0)
+    devices.make_device(SW1_ID, devices.SWITCH, [0])
+    devices.make_device(SW2_ID, devices.SWITCH, [0])
 
     # Make connections
     network.make_connection(SW1_ID, None, XOR1_ID, I1)
@@ -237,10 +237,10 @@ def test_execute_non_xor_gates(new_network, gate_id, switch_outputs,
     # Make devices
     gate_id = eval(gate_id)
     gate_kind = eval(gate_kind)
-    devices.make_device(gate_id, gate_kind, 3)
-    devices.make_device(SW1_ID, devices.SWITCH, 0)
-    devices.make_device(SW2_ID, devices.SWITCH, 0)
-    devices.make_device(SW3_ID, devices.SWITCH, 0)
+    devices.make_device(gate_id, gate_kind, [3])
+    devices.make_device(SW1_ID, devices.SWITCH, [0])
+    devices.make_device(SW2_ID, devices.SWITCH, [0])
+    devices.make_device(SW3_ID, devices.SWITCH, [0])
 
     # Make connections
     network.make_connection(SW1_ID, None, gate_id, I1)

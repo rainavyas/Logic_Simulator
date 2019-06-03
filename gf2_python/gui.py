@@ -343,7 +343,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
                         self.mat_diffuse)
         GL.glColorMaterial(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE)
 
-        GL.glClearColor(0.0, 0.0, 0.0, 0.0)
+        GL.glClearColor(1.0, 1.0, 1.0, 1.0)
         GL.glDepthFunc(GL.GL_LEQUAL)
         GL.glShadeModel(GL.GL_SMOOTH)
         GL.glDrawBuffer(GL.GL_BACK)
@@ -365,15 +365,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
         GL.glScalef(self.zoom, self.zoom, self.zoom)
 
     def render(self, text, monitors=None):
-        """Handle all drawing operations."""
-
-        """if monitors is not None:
-            self.current_signal, self.current_monitor_points = (
-                monitors.get_signals())
-            for i in range(len(self.current_monitor_points)):
-                self.signal_colours.append([random.uniform(0.0, 1.0), (
-                    random.uniform(0.0, 1.0)), random.uniform(0.0, 1.0)])
-        self.SetCurrent(self.context)"""
+        """Handle all 3D drawing operations."""
 
         if monitors is not None:
             self.current_signal, self.current_monitor_points = (
@@ -381,6 +373,8 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
             for i in range(len(self.current_monitor_points)):
                 self.signal_colours.append([random.uniform(0.0, 1.0), (
                     random.uniform(0.0, 1.0)), random.uniform(0.0, 1.0)])
+
+        self.SetCurrent(self.context)
 
         if not self.init:
             # Configure the OpenGL rendering context
@@ -390,25 +384,54 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
         # Clear everything
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
 
-        # Draw a sample signal trace, make sure its centre of gravity
-        # is at the scene origin
-        GL.glColor3f(1.0, 0.7, 0.5)  # signal trace is beige
-        for i in range(-10, 10):
-            z = i * 20
-            if i % 2 == 0:
-                self.draw_cuboid(0, z, 5, 10, 1)
-            else:
-                self.draw_cuboid(0, z, 5, 10, 11)
+        if self.current_signal != []:
+            # Draw each signal
+            for j in range(len(self.current_signal)):
+                GL.glColor3f(self.signal_colours[j][0], (
+                    self.signal_colours[j][1]), self.signal_colours[j][2])
+                for i in range(len(self.current_signal[j])):
+                    x = i * 20
+                    if self.current_signal[j][i] % 2 == 0:
+                        self.draw_cuboid(x, j*30, 0, 10, 5, 1)
+                    else:
+                        self.draw_cuboid(x, j*30, 0, 10, 5, 11)
 
-        GL.glColor3f(1.0, 1.0, 1.0)  # text is white
-        self.render_text("D1.QBAR", 0, 0, 210)
+                self.render_text('0', -25, j*30 - 7, 0)
+                self.render_text('1', -25, j*30 + 5, 0)
+                self.render_text(self.current_monitor_points[j], -45, j*30, 0)
+                self.render_text(self.current_monitor_points[j], -45, j*30, 0)
+
+            # Draw time-step axis
+            GL.glColor3f(0, 0, 0)
+            GL.glBegin(GL.GL_LINE_STRIP)
+            for i in range(len(self.current_signal[0])):
+                x = (i * 20) - 10
+                x_next = (i * 20) + 10
+                y = -10
+                GL.glVertex3f(x, y, 0)
+                GL.glVertex3f(x_next, y, 0)
+            GL.glEnd()
+            for i in range(len(self.current_signal[0])+1):
+                GL.glColor3f(0, 0, 0)
+                GL.glBegin(GL.GL_LINE_STRIP)
+                x = (i * 20) - 10
+                y_bottom = -15
+                y_top = -5 + (len(self.current_monitor_points)-1)*30
+                GL.glVertex3f(x, y_bottom, 0)
+                GL.glVertex3f(x, y_top, 0)
+                GL.glEnd()
+
+            # Label time-step axis
+            for i in range(len(self.current_signal[0])+1):
+                self.render_text(str(i), (i * 20) - 11, -32, 0)
+            self.render_text('time', -30, -25, 0)
 
         # We have been drawing to the back buffer, flush the graphics pipeline
         # and swap the back buffer to the front
         GL.glFlush()
         self.SwapBuffers()
 
-    def draw_cuboid(self, x_pos, z_pos, half_width, half_depth, height):
+    def draw_cuboid(self, x_pos, y_pos, z_pos, half_width, half_depth, height):
         """Draw a cuboid.
 
         Draw a cuboid at the specified position, with the specified
@@ -416,35 +439,35 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
         """
         GL.glBegin(GL.GL_QUADS)
         GL.glNormal3f(0, -1, 0)
-        GL.glVertex3f(x_pos - half_width, -6, z_pos - half_depth)
-        GL.glVertex3f(x_pos + half_width, -6, z_pos - half_depth)
-        GL.glVertex3f(x_pos + half_width, -6, z_pos + half_depth)
-        GL.glVertex3f(x_pos - half_width, -6, z_pos + half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6, z_pos - half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6, z_pos - half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6, z_pos + half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6, z_pos + half_depth)
         GL.glNormal3f(0, 1, 0)
-        GL.glVertex3f(x_pos + half_width, -6 + height, z_pos - half_depth)
-        GL.glVertex3f(x_pos - half_width, -6 + height, z_pos - half_depth)
-        GL.glVertex3f(x_pos - half_width, -6 + height, z_pos + half_depth)
-        GL.glVertex3f(x_pos + half_width, -6 + height, z_pos + half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6 + height, z_pos - half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6 + height, z_pos - half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6 + height, z_pos + half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6 + height, z_pos + half_depth)
         GL.glNormal3f(-1, 0, 0)
-        GL.glVertex3f(x_pos - half_width, -6 + height, z_pos - half_depth)
-        GL.glVertex3f(x_pos - half_width, -6, z_pos - half_depth)
-        GL.glVertex3f(x_pos - half_width, -6, z_pos + half_depth)
-        GL.glVertex3f(x_pos - half_width, -6 + height, z_pos + half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6 + height, z_pos - half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6, z_pos - half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6, z_pos + half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6 + height, z_pos + half_depth)
         GL.glNormal3f(1, 0, 0)
-        GL.glVertex3f(x_pos + half_width, -6, z_pos - half_depth)
-        GL.glVertex3f(x_pos + half_width, -6 + height, z_pos - half_depth)
-        GL.glVertex3f(x_pos + half_width, -6 + height, z_pos + half_depth)
-        GL.glVertex3f(x_pos + half_width, -6, z_pos + half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6, z_pos - half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6 + height, z_pos - half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6 + height, z_pos + half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6, z_pos + half_depth)
         GL.glNormal3f(0, 0, -1)
-        GL.glVertex3f(x_pos - half_width, -6, z_pos - half_depth)
-        GL.glVertex3f(x_pos - half_width, -6 + height, z_pos - half_depth)
-        GL.glVertex3f(x_pos + half_width, -6 + height, z_pos - half_depth)
-        GL.glVertex3f(x_pos + half_width, -6, z_pos - half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6, z_pos - half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6 + height, z_pos - half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6 + height, z_pos - half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6, z_pos - half_depth)
         GL.glNormal3f(0, 0, 1)
-        GL.glVertex3f(x_pos - half_width, -6 + height, z_pos + half_depth)
-        GL.glVertex3f(x_pos - half_width, -6, z_pos + half_depth)
-        GL.glVertex3f(x_pos + half_width, -6, z_pos + half_depth)
-        GL.glVertex3f(x_pos + half_width, -6 + height, z_pos + half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6 + height, z_pos + half_depth)
+        GL.glVertex3f(x_pos - half_width, y_pos-6, z_pos + half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6, z_pos + half_depth)
+        GL.glVertex3f(x_pos + half_width, y_pos-6 + height, z_pos + half_depth)
         GL.glEnd()
 
     def on_paint(self, event):
@@ -614,6 +637,8 @@ class Gui(wx.Frame):
         self.continue_button = wx.Button(self.main_panel, wx.ID_ANY,
                                          "Continue")
         self.continue_button.SetBackgroundColour(wx.Colour(255, 255, 100))
+        self.pos_reset_button = wx.Button(self.main_panel, wx.ID_ANY,
+                                          "Reset Position")
         self.exit_button = wx.Button(self.main_panel, wx.ID_ANY, "Exit")
         self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
         self.add_button = wx.Button(self.main_panel, wx.ID_ANY, "Add")
@@ -632,6 +657,7 @@ class Gui(wx.Frame):
         self.add_button.Bind(wx.EVT_BUTTON, self.onAddMP)
         self.file_picker.Bind(wx.EVT_FILEPICKER_CHANGED, self.checkFile)
         self.canvas_button.Bind(wx.EVT_BUTTON, self.switchCanvas)
+        self.pos_reset_button.Bind(wx.EVT_BUTTON, self.on_reset_button)
 
         # Configure sizers for layout
         frame_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -643,6 +669,7 @@ class Gui(wx.Frame):
         self.mp_sizer = wx.BoxSizer(wx.VERTICAL)
         mp_sizer_all = wx.BoxSizer(wx.VERTICAL)
         mp_control_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        control_buttons_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         frame_sizer.Add(self.top_panel, 1, wx.EXPAND)
         frame_sizer.Add(self.main_panel, 10, wx.EXPAND)
@@ -656,12 +683,15 @@ class Gui(wx.Frame):
         self.main_sizer.Add(self.side_sizer, 1, wx.RIGHT, 5)
 
         self.side_sizer.Add(cycle_sizer, 0, wx.ALL, 5)
-        self.side_sizer.Add(buttons_sizer, 0, wx.ALL, 5)
+        self.side_sizer.Add(buttons_sizer, 0, wx.ALL | wx.EXPAND, 5)
+        self.side_sizer.Add(control_buttons_sizer, 0, wx.ALL | wx.EXPAND, 5)
         self.side_sizer.Add(mp_sizer_all, 1, wx.ALL, 5)
-        self.side_sizer.Add(self.canvas_button, 0, wx.ALL | wx.ALIGN_CENTER, 5)
 
         cycle_sizer.Add(self.text_cycles, 1, wx.EXPAND)
         cycle_sizer.Add(self.spin, 3, wx.LEFT | wx.RIGHT, 5)
+
+        control_buttons_sizer.Add(self.canvas_button, 1)
+        control_buttons_sizer.Add(self.pos_reset_button, 1)
 
         buttons_sizer.Add(self.run_button, 1)
         buttons_sizer.Add(self.continue_button, 1)
@@ -738,6 +768,12 @@ class Gui(wx.Frame):
                 self.devices.cold_startup()
                 if self.run_network(cycles):
                     self.cycles_completed += cycles
+
+    def on_reset_button(self, event):
+        """Handle the event when the user clicks the position rest button."""
+        self.canvas.reset()
+        text = "Position reset."
+        self.canvas.render(text)
 
     def on_continue_button(self, event):
         """Handle the event when the user clicks the continue button."""
@@ -1041,3 +1077,6 @@ class Gui(wx.Frame):
             self.main_sizer.Insert(0, self.canvas, 5, wx.EXPAND | wx.ALL, 5)
             button.SetLabel('Switch to 2D Traces')
             self.Layout()
+
+        # Rerender up to the current point.
+        self.canvas.render("Switching signal", self.monitors)

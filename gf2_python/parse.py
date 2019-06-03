@@ -797,13 +797,3 @@ class Parser:
                 self.error(err, [self.scanner.KEYWORD, self.scanner.SEMICOLON,
                                  self.scanner.NAME, self.scanner.RIGHT_CURLY],
                            [self.scanner.END_ID])
-
-
-a = Names()
-path = "test_file_vyas.txt"
-b = Devices(a)
-c = Scanner(path, a)
-d = Network(a, b)
-e = Monitors(a, b, d)
-f = Parser(a, b,d,e, c)
-print(f.parse_network())

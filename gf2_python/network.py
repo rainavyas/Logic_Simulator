@@ -53,9 +53,15 @@ class Network:
 
     execute_clock(self, device_id): Simulates a clock and updates its output
                                     signal value.
+    
+    execute_siggen(self, device_id): Simulates a signal generator and updates
+                                     its output signal value.
 
     update_clocks(self): If it is time to do so, sets clock signals to RISING
                          or FALLING.
+    
+    update_siggens(self): If it is time to do so, set signal generator signals
+                          to RISING or FALLING.
 
     execute_network(self): Executes all the devices in the network for one
                            simulation cycle.
@@ -331,7 +337,10 @@ class Network:
             return False
     
     def execute_siggen(self, device_id):
-        # TODO docstring
+        """Simulate a signal generator and update its output signal value.
+
+        Return True if successful.
+        """
 
         device = self.devices.get_device(device_id)
         output_signal = device.outputs[None]  # output ID is None
@@ -372,7 +381,7 @@ class Network:
             device.clock_counter += 1
     
     def update_siggens(self):
-        # TODO docstring
+        """If it is time to do so, set signal generator signals to RISING or FALLING."""
         siggen_devices = self.devices.find_devices(self.devices.SIGGEN)
         for device_id in siggen_devices:
             device = self.devices.get_device(device_id)

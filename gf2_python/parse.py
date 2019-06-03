@@ -10,6 +10,10 @@ Parser - parses the definition file and builds the logic network.
 """
 
 from scanner import Symbol
+from names import Names
+from devices import Devices
+from network import Network
+from monitors import Monitors
 
 
 class Parser:

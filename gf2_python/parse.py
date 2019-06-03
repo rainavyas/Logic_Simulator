@@ -10,10 +10,6 @@ Parser - parses the definition file and builds the logic network.
 """
 
 from scanner import Symbol
-from names import Names
-from monitors import Monitors
-from devices import Devices
-from network import Network
 
 
 class Parser:
@@ -94,6 +90,7 @@ class Parser:
 
     def parse_network(self):
         """Parse the circuit definition file."""
+
 
         # Get the first symbol from Scanner
         self.symbol = self.scanner.get_symbol()
@@ -213,6 +210,9 @@ class Parser:
             option = True
         elif error_ID == self.devices.BAD_DEVICE:
             msg = "Invalid device declared"
+            option = True
+        elif error_ID == self.devices.EXCESS_QUALIFIER:
+            msg = "Too many qualifiers"
             option = True
 
         # CONNECTIONS
@@ -457,18 +457,42 @@ class Parser:
                 if(self.symbol.type == self.scanner.COMMA):
                     self.symbol = self.scanner.get_symbol()
                     if(self.symbol.type == self.scanner.KEYWORD):
-                        if(self.symbol.id == self.scanner.initial_ID or
-                           (self.symbol.id == self.scanner.inputs_ID or
-                                self.symbol.id == self.scanner.period_ID)):
+                        if(self.symbol.id in [self.scanner.initial_ID, 
+                           self.scanner.inputs_ID, 
+                                self.scanner.period_ID, self.scanner.sequence_ID]):
 
                             self.symbol = self.scanner.get_symbol()
 
+                            # initialise list to hold device property numbers
+                            device_property_list = []
+
                             if(self.symbol.type == self.scanner.NUMBER):
-                                device_property = int(
-                                    self.names.get_name_string(self.symbol.id))
+                                device_property_list.append(int(
+                                    self.names.get_name_string(self.symbol.id)))
                                 self.symbol = self.scanner.get_symbol()
+
+                                # Extract sequence of numbers for SIGGEN
+                                while (self.symbol.type == self.scanner.COMMA):
+                                    self.symbol = self.scanner.get_symbol()
+                                    if(self.symbol.type == self.scanner.NUMBER):
+                                        device_property_list.append(int(
+                                                self.names.get_name_string(self.symbol.id)))
+                                        self.symbol = self.scanner.get_symbol()
+                                    
+                                    else:
+                                        # Error: Needs to be an integer
+                                        # Stop symbs:';','}','CONNECT','MONITOR', END
+                                        self.error(
+                                            self.INTEGER, [
+                                                self.scanner.KEYWORD,
+                                                self.scanner.SEMICOLON,
+                                                self.scanner.RIGHT_CURLY], [
+                                                self.scanner.CONNECT_ID,
+                                                self.scanner.MONITOR_ID,
+                                                self.scanner.END_ID])
+
                             else:
-                                # Error: Needs to be a positive integer
+                                # Error: Needs to be an integer
                                 # Stop symbs:';','}','CONNECT','MONITOR', END
                                 self.error(
                                     self.INTEGER, [
@@ -503,7 +527,7 @@ class Parser:
                                     self.scanner.END_ID])
                 else:
                     # There is no device property
-                    device_property = None
+                    device_property_list = None
 
                 if (self.symbol.type == self.scanner.SEMICOLON):
                     self.symbol = self.scanner.get_symbol()
@@ -544,7 +568,7 @@ class Parser:
         if self.error_count == 0:
             # Only check for semantic errors if no errors so far
             err = self.devices.make_device(
-                device_id, device_kind, device_property)
+                device_id, device_kind, device_property_list)
             if err != self.devices.NO_ERROR:
                 # Stopping symbols: ';' , '}', 'CONNECT', 'MONITOR' or 'END'
                 # KEYWORD
@@ -561,7 +585,7 @@ class Parser:
             if device_name_string == "DTYPE":
                 self.num_input_pin += 4
             elif device_name_string in ["AND", "OR", "NAND", "NOR"]:
-                self.num_input_pin += device_property
+                self.num_input_pin += device_property_list[0]
             elif device_name_string == "XOR":
                 self.num_input_pin += 2
 

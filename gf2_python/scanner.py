@@ -110,9 +110,9 @@ class Scanner:
 
         #  Create a list of keywords, logic types, input and output pins.
         self.keywords_list = ["DEVICES", "CONNECT", "MONITOR", "END",
-                              "initial", "period", "inputs"]
+                              "initial", "period", "inputs", "sequence"]
         self.logic_type_list = ["CLOCK", "SWITCH", "AND", "NAND",
-                                "OR", "NOR", "DTYPE", "XOR"]
+                                "OR", "NOR", "DTYPE", "XOR", "SIGGEN"]
         self.input_pin_list = ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8",
                                "I9", "I10", "I11", "I12", "I13", "I14", "I15",
                                "I16", "DATA", "CLK", "SET", "CLEAR"]
@@ -121,7 +121,7 @@ class Scanner:
         #  Assign keywords an id using the "Names" module's "lookup" function.
         [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID,
          self.END_ID, self.initial_ID, self.period_ID,
-         self.inputs_ID] = self.names.lookup(self.keywords_list)
+         self.inputs_ID, self.sequence_ID] = self.names.lookup(self.keywords_list)
         self.current_character = self.file.read(1)
 
     def get_name(self):

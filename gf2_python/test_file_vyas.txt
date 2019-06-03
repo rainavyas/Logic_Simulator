@@ -1,0 +1,14 @@
+DEVICES {
+    nan1: NAND, inputs 1;
+    siggy: SIGGEN, sequence 0,1,0,0;
+}
+
+CONNECT {
+    siggy = nan1.I1;
+}
+
+MONITOR{
+    siggy;
+    nan1;
+}
+END

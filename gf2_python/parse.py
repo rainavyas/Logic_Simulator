@@ -10,12 +10,6 @@ Parser - parses the definition file and builds the logic network.
 """
 
 from scanner import Symbol
-# TODO DELETE THESE
-from scanner import Scanner
-from names import Names
-from monitors import Monitors
-from devices import Devices
-from network import Network
 
 
 class Parser:
@@ -97,8 +91,6 @@ class Parser:
     def parse_network(self):
         """Parse the circuit definition file."""
 
-        #TODO To remove
-        print("START")
 
         # Get the first symbol from Scanner
         self.symbol = self.scanner.get_symbol()
@@ -123,9 +115,6 @@ class Parser:
             self.monitors = Monitors(self.names, self.devices, self.network)
 
             return False
-
-        #TODO To remove
-        print("FINISH")
 
     def error(self, error_ID, stopping_symbols, symbol_IDs=[]):
         """ Display Error and recover to a useful parsing position"""

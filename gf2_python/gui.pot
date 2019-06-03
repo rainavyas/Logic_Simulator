@@ -1,0 +1,124 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-06-03 22:23+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+#: gui.py:165 gui.py:427
+msgid "time"
+msgstr ""
+
+#: gui.py:238 gui.py:560
+msgid "Canvas Cleared"
+msgstr ""
+
+#: gui.py:609
+msgid "About"
+msgstr ""
+
+#: gui.py:610 gui.py:641
+msgid "Exit"
+msgstr ""
+
+#: gui.py:611
+msgid "File"
+msgstr ""
+
+#: gui.py:628
+msgid "Select Source File"
+msgstr ""
+
+#: gui.py:630
+msgid "Cycles:"
+msgstr ""
+
+#: gui.py:632
+msgid "Monitor Points"
+msgstr ""
+
+#: gui.py:634
+msgid "Run"
+msgstr ""
+
+#: gui.py:637
+msgid "Continue"
+msgstr ""
+
+#: gui.py:640
+msgid "Reset Position"
+msgstr ""
+
+#: gui.py:643
+msgid "Add"
+msgstr ""
+
+#: gui.py:645 gui.py:1065 gui.py:1077
+msgid "Switch to 2D Traces"
+msgstr ""
+
+#: gui.py:647 gui.py:803 gui.py:816 gui.py:1005
+msgid "SELECT"
+msgstr ""
+
+#: gui.py:734
+msgid "New spin control value: "
+msgstr ""
+
+#: gui.py:745
+msgid "Drawing signal"
+msgstr ""
+
+#: gui.py:747
+msgid "Error! Network oscillating."
+msgstr ""
+
+#: gui.py:757
+msgid "Run button pressed."
+msgstr ""
+
+#: gui.py:774
+msgid "Position reset."
+msgstr ""
+
+#: gui.py:788
+msgid "Error! Nothing to continue. Run first."
+msgstr ""
+
+#: gui.py:824 gui.py:936
+msgid "Remove"
+msgstr ""
+
+#: gui.py:867 gui.py:973
+msgid "On"
+msgstr ""
+
+#: gui.py:874 gui.py:979
+msgid "Off"
+msgstr ""
+
+#: gui.py:948
+msgid "Switch Values:"
+msgstr ""
+
+#: gui.py:1058
+msgid "RUNTIME ERROR"
+msgstr ""
+
+#: gui.py:1070
+msgid "Switch to 3D Traces"
+msgstr ""
+
+#: gui.py:1081
+msgid "Switching signal"
+msgstr ""
+

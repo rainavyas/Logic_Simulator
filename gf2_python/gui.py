@@ -162,7 +162,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
             # Label time-step axis
             for i in range(len(self.current_signal[0])+1):
                 self.render_text(str(i), (i * 20) + 39, 25)
-            self.render_text('time', 10, 45)
+            self.render_text(_('time'), 10, 45)
 
         # We have been drawing to the back buffer, flush the graphics pipeline
         # and swap the back buffer to the front
@@ -235,7 +235,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         self.current_signal = []
         self.current_monitor_points = []
         self.signal_colours = []
-        self.render('Canvas Cleared')
+        self.render(_('Canvas Cleared'))
 
 
 class My3DGLCanvas(wxcanvas.GLCanvas):
@@ -424,7 +424,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
             # Label time-step axis
             for i in range(len(self.current_signal[0])+1):
                 self.render_text(str(i), (i * 20) - 11, -32, 0)
-            self.render_text('time', -30, -25, 0)
+            self.render_text(_('time'), -30, -25, 0)
 
         # We have been drawing to the back buffer, flush the graphics pipeline
         # and swap the back buffer to the front
@@ -479,8 +479,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
             self.init = True
 
         size = self.GetClientSize()
-        text = "".join(["Canvas redrawn on paint event, size is ",
-                        str(size.width), ", ", str(size.height)])
+        text = ""
         self.render(text)
 
     def on_size(self, event):
@@ -558,7 +557,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
         self.current_signal = []
         self.current_monitor_points = []
         self.signal_colours = []
-        self.render('Canvas Cleared')
+        self.render(_('Canvas Cleared'))
 
 
 class Gui(wx.Frame):
@@ -607,9 +606,9 @@ class Gui(wx.Frame):
         # Configure the file menu
         fileMenu = wx.Menu()
         menuBar = wx.MenuBar()
-        fileMenu.Append(wx.ID_ABOUT, "&About")
-        fileMenu.Append(wx.ID_EXIT, "&Exit")
-        menuBar.Append(fileMenu, "&File")
+        fileMenu.Append(wx.ID_ABOUT, _("About"))
+        fileMenu.Append(wx.ID_EXIT, _("Exit"))
+        menuBar.Append(fileMenu, _("File"))
         self.SetMenuBar(menuBar)
 
         # Create panels for the frame
@@ -626,26 +625,26 @@ class Gui(wx.Frame):
 
         # Configure the widgets
         self.file_picker = (
-            wx.FilePickerCtrl(self.top_panel, message='Select Source File',
+            wx.FilePickerCtrl(self.top_panel, message=_('Select Source File'),
                               wildcard='Text Files (*.txt)|*.txt'))
-        self.text_cycles = wx.StaticText(self.main_panel, wx.ID_ANY, "Cycles:")
+        self.text_cycles = wx.StaticText(self.main_panel, wx.ID_ANY, _("Cycles:"))
         self.text_mps = wx.StaticText(self.main_panel, wx.ID_ANY,
-                                      "Monitor Points")
+                                      _("Monitor Points"))
         self.spin = wx.SpinCtrl(self.main_panel, wx.ID_ANY, "10", min=1)
-        self.run_button = wx.Button(self.main_panel, wx.ID_ANY, "Run")
+        self.run_button = wx.Button(self.main_panel, wx.ID_ANY, _("Run"))
         self.run_button.SetBackgroundColour(wx.Colour(100, 255, 100))
         self.continue_button = wx.Button(self.main_panel, wx.ID_ANY,
-                                         "Continue")
+                                         _("Continue"))
         self.continue_button.SetBackgroundColour(wx.Colour(255, 255, 100))
         self.pos_reset_button = wx.Button(self.main_panel, wx.ID_ANY,
-                                          "Reset Position")
-        self.exit_button = wx.Button(self.main_panel, wx.ID_ANY, "Exit")
+                                          _("Reset Position"))
+        self.exit_button = wx.Button(self.main_panel, wx.ID_ANY, _("Exit"))
         self.exit_button.SetBackgroundColour(wx.Colour(255, 130, 130))
-        self.add_button = wx.Button(self.main_panel, wx.ID_ANY, "Add")
+        self.add_button = wx.Button(self.main_panel, wx.ID_ANY, _("Add"))
         self.canvas_button = wx.Button(self.main_panel,
-                                       wx.ID_ANY, 'Switch to 2D Traces')
+                                       wx.ID_ANY, _('Switch to 2D Traces'))
         self.mp_names = wx.Choice(self.main_panel, wx.ID_ANY,
-                                  choices=['SELECT'])
+                                  choices=[_('SELECT')])
         self.mp_names.SetSelection(0)
 
         # Bind events to widgets
@@ -732,7 +731,7 @@ class Gui(wx.Frame):
     def on_spin(self, event):
         """Handle the event when the user changes the spin control value."""
         spin_value = self.spin.GetValue()
-        text = "".join(["New spin control value: ", str(spin_value)])
+        text = "".join([_("New spin control value: "), str(spin_value)])
         self.canvas.render(text)
 
     def run_network(self, cycles):
@@ -740,12 +739,12 @@ class Gui(wx.Frame):
 
         If successful, return True. If unsuccessful, display error message.
         """
-        for _ in range(cycles):
+        for i in range(cycles):
             if self.network.execute_network():
                 self.monitors.record_signals()
-                self.canvas.render('Drawing signal', self.monitors)
+                self.canvas.render(_('Drawing signal'), self.monitors)
             else:
-                text = "Error! Network oscillating."
+                text = _("Error! Network oscillating.")
                 print(text)
                 self.displayError(text)
                 return False
@@ -755,7 +754,7 @@ class Gui(wx.Frame):
         """Handle the event when the user clicks the run button."""
         # Reset canvas and render notification
         self.canvas.reset()
-        text = "Run button pressed."
+        text = _("Run button pressed.")
         self.canvas.render(text)
 
         # Reset number of cycles and run network as desired
@@ -772,7 +771,7 @@ class Gui(wx.Frame):
     def on_reset_button(self, event):
         """Handle the event when the user clicks the position rest button."""
         self.canvas.reset()
-        text = "Position reset."
+        text = _("Position reset.")
         self.canvas.render(text)
 
     def on_continue_button(self, event):
@@ -786,7 +785,7 @@ class Gui(wx.Frame):
             cycles = self.spin.GetValue()
             if cycles is not None:
                 if self.cycles_completed == 0:
-                    text = "Error! Nothing to continue. Run first."
+                    text = _("Error! Nothing to continue. Run first.")
                     print(text)
                     self.displayError(text)
                 elif self.run_network(cycles):
@@ -801,7 +800,7 @@ class Gui(wx.Frame):
         # Finds selected monitor points and adds to monitor object
         index = self.mp_names.GetSelection()
         mp_name = self.mp_names.GetString(index)
-        if mp_name != 'SELECT':
+        if mp_name != _('SELECT'):
             self.mp_names.Delete(index)
             mp = mp_name.split('.')
             if len(mp) == 1:
@@ -814,15 +813,15 @@ class Gui(wx.Frame):
                 device, port, self.cycles_completed)
 
             # Removes monitor point from drop-down list
-            reset_index = self.mp_names.FindString('SELECT')
+            reset_index = self.mp_names.FindString(_('SELECT'))
             self.mp_names.SetSelection(reset_index)
 
             # Adds monitor point and remove button to GUI
-            text = "Monitor Point {} added.".format(mp_name)
+            text = _("Monitor Point {} added.".format(mp_name))
             self.canvas.render(text)
             self.number_of_mps += 1
             self.all_mp_names.append(mp_name)
-            new_button = wx.Button(self.mp_panel, label='Remove', name=mp_name)
+            new_button = wx.Button(self.mp_panel, label=_('Remove'), name=mp_name)
             new_sizer = wx.BoxSizer(wx.HORIZONTAL)
             new_sizer.Add(wx.StaticText(self.mp_panel, wx.ID_ANY, mp_name),
                           1, wx.ALIGN_CENTRE)
@@ -849,7 +848,7 @@ class Gui(wx.Frame):
 
         # Removes monitor point and remove button from GUI
         index = self.all_mp_names.index(mp_name)
-        text = "Monitor Point {} removed.".format(mp_name)
+        text = _("Monitor Point {} removed.".format(mp_name))
         self.canvas.render(text)
         self.mp_sizer.Hide(index)
         self.mp_sizer.Remove(index)
@@ -865,15 +864,15 @@ class Gui(wx.Frame):
             # Switch is off, so turn button on and green
             self.devices.set_switch(switch_id, 1)
             button.SetBackgroundColour(wx.Colour(100, 255, 100))
-            button.SetLabel('On')
-            text = "{} turned on.".format(button.GetName())
+            button.SetLabel(_('On'))
+            text = _("{} turned on.".format(button.GetName()))
             self.canvas.render(text)
         else:
             # Switch is on, so turn button off and red
             self.devices.set_switch(switch_id, 0)
             button.SetBackgroundColour(wx.Colour(255, 130, 130))
-            button.SetLabel('Off')
-            text = "{} turned off.".format(button.GetName())
+            button.SetLabel(_('Off'))
+            text = _("{} turned off.".format(button.GetName()))
             self.canvas.render(text)
 
     def checkFile(self, event):
@@ -934,7 +933,7 @@ class Gui(wx.Frame):
                     device, port, self.cycles_completed)
                 self.number_of_mps += 1
                 self.all_mp_names.append(i)
-                new_button = wx.Button(self.mp_panel, label='Remove', name=i)
+                new_button = wx.Button(self.mp_panel, label=_('Remove'), name=i)
                 new_sizer = wx.BoxSizer(wx.HORIZONTAL)
                 new_sizer.Add(wx.StaticText(self.mp_panel, wx.ID_ANY, i),
                               1, wx.ALIGN_CENTRE)
@@ -946,7 +945,7 @@ class Gui(wx.Frame):
         # Load switches from file to GUI
         if switch_names != []:
             text_switches = wx.StaticText(
-                self.main_panel, wx.ID_ANY, "Switch Values:")
+                self.main_panel, wx.ID_ANY, _("Switch Values:"))
             switchpanel = scrolled.ScrolledPanel(
                 self.main_panel, size=wx.Size(250, 250),
                 style=wx.SUNKEN_BORDER)
@@ -971,13 +970,13 @@ class Gui(wx.Frame):
                     1, wx.ALIGN_CENTRE)
                 if switch_initials[i] == 1:
                     button = wx.ToggleButton(
-                        switchpanel, wx.ID_ANY, 'On',
+                        switchpanel, wx.ID_ANY, _('On'),
                         name='{}'.format(switch_names[i]))
                     button.SetBackgroundColour(wx.Colour(100, 255, 100))
                     button.SetValue(True)
                 else:
                     button = wx.ToggleButton(
-                        switchpanel, wx.ID_ANY, 'Off',
+                        switchpanel, wx.ID_ANY, _('Off'),
                         name='{}'.format(switch_names[i]))
                     button.SetBackgroundColour(wx.Colour(255, 130, 130))
                 button.Bind(wx.EVT_TOGGLEBUTTON, self.onToggleButton)
@@ -1003,7 +1002,7 @@ class Gui(wx.Frame):
             self.all_mp_names.remove(name)
 
         self.mp_names.Clear()
-        self.mp_names.Append('SELECT')
+        self.mp_names.Append(_('SELECT'))
         self.mp_names.SetSelection(0)
 
         # Clear switches from GUI
@@ -1026,8 +1025,8 @@ class Gui(wx.Frame):
         # Create message dialog
         error_message = wx.MessageDialog(
             self, '',
-            'ERROR - FILE INVALID - {} Errors'.format(
-                str(len(self.scanner.error_list))),
+            _('ERROR - FILE INVALID - {} Errors'.format(
+                str(len(self.scanner.error_list)))),
             style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_string = ''
         font = error_message.GetFont()
@@ -1056,27 +1055,27 @@ class Gui(wx.Frame):
         """Displays message dialog containing nature of runtime error"""
         # Create message dialog with error string
         error_message = wx.MessageDialog(
-            self, text, caption='RUNTIME ERROR',
+            self, text, caption=_('RUNTIME ERROR'),
             style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_message.ShowModal()
         error_message.Destroy()
 
     def switchCanvas(self, event):
         button = event.GetEventObject()
-        if button.GetLabel() == 'Switch to 2D Traces':
+        if button.GetLabel() == _('Switch to 2D Traces'):
             self.main_sizer.Hide(0)
             self.main_sizer.Remove(0)
             self.canvas = MyGLCanvas(self.main_panel)
             self.main_sizer.Insert(0, self.canvas, 5, wx.EXPAND | wx.ALL, 5)
-            button.SetLabel('Switch to 3D Traces')
+            button.SetLabel(_('Switch to 3D Traces'))
             self.Layout()
         else:
             self.main_sizer.Hide(0)
             self.main_sizer.Remove(0)
             self.canvas = My3DGLCanvas(self.main_panel)
             self.main_sizer.Insert(0, self.canvas, 5, wx.EXPAND | wx.ALL, 5)
-            button.SetLabel('Switch to 2D Traces')
+            button.SetLabel(_('Switch to 2D Traces'))
             self.Layout()
 
         # Rerender up to the current point.
-        self.canvas.render("Switching signal", self.monitors)
+        self.canvas.render(_("Switching signal"), self.monitors)

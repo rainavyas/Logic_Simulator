@@ -7,10 +7,9 @@
 import wx
 
 # language domain
-langDomain = "I18Nwxapp"
+langDomain = "logicsimapp"
 # languages you want to support
 supLang = {u"en": wx.LANGUAGE_ENGLISH,
            u"fr": wx.LANGUAGE_FRENCH,
-           u"de": wx.LANGUAGE_GERMAN,
-	   u"ar": wx.LANGUAGE_ARABIC_UAE
+           u"hi": wx.LANGUAGE_HINDI
           }

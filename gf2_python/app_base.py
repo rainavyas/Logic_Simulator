@@ -63,9 +63,8 @@ class BaseApp(wx.App, InspectionMixin):
                                        localFilename=os.path.join(
                                        self.configLoc, "AppConfig"))
     
-        print(self.appConfig.Read(u'Language'))
         if not self.appConfig.HasEntry(u'Language'):
-            # on first run we default to German
+            # on first run we default to English
             self.appConfig.Write(key=u'Language', value=u'en')
 	
             

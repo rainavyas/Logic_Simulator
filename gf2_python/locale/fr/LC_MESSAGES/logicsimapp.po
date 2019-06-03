@@ -1,0 +1,136 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-06-03 22:21+0100\n"
+"PO-Revision-Date: 2019-06-03 22:23+0100\n"
+"Last-Translator: Jonty <jp730@cam.ac.uk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+#: gui.py:165
+#: gui.py:427
+msgid "time"
+msgstr "temps"
+
+#: gui.py:238
+#: gui.py:560
+msgid "Canvas Cleared"
+msgstr "Toile débarrassée"
+
+#: gui.py:609
+msgid "About"
+msgstr "Sur"
+
+#: gui.py:610
+#: gui.py:641
+msgid "Exit"
+msgstr "Quitter"
+
+#: gui.py:611
+msgid "File"
+msgstr "Fichier"
+
+#: gui.py:628
+msgid "Select Source File"
+msgstr "Sélectionner le fichier source"
+
+#: gui.py:630
+msgid "Cycles:"
+msgstr "Cycles:"
+
+#: gui.py:632
+msgid "Monitor Points"
+msgstr "Points de surveillance"
+
+#: gui.py:634
+msgid "Run"
+msgstr "Exécuter"
+
+#: gui.py:637
+msgid "Continue"
+msgstr "Continuer"
+
+#: gui.py:640
+msgid "Reset Position"
+msgstr "Réinitialiser la position"
+
+#: gui.py:643
+msgid "Add"
+msgstr "Ajouter"
+
+#: gui.py:645
+#: gui.py:1065
+#: gui.py:1077
+msgid "Switch to 2D Traces"
+msgstr "Passer aux traces 2D"
+
+#: gui.py:647
+#: gui.py:803
+#: gui.py:816
+#: gui.py:1005
+msgid "SELECT"
+msgstr "Sélectionner"
+
+#: gui.py:734
+msgid "New spin control value: "
+msgstr "Nouvelle valeur de contrôle de spin:"
+
+#: gui.py:745
+msgid "Drawing signal"
+msgstr "Signal de dessin"
+
+#: gui.py:747
+msgid "Error! Network oscillating."
+msgstr "Erreur! Réseau oscillant."
+
+#: gui.py:757
+msgid "Run button pressed."
+msgstr "Bouton executer enfoncé."
+
+#: gui.py:774
+msgid "Position reset."
+msgstr "Réinitialisation de la position"
+
+#: gui.py:788
+msgid "Error! Nothing to continue. Run first."
+msgstr "Erreur! Rien à continuer. Courez en premier."
+
+#: gui.py:824
+#: gui.py:936
+msgid "Remove"
+msgstr "Retirer"
+
+#: gui.py:867
+#: gui.py:973
+msgid "On"
+msgstr "Sur"
+
+#: gui.py:874
+#: gui.py:979
+msgid "Off"
+msgstr "De"
+
+#: gui.py:948
+msgid "Switch Values:"
+msgstr "Valeurs des commutateurs"
+
+#: gui.py:1058
+msgid "RUNTIME ERROR"
+msgstr "ERREUR D'EXÉCUTION"
+
+#: gui.py:1070
+msgid "Switch to 3D Traces"
+msgstr "Passer aux traces 3D"
+
+#: gui.py:1081
+msgid "Switching signal"
+msgstr "Signal de commutation"
+

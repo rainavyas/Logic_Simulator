@@ -153,7 +153,7 @@ class Parser:
             msg = "Needs to be a positive integer"
             option = False
         elif error_ID == self.NEED_QUALIFIER:
-            msg = "Expected a parameter: 'initial', 'inputs' or 'period'"
+            msg = "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"
             option = False
         elif error_ID == self.NEED_PARAM:
             msg = "Comma has to followed by parameter specification"
@@ -539,7 +539,7 @@ class Parser:
                                         self.scanner.MONITOR_ID,
                                         self.scanner.END_ID])
                         else:
-                            # Error: Parameter to be 'initial', inputs, period
+                            # Error: Parameter: 'initial', inputs, period, sequence
                             # Stopping symbols: ';' , '}','CONNECT', 'MONITOR'
                             # or 'END' KEYWORD '
                             self.error(self.NEED_QUALIFIER,

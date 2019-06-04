@@ -107,7 +107,7 @@ class Parser:
 
         if not (self.symbol.type == self.scanner.KEYWORD and
                 self.symbol.id == self.scanner.END_ID):
-            # Error Type: 0: 'END' keyword required at end of file
+            # Error: 'END' keyword required at end of file
             self.error(self.NO_END, [])
 
         if self.error_count == 0:

@@ -1,7 +1,7 @@
 DEVICES{
 sigg: SIGGEN, sequence 1, 0, 0, 1;
+switch1: SWITCH, initial 0;
 switch2: SWITCH, initial 0;
-switch3: SWITCH, initial 0;
 D1: DTYPE;
 D2: DTYPE;
 D3: DTYPE;

@@ -272,7 +272,8 @@ class Parser:
 
         # Define error IDs where punctuation stopping to not be moved on from
         dont_move_err_IDS = [self.INTEGER, self.NEED_PARAM, self.LOGIC_GATE,
-                             self.NEED_QUALIFIER, self.SIGGEN_QUALIFIER]
+                             self.NEED_QUALIFIER, self.SIGGEN_QUALIFIER,
+                             self.devices.EXCESS_QUALIFIER]
 
         # Define a move_on Boolean state
         move_on = True
@@ -498,17 +499,29 @@ class Parser:
 
                                 # Extract sequence of numbers for SIGGEN
                                 while (self.symbol.type == self.scanner.COMMA):
-                                    self.symbol = self.scanner.get_symbol()
-                                    if(self.symbol.type == self.scanner.NUMBER):
-                                        number_val = int(self.names.get_name_string(self.symbol.id))
-                                        if (number_val == 0 or number_val == 1):
-                                            device_property_list.append(number_val)
-                                            self.symbol = self.scanner.get_symbol()
+                                    if device_kind == self.names.query("SIGGEN"):
+                                        self.symbol = self.scanner.get_symbol()
+                                        if(self.symbol.type == self.scanner.NUMBER):
+                                            number_val = int(self.names.get_name_string(self.symbol.id))
+                                            if (number_val == 0 or number_val == 1):
+                                                device_property_list.append(number_val)
+                                                self.symbol = self.scanner.get_symbol()
+                                            else:
+                                                # Error: Signal value has to be '0' or '1'
+                                                # Stop symbs:';','}','CONNECT','MONITOR', END
+                                                self.error(
+                                                    self.SIGGEN_QUALIFIER, [
+                                                        self.scanner.KEYWORD,
+                                                        self.scanner.SEMICOLON,
+                                                        self.scanner.RIGHT_CURLY], [
+                                                        self.scanner.CONNECT_ID,
+                                                        self.scanner.MONITOR_ID,
+                                                        self.scanner.END_ID])
                                         else:
-                                            # Error: Signal value has to be '0' or '1'
+                                            # Error: Needs to be an integer
                                             # Stop symbs:';','}','CONNECT','MONITOR', END
                                             self.error(
-                                                self.SIGGEN_QUALIFIER, [
+                                                self.INTEGER, [
                                                     self.scanner.KEYWORD,
                                                     self.scanner.SEMICOLON,
                                                     self.scanner.RIGHT_CURLY], [
@@ -516,17 +529,16 @@ class Parser:
                                                     self.scanner.MONITOR_ID,
                                                     self.scanner.END_ID])
                                     else:
-                                        # Error: Needs to be an integer
+                                        # Error: Excess qualifiers for non-SIGGEN
                                         # Stop symbs:';','}','CONNECT','MONITOR', END
-                                        self.error(
-                                            self.INTEGER, [
-                                                self.scanner.KEYWORD,
-                                                self.scanner.SEMICOLON,
-                                                self.scanner.RIGHT_CURLY], [
-                                                self.scanner.CONNECT_ID,
-                                                self.scanner.MONITOR_ID,
-                                                self.scanner.END_ID])
-
+                                            self.error(
+                                                self.devices.EXCESS_QUALIFIER, [
+                                                    self.scanner.KEYWORD,
+                                                    self.scanner.SEMICOLON,
+                                                    self.scanner.RIGHT_CURLY], [
+                                                    self.scanner.CONNECT_ID,
+                                                    self.scanner.MONITOR_ID,
+                                                    self.scanner.END_ID])
                             else:
                                 # Error: Needs to be an integer
                                 # Stop symbs:';','}','CONNECT','MONITOR', END

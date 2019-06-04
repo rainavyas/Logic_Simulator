@@ -271,10 +271,10 @@ def test_execute_non_gates(new_network):
     # Make different devices
     [SW1_ID, SW2_ID, SW3_ID, CL_ID, D_ID] = names.lookup(["Sw1", "Sw2", "Sw3",
                                                           "Clock1", "D1"])
-    devices.make_device(SW1_ID, devices.SWITCH, 1)
-    devices.make_device(SW2_ID, devices.SWITCH, 0)
-    devices.make_device(SW3_ID, devices.SWITCH, 0)
-    devices.make_device(CL_ID, devices.CLOCK, 1)
+    devices.make_device(SW1_ID, devices.SWITCH, [1])
+    devices.make_device(SW2_ID, devices.SWITCH, [0])
+    devices.make_device(SW3_ID, devices.SWITCH, [0])
+    devices.make_device(CL_ID, devices.CLOCK, [1])
     devices.make_device(D_ID, devices.D_TYPE)
 
     # Make connections
@@ -342,7 +342,7 @@ def test_oscillating_network(new_network):
 
     [NOR1, I1] = names.lookup(["Nor1", "I1"])
     # Make NOR gate
-    devices.make_device(NOR1, devices.NOR, 1)
+    devices.make_device(NOR1, devices.NOR, [1])
 
     # Connect the NOR gate to itself
     network.make_connection(NOR1, None, NOR1, I1)

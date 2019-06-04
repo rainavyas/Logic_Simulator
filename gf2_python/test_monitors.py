@@ -165,7 +165,7 @@ def test_display_signals(capsys, new_monitors):
     HIGH = devices.HIGH
 
     # Make a clock and set a monitor on its output
-    devices.make_device(CL_ID, CLOCK_ID, 2)
+    devices.make_device(CL_ID, CLOCK_ID, [2])
     new_monitors.make_monitor(CL_ID, None)
 
     # Both switches are currently LOW

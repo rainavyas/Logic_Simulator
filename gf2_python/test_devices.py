@@ -1,6 +1,5 @@
 """Test the devices module."""
 import pytest
-
 from names import Names
 from devices import Devices
 

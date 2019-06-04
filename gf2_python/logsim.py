@@ -15,6 +15,7 @@ import sys
 import os
 
 import wx
+import builtins
 
 from names import Names
 from devices import Devices
@@ -26,40 +27,6 @@ from userint import UserInterface
 from gui import Gui
 import app_const as appC
 import app_base as ab
-
-class MyDialog(wx.Dialog): 
-   def __init__(self, parent, title): 
-      super(MyDialog, self).__init__(parent, title = title, size = (250,100)) 
-      panel = wx.Panel(self)
-      self.languages = list(appC.supLang.keys())
-      static_text = wx.StaticText(panel, wx.ID_ANY, 'Select Language')
-      self.selector = wx.Choice(panel, wx.ID_ANY, choices=self.languages)
-      self.selector.SetSelection(0)
-      okayButton = wx.Button(panel, wx.ID_ANY, 'Ok')
-      okayButton.Bind(wx.EVT_BUTTON, self.okayButton)
-      cancelButton = wx.Button(panel, wx.ID_ANY, 'Cancel')
-      cancelButton.Bind(wx.EVT_BUTTON, self.cancelButton)
-      
-      selector_sizer = wx.BoxSizer(wx.HORIZONTAL)
-      control_sizer = wx.BoxSizer(wx.HORIZONTAL)
-      main_sizer = wx.BoxSizer(wx.VERTICAL)
-
-      selector_sizer.Add(static_text, 1, wx.EXPAND | wx.ALIGN_CENTER)
-      selector_sizer.Add(self.selector, 1, wx.EXPAND)
-
-      control_sizer.Add(okayButton, 1, wx.EXPAND)
-      control_sizer.Add(cancelButton, 1, wx.EXPAND)
-
-      main_sizer.Add(selector_sizer, 0, wx.EXPAND)
-      main_sizer.Add(control_sizer, 0, wx.EXPAND)
-
-      panel.SetSizer(main_sizer)
-
-   def okayButton(self, event):
-       self.EndModal(self.selector.GetSelection())
-
-   def cancelButton(self, event):
-       self.EndModal(-1)
 
 def main(arg_list):
     """Parse the command line options and arguments specified in arg_list.
@@ -109,29 +76,33 @@ def main(arg_list):
             scanner = Scanner(path, names)
             parser = Parser(names, devices, network, monitors, scanner)
             if parser.parse_network():
-                app = wx.App()
-                a = MyDialog(None, 'Language Selection')
-                index = a.ShowModal()
-                a.Destroy()
-                if index != -1:
-                    main_app = ab.BaseApp(redirect=False)
-                    main_app.updateLanguage(list(appC.supLang.keys())[index])
-                    gui = Gui("Logic Simulator", names, devices, network,
-                              monitors, os.path.abspath(path), scanner, parser)
-                    gui.Show(True)
-                    main_app.MainLoop()
+               app = wx.App()
+
+               # Internationalisation
+               builtins._ = wx.GetTranslation
+               locale = wx.Locale()
+               locale.Init(wx.LANGUAGE_DEFAULT)
+               locale.AddCatalogLookupPathPrefix('./locale')
+               locale.AddCatalog('logicsimapp')
+               
+               gui = Gui("Logic Simulator", names, devices, network,
+                         monitors, os.path.abspath(path), scanner, parser)
+               gui.Show(True)
+               app.MainLoop()
 
         if len(arguments) == 0:
             app = wx.App()
-            a = MyDialog(None, 'Language Selection')
-            index = a.ShowModal()
-            a.Destroy()
-            if index != -1:
-                main_app = ab.BaseApp(redirect=False)
-                main_app.updateLanguage(list(appC.supLang.keys())[index])
-                gui = Gui("Logic Simulator", names, devices, network, monitors)
-                gui.Show(True)
-                main_app.MainLoop()
+
+            # Internationalisation
+            builtins._ = wx.GetTranslation
+            locale = wx.Locale()
+            locale.Init(wx.LANGUAGE_DEFAULT)
+            locale.AddCatalogLookupPathPrefix('./locale')
+            locale.AddCatalog('logicsimapp')
+            
+            gui = Gui("Logic Simulator", names, devices, network, monitors)
+            gui.Show(True)
+            app.MainLoop()
 
 
 if __name__ == "__main__":

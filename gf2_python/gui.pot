@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-06-03 22:23+0100\n"
+"POT-Creation-Date: 2019-06-04 16:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,111 +14,147 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: gui.py:165 gui.py:427
+#: gui.py:173 gui.py:450
 msgid "time"
 msgstr ""
 
-#: gui.py:238 gui.py:560
+#: gui.py:263 gui.py:583
 msgid "Canvas Cleared"
 msgstr ""
 
-#: gui.py:609
+#: gui.py:632
 msgid "About"
 msgstr ""
 
-#: gui.py:610 gui.py:641
+#: gui.py:633 gui.py:664
 msgid "Exit"
 msgstr ""
 
-#: gui.py:611
+#: gui.py:634
 msgid "File"
 msgstr ""
 
-#: gui.py:628
+#: gui.py:651
 msgid "Select Source File"
 msgstr ""
 
-#: gui.py:630
+#: gui.py:653
 msgid "Cycles:"
 msgstr ""
 
-#: gui.py:632
+#: gui.py:655
 msgid "Monitor Points"
 msgstr ""
 
-#: gui.py:634
+#: gui.py:657
 msgid "Run"
 msgstr ""
 
-#: gui.py:637
+#: gui.py:660
 msgid "Continue"
 msgstr ""
 
-#: gui.py:640
+#: gui.py:663
 msgid "Reset Position"
 msgstr ""
 
-#: gui.py:643
+#: gui.py:666
 msgid "Add"
 msgstr ""
 
-#: gui.py:645 gui.py:1065 gui.py:1077
+#: gui.py:668 gui.py:1088 gui.py:1100
 msgid "Switch to 2D Traces"
 msgstr ""
 
-#: gui.py:647 gui.py:803 gui.py:816 gui.py:1005
+#: gui.py:670 gui.py:826 gui.py:839 gui.py:1028
 msgid "SELECT"
 msgstr ""
 
-#: gui.py:734
-msgid "New spin control value: "
+#: gui.py:750
+msgid ""
+"Logic Simulator\n"
+"Created by Jonty Page,"
 msgstr ""
 
-#: gui.py:745
-msgid "Drawing signal"
+#: gui.py:751
+msgid ""
+" Vyas Raina and James Crossley\n"
+"2019"
 msgstr ""
 
-#: gui.py:747
-msgid "Error! Network oscillating."
+#: gui.py:752
+msgid "About Logsim"
 msgstr ""
 
 #: gui.py:757
+msgid "New spin control value: "
+msgstr ""
+
+#: gui.py:768
+msgid "Drawing signal"
+msgstr ""
+
+#: gui.py:770
+msgid "Error! Network oscillating."
+msgstr ""
+
+#: gui.py:780
 msgid "Run button pressed."
 msgstr ""
 
-#: gui.py:774
+#: gui.py:797
 msgid "Position reset."
 msgstr ""
 
-#: gui.py:788
+#: gui.py:811
 msgid "Error! Nothing to continue. Run first."
 msgstr ""
 
-#: gui.py:824 gui.py:936
+#: gui.py:843
+msgid "Monitor Point %s added."
+msgstr ""
+
+#: gui.py:847 gui.py:959
 msgid "Remove"
 msgstr ""
 
-#: gui.py:867 gui.py:973
+#: gui.py:874
+msgid "Monitor Point %s removed."
+msgstr ""
+
+#: gui.py:890 gui.py:996
 msgid "On"
 msgstr ""
 
-#: gui.py:874 gui.py:979
+#: gui.py:891
+msgid "%s turned on."
+msgstr ""
+
+#: gui.py:897 gui.py:1002
 msgid "Off"
 msgstr ""
 
-#: gui.py:948
+#: gui.py:898
+msgid "%s turned off."
+msgstr ""
+
+#: gui.py:971
 msgid "Switch Values:"
 msgstr ""
 
-#: gui.py:1058
-msgid "RUNTIME ERROR"
-msgstr ""
-
-#: gui.py:1070
-msgid "Switch to 3D Traces"
+#: gui.py:1051
+msgid "ERROR - FILE INVALID - %s Errors"
 msgstr ""
 
 #: gui.py:1081
+msgid "RUNTIME ERROR"
+msgstr ""
+
+#: gui.py:1093
+msgid "Switch to 3D Traces"
+msgstr ""
+
+#: gui.py:1104
 msgid "Switching signal"
 msgstr ""
 

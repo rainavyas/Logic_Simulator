@@ -34,8 +34,6 @@ class MyGLCanvas(wxcanvas.GLCanvas):
     Parameters
     ----------
     parent: parent window.
-    devices: instance of the devices.Devices() class.
-    monitors: instance of the monitors.Monitors() class.
 
     Public methods
     --------------
@@ -51,6 +49,10 @@ class MyGLCanvas(wxcanvas.GLCanvas):
 
     render_text(self, text, x_pos, y_pos): Handles text drawing
                                            operations.
+
+    reset(self): Resets the viewframe to original position
+
+    clear(self): Clears the canvas and resets position
     """
 
     def __init__(self, parent):
@@ -72,9 +74,10 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         self.last_mouse_x = 0  # previous mouse x position
         self.last_mouse_y = 0  # previous mouse y position
 
-        # Initialise variables for measuring model
+        # Initialise variables for measuring model and zooming
         self.max_x = 0
         self.max_y = 0
+        self.zoom = 1
 
         # Bind events to the canvas
         self.Bind(wx.EVT_PAINT, self.on_paint)
@@ -94,6 +97,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         GL.glMatrixMode(GL.GL_MODELVIEW)
         GL.glLoadIdentity()
         GL.glTranslated(self.pan_x, self.pan_y, 0.0)
+        GL.glScaled(self.zoom, self.zoom, self.zoom)
 
     def render(self, text, monitors=None):
         """Handle all drawing operations."""
@@ -193,27 +197,39 @@ class MyGLCanvas(wxcanvas.GLCanvas):
     def on_mouse(self, event):
         """Handle mouse events."""
         text = ""
+        # Records button down location
         if event.ButtonDown():
             self.last_mouse_x = event.GetX()
             self.last_mouse_y = event.GetY()
+        # Handles the panning of graphs and sets limits
         if event.Dragging():
             size = self.GetClientSize()
             intended_move_x = (self.pan_x + event.GetX() - self.last_mouse_x)
             intended_move_y = (self.pan_y - event.GetY() + self.last_mouse_y)
-            if intended_move_x < 0 and intended_move_x > min(0, size.width-self.max_x):
+            if intended_move_x < 0 and intended_move_x > min(0, size.width-self.max_x*self.zoom):
                 self.pan_x += event.GetX() - self.last_mouse_x
                 self.last_mouse_x = event.GetX()
-            if intended_move_y < 0 and intended_move_y > min(0, size.height-self.max_y):
+            if intended_move_y < 0 and intended_move_y > min(0, size.height-self.max_y*self.zoom):
                 self.pan_y -= event.GetY() - self.last_mouse_y
                 self.last_mouse_y = event.GetY()
             if intended_move_x > 0:
                 self.pan_x = 0
             if intended_move_y > 0:
                 self.pan_y = 0
-            if intended_move_x < min(0, size.width-self.max_x):
-                self.pan_x = min(0, size.width-self.max_x)
-            if intended_move_y < min(0, size.height-self.max_y):
-                self.pan_y = min(0, size.height-self.max_y)
+            if intended_move_x < min(0, size.width-self.max_x*self.zoom):
+                self.pan_x = min(0, size.width-self.max_x*self.zoom)
+            if intended_move_y < min(0, size.height-self.max_y*self.zoom):
+                self.pan_y = min(0, size.height-self.max_y*self.zoom)
+            self.init = False
+        # Handles zooming in
+        if event.GetWheelRotation() < 0:
+            self.zoom *= (1.0 + (
+                event.GetWheelRotation() / (20 * event.GetWheelDelta())))
+            self.init = False
+        # Handles zooming out
+        if event.GetWheelRotation() > 0:
+            self.zoom /= (1.0 - (
+                event.GetWheelRotation() / (20 * event.GetWheelDelta())))
             self.init = False
         self.render(text)
         self.Refresh()  # triggers the paint event
@@ -236,6 +252,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         GL.glLoadIdentity()
         self.pan_x = 0
         self.pan_y = 0
+        self.zoom = 1
 
     def clear(self):
         """Clears the canvas and resets position"""
@@ -255,8 +272,6 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
     Parameters
     ----------
     parent: parent window.
-    devices: instance of the devices.Devices() class.
-    monitors: instance of the monitors.Monitors() class.
 
     Public methods
     --------------
@@ -732,9 +747,9 @@ class Gui(wx.Frame):
             self.Close(True)
         if Id == wx.ID_ABOUT:
             wx.MessageBox(
-                ("Logic Simulator\nCreated by Jonty Page," +
-                 " Vyas Raina and James Crossley\n2019"),
-                "About Logsim", wx.ICON_INFORMATION | wx.OK)
+                (_("Logic Simulator\nCreated by Jonty Page,") +
+                 _(" Vyas Raina and James Crossley\n2019")),
+                _("About Logsim"), wx.ICON_INFORMATION | wx.OK)
 
     def on_spin(self, event):
         """Handle the event when the user changes the spin control value."""
@@ -825,7 +840,7 @@ class Gui(wx.Frame):
             self.mp_names.SetSelection(reset_index)
 
             # Adds monitor point and remove button to GUI
-            text = _("Monitor Point {} added.".format(mp_name))
+            text = _("Monitor Point %s added.") % mp_name
             self.canvas.render(text)
             self.number_of_mps += 1
             self.all_mp_names.append(mp_name)
@@ -856,7 +871,7 @@ class Gui(wx.Frame):
 
         # Removes monitor point and remove button from GUI
         index = self.all_mp_names.index(mp_name)
-        text = _("Monitor Point {} removed.".format(mp_name))
+        text = _("Monitor Point %s removed.") % mp_name
         self.canvas.render(text)
         self.mp_sizer.Hide(index)
         self.mp_sizer.Remove(index)
@@ -873,14 +888,14 @@ class Gui(wx.Frame):
             self.devices.set_switch(switch_id, 1)
             button.SetBackgroundColour(wx.Colour(100, 255, 100))
             button.SetLabel(_('On'))
-            text = _("{} turned on.".format(button.GetName()))
+            text = _("%s turned on.") % button.GetName()
             self.canvas.render(text)
         else:
             # Switch is on, so turn button off and red
             self.devices.set_switch(switch_id, 0)
             button.SetBackgroundColour(wx.Colour(255, 130, 130))
             button.SetLabel(_('Off'))
-            text = _("{} turned off.".format(button.GetName()))
+            text = _("%s turned off.") % button.GetName()
             self.canvas.render(text)
 
     def checkFile(self, event):
@@ -1033,8 +1048,8 @@ class Gui(wx.Frame):
         # Create message dialog
         error_message = wx.MessageDialog(
             self, '',
-            _('ERROR - FILE INVALID - {} Errors'.format(
-                str(len(self.scanner.error_list)))),
+            _('ERROR - FILE INVALID - %s Errors') % (
+                str(len(self.scanner.error_list))),
             style=wx.OK | wx.CENTRE | wx.STAY_ON_TOP)
         error_string = ''
         font = error_message.GetFont()

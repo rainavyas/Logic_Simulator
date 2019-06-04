@@ -25,8 +25,6 @@ from scanner import Scanner
 from parse import Parser
 from userint import UserInterface
 from gui import Gui
-import app_const as appC
-import app_base as ab
 
 def main(arg_list):
     """Parse the command line options and arguments specified in arg_list.

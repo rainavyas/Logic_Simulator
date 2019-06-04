@@ -1,6 +1,5 @@
 """Test the devices module."""
 import pytest
-
 from names import Names
 from devices import Devices
 
@@ -90,21 +89,24 @@ def test_make_device(new_devices):
 
 
 @pytest.mark.parametrize("function_args, error", [
-    ("(AND1_ID, new_devices.AND, 17)", "new_devices.INVALID_QUALIFIER"),
+    ("(AND1_ID, new_devices.AND, [17])", "new_devices.INVALID_QUALIFIER"),
     ("(SW1_ID, new_devices.SWITCH, None)", "new_devices.NO_QUALIFIER"),
-    ("(X1_ID, new_devices.XOR, 2)", "new_devices.QUALIFIER_PRESENT"),
+    ("(X1_ID, new_devices.XOR, [2])", "new_devices.QUALIFIER_PRESENT"),
     ("(D_ID, D_ID, None)", "new_devices.BAD_DEVICE"),
-    ("(CL_ID, new_devices.CLOCK, 0)", "new_devices.INVALID_QUALIFIER"),
-    ("(CL_ID, new_devices.CLOCK, 10)", "new_devices.NO_ERROR"),
+    ("(CL_ID, new_devices.CLOCK, [0])", "new_devices.INVALID_QUALIFIER"),
+    ("(CL_ID, new_devices.CLOCK, [10])", "new_devices.NO_ERROR"),
 
     # Note: XOR device X2_ID will have been made earlier in the function
     ("(X2_ID, new_devices.XOR)", "new_devices.DEVICE_PRESENT"),
+
+    # Non-SIGGEN device defined with multiple qualifiers
+    ("(SW2_ID, new_devices.SWITCH, [0 , 1])", "new_devices.EXCESS_QUALIFIER"),
 ])
 def test_make_device_gives_errors(new_devices, function_args, error):
     """Test if make_device returns the appropriate errors."""
     names = new_devices.names
     [AND1_ID, SW1_ID, CL_ID, D_ID, X1_ID,
-     X2_ID] = names.lookup(["And1", "Sw1", "Clock1", "D1", "Xor1", "Xor2"])
+     X2_ID, SW2_ID] = names.lookup(["And1", "Sw1", "Clock1", "D1", "Xor1", "Xor2", "SW2"])
 
     # Add a XOR device: X2_ID
     new_devices.make_device(X2_ID, new_devices.XOR)

@@ -53,6 +53,8 @@ def file_list():
                  "Error32.txt", "Error33.txt",
                  # Semantic error files (monitors):
                  "Error34.txt", "Error35.txt",
+                 # Additional test files post-maintenance.
+                 "Error36.txt", "Error37.txt",
                  # Correct definition file with extended monitoring points:
                  "Test_File.txt"
                  ]
@@ -82,8 +84,8 @@ def test_parse_network(names, devices, network, monitors, file_list):
     (6, "Line 29:", "Expected '{' after 'MONITOR'"),
     (7, "Line 29:", "'MONITOR' keyword required"),
     (8, "Line 4:", "Needs to be a positive integer"),
-    (9, "Line 5:", "Expected a parameter: 'initial', 'inputs' or 'period'"),
-    (10, "Line 6:", "Expected a parameter: 'initial', 'inputs' or 'period'"),
+    (9, "Line 5:", "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"),
+    (10, "Line 6:", "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"),
     (11, "Line 5:", "Device definition needs to end in ';'"),
     (12, "Line 4:", "Device name has to be followed by ':'"),
     (13, "Line 6:", "Valid Device name required"),
@@ -99,8 +101,8 @@ def test_parse_network(names, devices, network, monitors, file_list):
     (23, "Line 11:", "Missing '}'"),
     # Semantic errors (devices):
     (24, "Line 5:", "Device Name already used"),
-    (25, "Line 4:", "Expected a parameter: 'initial', 'inputs' or 'period'"),
-    (26, "Line 7:", "Expected a parameter: 'initial', 'inputs' or 'period'"),
+    (25, "Line 4:", "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"),
+    (26, "Line 7:", "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"),
     (27, "Line 4:", "Needs to be a positive integer"),
     (28, "Line 8:", "Valid device qualifier requried"),
     # Semantic errors (connections):
@@ -111,7 +113,10 @@ def test_parse_network(names, devices, network, monitors, file_list):
     (33, "Line 23:", "'.' required to specify input pin"),
     # Semantic errors (monitors):
     (34, "Line 31:", "Output pin has to be 'Q' or 'QBAR'"),
-    (35, "Line 32:", "This point is already being monitored")
+    (35, "Line 32:", "This point is already being monitored"),
+    # Additional tests post-maintenance:
+    (36, "Line 7:", "Too many qualifiers"),
+    (37, "Line 3:", "SIGGEN signal values can only be '0' or '1'")
 ])
 def test_error(names, devices, network, monitors, file_list, file, error_line,
                expected_msg):
@@ -157,7 +162,9 @@ def test_error(names, devices, network, monitors, file_list, file, error_line,
                                           (7, "dtype", "DTYPE",
                                            ["SET", "DATA", "CLK", "CLEAR"],
                                            ["clock1", "clock2", "clock3",
-                                            "switch1"])
+                                            "switch1"]),
+                                            # Additional test post-maintenance.
+                                          (8, "siggy", "SIGGEN", [], ["nand"])
                                         ])
 def test_devices_and_connections(names, devices, network, monitors, file_list,
                                  device_number, device_name, device_type,
@@ -166,13 +173,13 @@ def test_devices_and_connections(names, devices, network, monitors, file_list,
     Asserts that connections between devices are as expected.
     """
     # Create scanner and parse objects for given file:
-    path = "parse_test_files/" + file_list[36]
+    path = "parse_test_files/" + file_list[38]
     scanner = Scanner(path, names)
     parse = Parser(names, devices, network, monitors, scanner)
     # Parse the given file:
     parse.parse_network()
     # Assert correct number of devices created:
-    assert len(devices.devices_list) == 8
+    assert len(devices.devices_list) == 9
     # Create device object for the current device in the list:
     device = devices.devices_list[device_number]
     # Assert that the device id and kind are consistent:
@@ -200,13 +207,15 @@ def test_devices_and_connections(names, devices, network, monitors, file_list,
     (2, "switch1"),
     (3, "xor"),
     (4, "dtype.QBAR"),
-    (5, "dtype.Q")
+    (5, "dtype.Q"),
+    # Additional test post-maintenance:
+    (6, "siggy")
 ])
 def test_monitors(names, devices, network, monitors, file_list, monitor_num,
                   monitor_name):
     """Tests whether monitoring points have been created correctly."""
     # Create scanner and parse objects for given file:
-    path = "parse_test_files/" + file_list[36]
+    path = "parse_test_files/" + file_list[38]
     scanner = Scanner(path, names)
     parse = Parser(names, devices, network, monitors, scanner)
     # Parse the given file:

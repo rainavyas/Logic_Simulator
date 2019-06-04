@@ -98,12 +98,15 @@ def test_make_device(new_devices):
 
     # Note: XOR device X2_ID will have been made earlier in the function
     ("(X2_ID, new_devices.XOR)", "new_devices.DEVICE_PRESENT"),
+
+    # Non-SIGGEN device defined with multiple qualifiers
+    ("(SW2_ID, new_devices.SWITCH, [0 , 1])", "new_devices.EXCESS_QUALIFIER"),
 ])
 def test_make_device_gives_errors(new_devices, function_args, error):
     """Test if make_device returns the appropriate errors."""
     names = new_devices.names
     [AND1_ID, SW1_ID, CL_ID, D_ID, X1_ID,
-     X2_ID] = names.lookup(["And1", "Sw1", "Clock1", "D1", "Xor1", "Xor2"])
+     X2_ID, SW2_ID] = names.lookup(["And1", "Sw1", "Clock1", "D1", "Xor1", "Xor2", "SW2"])
 
     # Add a XOR device: X2_ID
     new_devices.make_device(X2_ID, new_devices.XOR)

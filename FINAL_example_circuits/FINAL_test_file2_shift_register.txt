@@ -1,5 +1,5 @@
 DEVICES{
-switch1: SWITCH, initial 1;
+sigg: SIGGEN, sequence 1, 0, 0, 1;
 switch2: SWITCH, initial 0;
 switch3: SWITCH, initial 0;
 D1: DTYPE;
@@ -10,7 +10,7 @@ clock: CLOCK, period 5;
 }
 
 CONNECT{
-switch1 = D1.DATA;
+sigg = D1.DATA;
 D1.Q = D2.DATA;
 D2.Q = D3.DATA;
 D3.Q = D4.DATA;
@@ -18,14 +18,14 @@ clock = D1.CLK;
 clock = D2.CLK;
 clock = D3.CLK;
 clock = D4.CLK;
-switch2 = D1.SET;
-switch2 = D2.SET;
-switch2 = D3.SET;
-switch2 = D4.SET;
-switch3 = D1.CLEAR;
-switch3 = D2.CLEAR;
-switch3 = D3.CLEAR;
-switch3 = D4.CLEAR;
+switch1 = D1.SET;
+switch1 = D2.SET;
+switch1 = D3.SET;
+switch1 = D4.SET;
+switch2 = D1.CLEAR;
+switch2 = D2.CLEAR;
+switch2 = D3.CLEAR;
+switch2 = D4.CLEAR;
 }
 
 MONITOR{

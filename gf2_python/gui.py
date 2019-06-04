@@ -75,6 +75,9 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         # Initialise variables for zooming
         self.zoom = 1
 
+        self.max_x = 0
+        self.max_y = 0
+
         # Bind events to the canvas
         self.Bind(wx.EVT_PAINT, self.on_paint)
         self.Bind(wx.EVT_SIZE, self.on_size)
@@ -139,6 +142,9 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 self.render_text(self.current_monitor_points[j], 10, (
                     75*(j+1)+10))
 
+            self.max_x = (len(self.current_signal[0])*20) + 60
+            self.max_y = ((len(self.current_signal)+1)*75) + 55
+
             # Draw time-step axis
             GL.glColor3f(0, 0, 0)
             GL.glBegin(GL.GL_LINE_STRIP)
@@ -193,10 +199,25 @@ class MyGLCanvas(wxcanvas.GLCanvas):
             self.last_mouse_x = event.GetX()
             self.last_mouse_y = event.GetY()
         if event.Dragging():
-            self.pan_x += event.GetX() - self.last_mouse_x
-            self.pan_y -= event.GetY() - self.last_mouse_y
-            self.last_mouse_x = event.GetX()
-            self.last_mouse_y = event.GetY()
+            size = self.GetClientSize()
+            zoom_factor = GL.glGetFloatv(GL.GL_MODELVIEW_MATRIX)[0][0]
+            print(GL.glGetFloatv(GL.GL_MODELVIEW_MATRIX))
+            intended_move_x = (self.pan_x + event.GetX() - self.last_mouse_x)
+            intended_move_y = (self.pan_y - event.GetY() + self.last_mouse_y)
+            if intended_move_x < 0 and intended_move_x > min(0, size.width*zoom_factor-self.max_x):
+                self.pan_x += event.GetX() - self.last_mouse_x
+                self.last_mouse_x = event.GetX()
+            if intended_move_y < 0 and intended_move_y > min(0, size.height*zoom_factor-self.max_y):
+                self.pan_y -= event.GetY() - self.last_mouse_y
+                self.last_mouse_y = event.GetY()
+            if intended_move_x > 0:
+                self.pan_x = 0
+            if intended_move_y > 0:
+                self.pan_y = 0
+            if intended_move_x < min(0, size.width*zoom_factor-self.max_x):
+                self.pan_x = min(0, size.width*zoom_factor-self.max_x)
+            if intended_move_y < min(0, size.height*zoom_factor-self.max_y):
+                self.pan_y = min(0, size.height*zoom_factor-self.max_y)
             self.init = False
         if event.GetWheelRotation() < 0:
             self.zoom *= (1.0 + (

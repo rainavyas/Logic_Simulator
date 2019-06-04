@@ -72,9 +72,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         self.last_mouse_x = 0  # previous mouse x position
         self.last_mouse_y = 0  # previous mouse y position
 
-        # Initialise variables for zooming
-        self.zoom = 1
-
+        # Initialise variables for measuring model
         self.max_x = 0
         self.max_y = 0
 
@@ -96,7 +94,6 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         GL.glMatrixMode(GL.GL_MODELVIEW)
         GL.glLoadIdentity()
         GL.glTranslated(self.pan_x, self.pan_y, 0.0)
-        GL.glScaled(self.zoom, self.zoom, self.zoom)
 
     def render(self, text, monitors=None):
         """Handle all drawing operations."""
@@ -126,14 +123,15 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                     self.signal_colours[j][1]), self.signal_colours[j][2])
                 GL.glBegin(GL.GL_LINE_STRIP)
                 for i in range(len(self.current_signal[j])):
-                    x = (i * 20) + 40
-                    x_next = (i * 20) + 60
-                    if self.current_signal[j][i] == 0:
-                        y = 75*(j+1)+30
-                    else:
-                        y = 75*(j+1)+55
-                    GL.glVertex2f(x, y)
-                    GL.glVertex2f(x_next, y)
+                    if self.current_signal[j][i] != 4:
+                        x = (i * 20) + 40
+                        x_next = (i * 20) + 60
+                        if self.current_signal[j][i] == 0:
+                            y = 75*(j+1)+30
+                        else:
+                            y = 75*(j+1)+55
+                        GL.glVertex2f(x, y)
+                        GL.glVertex2f(x_next, y)
                 GL.glEnd()
                 self.render_text('0', 10, 75*(j+1)+30)
                 self.render_text('1', 10, 75*(j+1)+55)
@@ -200,32 +198,22 @@ class MyGLCanvas(wxcanvas.GLCanvas):
             self.last_mouse_y = event.GetY()
         if event.Dragging():
             size = self.GetClientSize()
-            zoom_factor = GL.glGetFloatv(GL.GL_MODELVIEW_MATRIX)[0][0]
-            print(GL.glGetFloatv(GL.GL_MODELVIEW_MATRIX))
             intended_move_x = (self.pan_x + event.GetX() - self.last_mouse_x)
             intended_move_y = (self.pan_y - event.GetY() + self.last_mouse_y)
-            if intended_move_x < 0 and intended_move_x > min(0, size.width*zoom_factor-self.max_x):
+            if intended_move_x < 0 and intended_move_x > min(0, size.width-self.max_x):
                 self.pan_x += event.GetX() - self.last_mouse_x
                 self.last_mouse_x = event.GetX()
-            if intended_move_y < 0 and intended_move_y > min(0, size.height*zoom_factor-self.max_y):
+            if intended_move_y < 0 and intended_move_y > min(0, size.height-self.max_y):
                 self.pan_y -= event.GetY() - self.last_mouse_y
                 self.last_mouse_y = event.GetY()
             if intended_move_x > 0:
                 self.pan_x = 0
             if intended_move_y > 0:
                 self.pan_y = 0
-            if intended_move_x < min(0, size.width*zoom_factor-self.max_x):
-                self.pan_x = min(0, size.width*zoom_factor-self.max_x)
-            if intended_move_y < min(0, size.height*zoom_factor-self.max_y):
-                self.pan_y = min(0, size.height*zoom_factor-self.max_y)
-            self.init = False
-        if event.GetWheelRotation() < 0:
-            self.zoom *= (1.0 + (
-                event.GetWheelRotation() / (20 * event.GetWheelDelta())))
-            self.init = False
-        if event.GetWheelRotation() > 0:
-            self.zoom /= (1.0 - (
-                event.GetWheelRotation() / (20 * event.GetWheelDelta())))
+            if intended_move_x < min(0, size.width-self.max_x):
+                self.pan_x = min(0, size.width-self.max_x)
+            if intended_move_y < min(0, size.height-self.max_y):
+                self.pan_y = min(0, size.height-self.max_y)
             self.init = False
         self.render(text)
         self.Refresh()  # triggers the paint event
@@ -248,7 +236,6 @@ class MyGLCanvas(wxcanvas.GLCanvas):
         GL.glLoadIdentity()
         self.pan_x = 0
         self.pan_y = 0
-        self.zoom = 1
 
     def clear(self):
         """Clears the canvas and resets position"""

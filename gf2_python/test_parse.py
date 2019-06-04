@@ -84,8 +84,10 @@ def test_parse_network(names, devices, network, monitors, file_list):
     (6, "Line 29:", "Expected '{' after 'MONITOR'"),
     (7, "Line 29:", "'MONITOR' keyword required"),
     (8, "Line 4:", "Needs to be a positive integer"),
-    (9, "Line 5:", "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"),
-    (10, "Line 6:", "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"),
+    (9, "Line 5:", ("Expected a parameter: 'initial',"
+                    "'inputs', 'sequence' or 'period'")),
+    (10, "Line 6:", ("Expected a parameter: 'initial',"
+                     "'inputs', 'sequence' or 'period'")),
     (11, "Line 5:", "Device definition needs to end in ';'"),
     (12, "Line 4:", "Device name has to be followed by ':'"),
     (13, "Line 6:", "Valid Device name required"),
@@ -101,8 +103,10 @@ def test_parse_network(names, devices, network, monitors, file_list):
     (23, "Line 11:", "Missing '}'"),
     # Semantic errors (devices):
     (24, "Line 5:", "Device Name already used"),
-    (25, "Line 4:", "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"),
-    (26, "Line 7:", "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"),
+    (25, "Line 4:", ("Expected a parameter: 'initial',"
+                     "'inputs', 'sequence' or 'period'")),
+    (26, "Line 7:", ("Expected a parameter: 'initial',"
+                     "'inputs', 'sequence' or 'period'")),
     (27, "Line 4:", "Needs to be a positive integer"),
     (28, "Line 8:", "Valid device qualifier requried"),
     # Semantic errors (connections):
@@ -163,7 +167,7 @@ def test_error(names, devices, network, monitors, file_list, file, error_line,
                                            ["SET", "DATA", "CLK", "CLEAR"],
                                            ["clock1", "clock2", "clock3",
                                             "switch1"]),
-                                            # Additional test post-maintenance.
+                                          # Additional test post-maintenance.
                                           (8, "siggy", "SIGGEN", [], ["nand"])
                                         ])
 def test_devices_and_connections(names, devices, network, monitors, file_list,

@@ -121,7 +121,8 @@ class Scanner:
         #  Assign keywords an id using the "Names" module's "lookup" function.
         [self.DEVICES_ID, self.CONNECT_ID, self.MONITOR_ID,
          self.END_ID, self.initial_ID, self.period_ID,
-         self.inputs_ID, self.sequence_ID] = self.names.lookup(self.keywords_list)
+         self.inputs_ID, self.sequence_ID] = self.names.lookup(
+            self.keywords_list)
         self.current_character = self.file.read(1)
 
     def get_name(self):

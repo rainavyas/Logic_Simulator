@@ -96,7 +96,6 @@ class Parser:
     def parse_network(self):
         """Parse the circuit definition file."""
 
-
         # Get the first symbol from Scanner
         self.symbol = self.scanner.get_symbol()
 
@@ -153,7 +152,8 @@ class Parser:
             msg = "Needs to be a positive integer"
             option = False
         elif error_ID == self.NEED_QUALIFIER:
-            msg = "Expected a parameter: 'initial', 'inputs', 'sequence' or 'period'"
+            msg = ("Expected a parameter: 'initial',"
+                   "'inputs', 'sequence' or 'period'")
             option = False
         elif error_ID == self.NEED_PARAM:
             msg = "Comma has to followed by parameter specification"
@@ -466,9 +466,9 @@ class Parser:
                 if(self.symbol.type == self.scanner.COMMA):
                     self.symbol = self.scanner.get_symbol()
                     if(self.symbol.type == self.scanner.KEYWORD):
-                        if(self.symbol.id in [self.scanner.initial_ID, 
-                           self.scanner.inputs_ID, 
-                                self.scanner.period_ID, self.scanner.sequence_ID]):
+                        if(self.symbol.id in [self.scanner.initial_ID,
+                           self.scanner.inputs_ID,
+                           self.scanner.period_ID, self.scanner.sequence_ID]):
 
                             self.symbol = self.scanner.get_symbol()
 
@@ -476,14 +476,17 @@ class Parser:
                             device_property_list = []
 
                             if(self.symbol.type == self.scanner.NUMBER):
-                                number_val = int(self.names.get_name_string(self.symbol.id))
+                                number_val = int(
+                                    self.names.get_name_string(self.symbol.id))
                                 if device_kind == self.names.query("SIGGEN"):
                                     if (number_val == 0 or number_val == 1):
                                         device_property_list.append(number_val)
                                         self.symbol = self.scanner.get_symbol()
                                     else:
-                                        # Error: Siggen signal value has to be '0' or '1'
-                                        # Stop symbs:';','}','CONNECT','MONITOR', END
+                                        # Error: Siggen signal value has
+                                        # to be '0' or '1'.
+                                        # Stop symbs:';','}','CONNECT',
+                                        # 'MONITOR', END.
                                         self.error(
                                             self.SIGGEN_QUALIFIER, [
                                                 self.scanner.KEYWORD,
@@ -499,46 +502,68 @@ class Parser:
 
                                 # Extract sequence of numbers for SIGGEN
                                 while (self.symbol.type == self.scanner.COMMA):
-                                    if device_kind == self.names.query("SIGGEN"):
+                                    if device_kind == self.names.query(
+                                            "SIGGEN"):
                                         self.symbol = self.scanner.get_symbol()
-                                        if(self.symbol.type == self.scanner.NUMBER):
-                                            number_val = int(self.names.get_name_string(self.symbol.id))
-                                            if (number_val == 0 or number_val == 1):
-                                                device_property_list.append(number_val)
-                                                self.symbol = self.scanner.get_symbol()
+                                        if(self.symbol.type == (
+                                                self.scanner.NUMBER)):
+                                            number_val = int(
+                                                self.names.get_name_string(
+                                                    self.symbol.id))
+                                            if (number_val == 0 or (
+                                                    number_val == 1)):
+                                                device_property_list.append(
+                                                    number_val)
+                                                self.symbol = (
+                                                    self.scanner.get_symbol())
                                             else:
-                                                # Error: Signal value has to be '0' or '1'
-                                                # Stop symbs:';','}','CONNECT','MONITOR', END
+                                                # Error: Signal value has
+                                                # to be '0' or '1'.
+                                                # Stop symbs:';','}','CONNECT',
+                                                # 'MONITOR', END.
+                                                list1 = [
+                                                    self.scanner.KEYWORD,
+                                                    self.scanner.SEMICOLON,
+                                                    self.scanner.RIGHT_CURLY
+                                                ]
+                                                list2 = [
+                                                    self.scanner.CONNECT_ID,
+                                                    self.scanner.MONITOR_ID,
+                                                    self.scanner.END_ID
+                                                ]
                                                 self.error(
-                                                    self.SIGGEN_QUALIFIER, [
-                                                        self.scanner.KEYWORD,
-                                                        self.scanner.SEMICOLON,
-                                                        self.scanner.RIGHT_CURLY], [
-                                                        self.scanner.CONNECT_ID,
-                                                        self.scanner.MONITOR_ID,
-                                                        self.scanner.END_ID])
+                                                    self.SIGGEN_QUALIFIER,
+                                                    list1,
+                                                    list2)
                                         else:
                                             # Error: Needs to be an integer
-                                            # Stop symbs:';','}','CONNECT','MONITOR', END
+                                            # Stop symbs:';','}','CONNECT',
+                                            # 'MONITOR', END
+                                            list1 = [
+                                                self.scanner.KEYWORD,
+                                                self.scanner.SEMICOLON,
+                                                self.scanner.RIGHT_CURLY
+                                            ]
+                                            list2 = [
+                                                self.scanner.CONNECT_ID,
+                                                self.scanner.MONITOR_ID,
+                                                self.scanner.END_ID
+                                            ]
                                             self.error(
-                                                self.INTEGER, [
-                                                    self.scanner.KEYWORD,
-                                                    self.scanner.SEMICOLON,
-                                                    self.scanner.RIGHT_CURLY], [
-                                                    self.scanner.CONNECT_ID,
-                                                    self.scanner.MONITOR_ID,
-                                                    self.scanner.END_ID])
+                                                self.INTEGER, list1, list2)
                                     else:
-                                        # Error: Excess qualifiers for non-SIGGEN
-                                        # Stop symbs:';','}','CONNECT','MONITOR', END
-                                            self.error(
-                                                self.devices.EXCESS_QUALIFIER, [
-                                                    self.scanner.KEYWORD,
-                                                    self.scanner.SEMICOLON,
-                                                    self.scanner.RIGHT_CURLY], [
-                                                    self.scanner.CONNECT_ID,
-                                                    self.scanner.MONITOR_ID,
-                                                    self.scanner.END_ID])
+                                        # Error: Excess qualifiers
+                                        # for non-SIGGEN
+                                        # Stop symbs:';','}','CONNECT',
+                                        # 'MONITOR', END
+                                        self.error(
+                                            self.devices.EXCESS_QUALIFIER, [
+                                                self.scanner.KEYWORD,
+                                                self.scanner.SEMICOLON,
+                                                self.scanner.RIGHT_CURLY], [
+                                                self.scanner.CONNECT_ID,
+                                                self.scanner.MONITOR_ID,
+                                                self.scanner.END_ID])
                             else:
                                 # Error: Needs to be an integer
                                 # Stop symbs:';','}','CONNECT','MONITOR', END
@@ -551,7 +576,8 @@ class Parser:
                                         self.scanner.MONITOR_ID,
                                         self.scanner.END_ID])
                         else:
-                            # Error: Parameter: 'initial', inputs, period, sequence
+                            # Error: Parameter: 'initial',
+                            # inputs, period, sequence.
                             # Stopping symbols: ';' , '}','CONNECT', 'MONITOR'
                             # or 'END' KEYWORD '
                             self.error(self.NEED_QUALIFIER,

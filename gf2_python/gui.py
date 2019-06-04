@@ -206,10 +206,12 @@ class MyGLCanvas(wxcanvas.GLCanvas):
             size = self.GetClientSize()
             intended_move_x = (self.pan_x + event.GetX() - self.last_mouse_x)
             intended_move_y = (self.pan_y - event.GetY() + self.last_mouse_y)
-            if intended_move_x < 0 and intended_move_x > min(0, size.width-self.max_x*self.zoom):
+            if intended_move_x < 0 and intended_move_x > min(
+                    0, size.width-self.max_x*self.zoom):
                 self.pan_x += event.GetX() - self.last_mouse_x
                 self.last_mouse_x = event.GetX()
-            if intended_move_y < 0 and intended_move_y > min(0, size.height-self.max_y*self.zoom):
+            if intended_move_y < 0 and intended_move_y > min(
+                    0, size.height-self.max_y*self.zoom):
                 self.pan_y -= event.GetY() - self.last_mouse_y
                 self.last_mouse_y = event.GetY()
             if intended_move_x > 0:
@@ -501,7 +503,6 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
             self.init_gl()
             self.init = True
 
-        size = self.GetClientSize()
         text = ""
         self.render(text)
 
@@ -650,7 +651,8 @@ class Gui(wx.Frame):
         self.file_picker = (
             wx.FilePickerCtrl(self.top_panel, message=_('Select Source File'),
                               wildcard='Text Files (*.txt)|*.txt'))
-        self.text_cycles = wx.StaticText(self.main_panel, wx.ID_ANY, _("Cycles:"))
+        self.text_cycles = wx.StaticText(
+            self.main_panel, wx.ID_ANY, _("Cycles:"))
         self.text_mps = wx.StaticText(self.main_panel, wx.ID_ANY,
                                       _("Monitor Points"))
         self.spin = wx.SpinCtrl(self.main_panel, wx.ID_ANY, "10", min=1)
@@ -844,7 +846,8 @@ class Gui(wx.Frame):
             self.canvas.render(text)
             self.number_of_mps += 1
             self.all_mp_names.append(mp_name)
-            new_button = wx.Button(self.mp_panel, label=_('Remove'), name=mp_name)
+            new_button = wx.Button(
+                self.mp_panel, label=_('Remove'), name=mp_name)
             new_sizer = wx.BoxSizer(wx.HORIZONTAL)
             new_sizer.Add(wx.StaticText(self.mp_panel, wx.ID_ANY, mp_name),
                           1, wx.ALIGN_CENTRE)
@@ -956,7 +959,8 @@ class Gui(wx.Frame):
                     device, port, self.cycles_completed)
                 self.number_of_mps += 1
                 self.all_mp_names.append(i)
-                new_button = wx.Button(self.mp_panel, label=_('Remove'), name=i)
+                new_button = wx.Button(
+                    self.mp_panel, label=_('Remove'), name=i)
                 new_sizer = wx.BoxSizer(wx.HORIZONTAL)
                 new_sizer.Add(wx.StaticText(self.mp_panel, wx.ID_ANY, i),
                               1, wx.ALIGN_CENTRE)

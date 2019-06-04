@@ -26,6 +26,7 @@ from parse import Parser
 from userint import UserInterface
 from gui import Gui
 
+
 def main(arg_list):
     """Parse the command line options and arguments specified in arg_list.
 
@@ -74,19 +75,19 @@ def main(arg_list):
             scanner = Scanner(path, names)
             parser = Parser(names, devices, network, monitors, scanner)
             if parser.parse_network():
-               app = wx.App()
+                app = wx.App()
 
-               # Internationalisation
-               builtins._ = wx.GetTranslation
-               locale = wx.Locale()
-               locale.Init(wx.LANGUAGE_DEFAULT)
-               locale.AddCatalogLookupPathPrefix('./locale')
-               locale.AddCatalog('logicsimapp')
-               
-               gui = Gui("Logic Simulator", names, devices, network,
-                         monitors, os.path.abspath(path), scanner, parser)
-               gui.Show(True)
-               app.MainLoop()
+                # Internationalisation
+                builtins._ = wx.GetTranslation
+                locale = wx.Locale()
+                locale.Init(wx.LANGUAGE_DEFAULT)
+                locale.AddCatalogLookupPathPrefix('./locale')
+                locale.AddCatalog('logicsimapp')
+
+                gui = Gui("Logic Simulator", names, devices, network,
+                          monitors, os.path.abspath(path), scanner, parser)
+                gui.Show(True)
+                app.MainLoop()
 
         if len(arguments) == 0:
             app = wx.App()
@@ -97,7 +98,7 @@ def main(arg_list):
             locale.Init(wx.LANGUAGE_DEFAULT)
             locale.AddCatalogLookupPathPrefix('./locale')
             locale.AddCatalog('logicsimapp')
-            
+
             gui = Gui("Logic Simulator", names, devices, network, monitors)
             gui.Show(True)
             app.MainLoop()

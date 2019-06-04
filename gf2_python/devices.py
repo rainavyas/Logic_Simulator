@@ -88,7 +88,7 @@ class Devices:
     make_clock(self, device_id, clock_half_period): Makes a clock device with
                                                     the specified half period.
 
-    make_siggen(self, device_id, signal): Make a signal generator device with 
+    make_siggen(self, device_id, signal): Make a signal generator device with
                                           the specified signal.
 
     make_gate(self, device_id, device_kind, no_of_inputs): Makes logic gates
@@ -116,7 +116,8 @@ class Devices:
 
         [self.NO_ERROR, self.INVALID_QUALIFIER, self.NO_QUALIFIER,
          self.BAD_DEVICE, self.QUALIFIER_PRESENT,
-         self.DEVICE_PRESENT, self.EXCESS_QUALIFIER] = self.names.unique_error_codes(7)
+         self.DEVICE_PRESENT,
+         self.EXCESS_QUALIFIER] = self.names.unique_error_codes(7)
 
         self.signal_types = [self.LOW, self.HIGH, self.RISING,
                              self.FALLING, self.BLANK] = range(5)
@@ -130,7 +131,6 @@ class Devices:
             self.Q_ID, self.QBAR_ID] = self.names.lookup(dtype_outputs)
 
         self.max_gate_inputs = 16
-
 
     def get_device(self, device_id):
         """Return the Device object corresponding to device_id."""
@@ -247,7 +247,6 @@ class Devices:
         device.clock_half_period = clock_half_period
         self.cold_startup()  # clock initialised to a random point in its cycle
 
-    
     def make_siggen(self, device_id, signal):
         """Make a signal generator device with the specified signal.
 
@@ -263,7 +262,7 @@ class Devices:
         device.siggen_counter = 0
 
         self.add_output(device.device_id, output_id=None,
-                                signal=siggen_start_signal)
+                        signal=siggen_start_signal)
         # Set the clock counter
         device.clock_counter = random.randrange(device.clock_half_period)
 
@@ -306,7 +305,7 @@ class Devices:
 
     def make_device(self, device_id, device_kind, device_property=None):
         """Create the specified device.
-        
+
         Return self.NO_ERROR if successful. Return corresponding error if not.
         """
         # Device has already been added to the devices_list
@@ -338,14 +337,14 @@ class Devices:
                     error_type = self.NO_ERROR
             else:
                 error_type = self.EXCESS_QUALIFIER
-        
+
         elif device_kind == self.SIGGEN:
             # Device property is a list of binary signal values
             if device_property is None:
                 error_type = self.NO_QUALIFIER
             elif not (set(device_property) <= set([self.LOW, self.HIGH])):
                 # Qualifier is not '0' or '1' as requried
-                
+
                 error_type = self.INVALID_QUALIFIER
             else:
                 self.make_siggen(device_id, device_property)
@@ -363,14 +362,15 @@ class Devices:
                 if device_property is None:
                     error_type = self.NO_QUALIFIER
                 elif len(device_property) == 1:
-                    if device_property[0] not in range(1, 17):  # between 1 and 16
+                    # between 1 and 16
+                    if device_property[0] not in range(1, 17):
                         error_type = self.INVALID_QUALIFIER
                     else:
-                        self.make_gate(device_id, device_kind, device_property[0])
+                        self.make_gate(
+                            device_id, device_kind, device_property[0])
                         error_type = self.NO_ERROR
                 else:
                     error_type = self.EXCESS_QUALIFIER
-
 
         elif device_kind == self.D_TYPE:
             if device_property is not None:
@@ -381,6 +381,5 @@ class Devices:
 
         else:
             error_type = self.BAD_DEVICE
-        
 
         return error_type

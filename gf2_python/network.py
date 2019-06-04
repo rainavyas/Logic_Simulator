@@ -53,13 +53,13 @@ class Network:
 
     execute_clock(self, device_id): Simulates a clock and updates its output
                                     signal value.
-    
+
     execute_siggen(self, device_id): Simulates a signal generator and updates
                                      its output signal value.
 
     update_clocks(self): If it is time to do so, sets clock signals to RISING
                          or FALLING.
-    
+
     update_siggens(self): If it is time to do so, set signal generator signals
                           to RISING or FALLING.
 
@@ -335,7 +335,7 @@ class Network:
 
         else:
             return False
-    
+
     def execute_siggen(self, device_id):
         """Simulate a signal generator and update its output signal value.
 
@@ -379,9 +379,11 @@ class Network:
                 elif output_signal == self.devices.LOW:
                     device.outputs[None] = self.devices.RISING
             device.clock_counter += 1
-    
+
     def update_siggens(self):
-        """If it is time to do so, set signal generator signals to RISING or FALLING."""
+        """If it is time to do so, set signal generator signals to RISING
+           or FALLING.
+           """
         siggen_devices = self.devices.find_devices(self.devices.SIGGEN)
         for device_id in siggen_devices:
             device = self.devices.get_device(device_id)
@@ -389,13 +391,13 @@ class Network:
                 device.clock_counter = 0
                 output_signal = self.get_output_signal(device_id,
                                                        output_id=None)
-                                            
+
                 # Update position in siggen signal sequence
                 device.siggen_counter += 1
                 if device.siggen_counter == len(device.siggen_signal):
                     # Reached end of sequence
                     device.siggen_counter = 0
-               
+
                 next_signal = device.siggen_signal[device.siggen_counter]
 
                 if output_signal != next_signal:
@@ -424,7 +426,7 @@ class Network:
         # This sets clock signals to RISING or FALLING, where necessary
         self.update_clocks()
 
-        #This sets siggen signals to RISING or FALLING, where necessary
+        # This sets siggen signals to RISING or FALLING, where necessary
         self.update_siggens()
 
         # Number of iterations to wait for the signals to settle before

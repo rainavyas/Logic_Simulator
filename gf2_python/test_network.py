@@ -269,8 +269,8 @@ def test_execute_non_gates(new_network):
     HIGH = devices.HIGH
 
     # Make different devices
-    [SW2_ID, SW3_ID, CL_ID, D_ID, SGG_ID] = names.lookup(["Sw2", "Sw3",
-                                                          "Clock1", "D1", "SGG"])
+    [SW2_ID, SW3_ID, CL_ID, D_ID, SGG_ID] = names.lookup(
+        ["Sw2", "Sw3", "Clock1", "D1", "SGG"])
     devices.make_device(SW2_ID, devices.SWITCH, [0])
     devices.make_device(SW3_ID, devices.SWITCH, [0])
     devices.make_device(CL_ID, devices.CLOCK, [1])

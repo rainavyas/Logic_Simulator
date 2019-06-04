@@ -6,6 +6,7 @@ or adjust the network properties.
 Classes:
 --------
 MyGLCanvas - handles all canvas drawing operations.
+My3DGLCanvas - handles all 3D canvas drawing operations.
 Gui - configures the main window and all the widgets.
 """
 import wx
@@ -289,6 +290,10 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
 
     render_text(self, text, x_pos, y_pos, z_pos): Handles text drawing
                                                   operations.
+
+    reset(self): Resets the viewframe to original position
+
+    clear(self): Clears the canvas and resets position
     """
 
     def __init__(self, parent):
@@ -601,10 +606,42 @@ class Gui(wx.Frame):
     on_spin(self, event): Event handler for when the user changes the spin
                            control value.
 
+    run_network(self, cycles): Run the network for the specified number of
+                               simulation cycles.
+
     on_run_button(self, event): Event handler for when the user clicks the run
                                 button.
 
-    on_text_box(self, event): Event handler for when the user enters text.
+    on_reset_button(self, event): Handle the event when the user clicks the
+                                  position reset button.
+
+    on_continue_button(self, event): Handle the event when the user clicks
+                                     the continue button.
+
+    on_exit_button(self, event): Handle the event when the user clicks the
+                                 exit button.
+
+    onAddMP(self, event): Handle the event when the user clicks the Add button.
+
+    onRemoveMP(self, event): Handle the event when the user clicks the
+                             remove button.
+
+    onToggleButton(self, event): Handle the event when the user clicks a
+                                 switch's toggle button.
+
+    checkFile(self, event): Check file selected is successfully parsed.
+
+    loadNetwork(self): Loads switches and monitoring points from file into GUI.
+
+    clearNetwork(self): Clears the switches and monitoring points from the GUI.
+
+    displaySyntaxErrors(self): Displays message dialog containing nature
+                               of syntax error.
+
+    displayError(self, text): Displays message dialog containing nature
+                              of runtime error.
+
+    switchCanvas(self, event): Switches the OpenGL from 2D to 3D or vice-versa.
     """
 
     def __init__(self, title, names, devices, network,
@@ -794,7 +831,7 @@ class Gui(wx.Frame):
                     self.cycles_completed += cycles
 
     def on_reset_button(self, event):
-        """Handle the event when the user clicks the position rest button."""
+        """Handle the event when the user clicks the position reset button."""
         self.canvas.reset()
         text = _("Position reset.")
         self.canvas.render(text)
@@ -821,7 +858,7 @@ class Gui(wx.Frame):
         self.Close()
 
     def onAddMP(self, event):
-        """Handle the event when the user clicks the Add button"""
+        """Handle the event when the user clicks the Add button."""
         # Finds selected monitor points and adds to monitor object
         index = self.mp_names.GetSelection()
         mp_name = self.mp_names.GetString(index)
@@ -857,7 +894,7 @@ class Gui(wx.Frame):
             self.Layout()
 
     def onRemoveMP(self, event):
-        """Handle the event when the user clicks the remove button"""
+        """Handle the event when the user clicks the remove button."""
         # Finds selected monitor points and removes from monitor object
         mp_name = event.GetEventObject().GetName()
         mp = mp_name.split('.')
@@ -883,7 +920,7 @@ class Gui(wx.Frame):
         del self.all_mp_names[index]
 
     def onToggleButton(self, event):
-        """Handle the event when the user clicks a switch's toggle button"""
+        """Handle the event when the user clicks a switch's toggle button."""
         button = event.GetEventObject()
         switch_id = self.names.query(button.GetName())
         if button.GetValue():
@@ -902,7 +939,7 @@ class Gui(wx.Frame):
             self.canvas.render(text)
 
     def checkFile(self, event):
-        """Check file selected by filepickerctrl is successfully parsed
+        """Check file selected is successfully parsed.
 
         If succesful, load network. If unsuccessful, display error message.
         """
@@ -928,7 +965,7 @@ class Gui(wx.Frame):
             self.top_panel.SetBackgroundColour(wx.Colour(255, 130, 130))
 
     def loadNetwork(self):
-        """Loads switches and monitoring points from file into GUI"""
+        """Loads switches and monitoring points from file into GUI."""
         # Find list of monitored and unmonitored signals
         signal_list = self.monitors.get_signal_names()
         monitored_signal_list = signal_list[0]
@@ -1018,7 +1055,7 @@ class Gui(wx.Frame):
         self.loaded_network = True
 
     def clearNetwork(self):
-        """Clears the switches and monitoring points from the GUI"""
+        """Clears the switches and monitoring points from the GUI."""
         # Clear monitored points from GUI
         for i in range(len(self.all_mp_names)-1, -1, -1):
             name = self.all_mp_names[i]
@@ -1048,7 +1085,7 @@ class Gui(wx.Frame):
         self.loaded_network = False
 
     def displaySyntaxErrors(self):
-        """Displays message dialog containing nature of syntax error"""
+        """Displays message dialog containing nature of syntax error."""
         # Create message dialog
         error_message = wx.MessageDialog(
             self, '',
@@ -1079,7 +1116,7 @@ class Gui(wx.Frame):
         self.file_picker.SetPath('')
 
     def displayError(self, text):
-        """Displays message dialog containing nature of runtime error"""
+        """Displays message dialog containing nature of runtime error."""
         # Create message dialog with error string
         error_message = wx.MessageDialog(
             self, text, caption=_('RUNTIME ERROR'),
@@ -1088,7 +1125,9 @@ class Gui(wx.Frame):
         error_message.Destroy()
 
     def switchCanvas(self, event):
+        """Switches the OpenGL from 2D to 3D or vice-versa."""
         button = event.GetEventObject()
+        # Destroy 3D canvas and replace with 2D canvas
         if button.GetLabel() == _('Switch to 2D Traces'):
             self.main_sizer.Hide(0)
             self.main_sizer.Remove(0)
@@ -1096,6 +1135,7 @@ class Gui(wx.Frame):
             self.main_sizer.Insert(0, self.canvas, 5, wx.EXPAND | wx.ALL, 5)
             button.SetLabel(_('Switch to 3D Traces'))
             self.Layout()
+        # Destroy 2D canvas and replace with 3D canvas
         else:
             self.main_sizer.Hide(0)
             self.main_sizer.Remove(0)

@@ -1,0 +1,157 @@
+\documentclass{article}					%Define the document type (book, report, article, etc.)
+\usepackage{geometry}
+\geometry{a4paper}
+\usepackage[style=numeric,backend=bibtex]{biblatex}
+\usepackage[utf8]{inputenc}
+\usepackage{mdframed}					%These are a few packages we need for extra formatting.
+\usepackage{graphicx}					%I've included some helpful packages, but you can add more as needed.
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{subcaption}
+\usepackage{bm}
+\usepackage{minted}
+\usepackage[titletoc, title]{appendix}
+\addbibresource{bibliography.bib}
+\begin{document}						%Start the document. Everything before this is formatting.
+
+%%%%%%%%%%%%%%%% I've started your lab report with a title page for you to fill in %%%%%%%%%%%%%%%%
+
+\begin{titlepage} 						%Start of title page.
+\centering								%Horizontally centre the page.
+
+\vspace*{\fill}							%Vertically centre the page (vspace = vertical space)
+										%(fill the page above the title with blank space)
+
+\huge{CAMBRIDGE UNIVERSITY ENGINEERING DEPARTMENT}\\		%Your title goes here in huge text.
+\vspace{1 cm}
+
+\LARGE{Part IIA - GF2 Software}\\
+\LARGE{FINAL REPORT}
+\vspace{1.5 cm}
+
+\begin{mdframed}						%This is just a space that will appear framed by a box.
+\centering
+\LARGE{Logic Simulator}
+\end{mdframed}
+
+\vspace{0.25 cm}
+
+\begin{center}
+\includegraphics{cambridge}
+\end{center}
+
+\vspace{0.5 cm}
+
+\begin{flushleft}
+\large{Name: Jonty Page\\				%Name, group, college, and date of experiment.
+College: Pembroke\\
+Date: 04/06/2019\\}
+
+\vspace{1.5 cm}
+\underline{Abstract}\\					%Here you can summarise your report to make it easy for your marker.
+A client has contracted a software development company to create a logic simulation program. This program should be able to pass, simulate and display the output of logic circuits and meet a detailed set of requirements given by the client. The program is divided into eight functional modules, four of which are the responsibility of the sub-team to develop, integrate and test. After three weeks of development, a change to the specification was introduced by the client which also have to be implemented by the sub-team. Overall, an out-of-the-box solution was developed which met all of the clients requirements, was easy and intuitive to use and robust to errors in execution and input.
+
+\vspace*{\fill}
+
+\end{flushleft}
+\end{titlepage}							%End of the title page.
+
+%%%%%%%%%%%%%%%% Now you can start your report %%%%%%%%%%%%%%%%
+\section{Introduction}
+A software company was contracted by a client to produce a logic simulation program to enable the operation of both combinatorial and clocked logic circuits to be studied by a computer prior to their implementation in hardware. The client provided a detailed specifications document listing the requirements of the software and this can be found in appendix A of the CUED GF2 project main handout \cite{gee_agboola_2018}. The general function of the software should be:
+\begin{enumerate}
+	\item The program reads in a text file (“.txt”)  which fully defines the logic elements, the connections between them, the generators for inputs and the signals to be monitored.
+	\item The user is then able to control the initial state of switches, add/remove points which are monitored and set the number of clock cycles for which the simulation should be run at will.
+	\item The network is executed and the output at each user-defined monitoring point is displayed.
+\end{enumerate}
+There are two methods in which the user can interact with the software, either through a command-line user interface (UI) (which was already fully developed and functional) or through a graphical user interface (GUI) (which was the responsibility of the sub-team to develop). In initial implementation, six logic elements and two generators (a clock and a switch) were to be supported. The circuit should be read into the software through a circuit definition file written in a logic description language created by the developers. The logic description language was to be described formally by EBNF notation and adhere to the specifications laid out in part A3 and A6 of the client requirements document. The GUI was to have the same functionality as the UI and full error-checking was to be applied to user command inputs in-order to maintain robustness. Finally, there was to be no limit to the size of the circuit, number of monitoring points or devices except that implied by the memory of the computer.
+\section{Software Structure}
+\subsection{Overview}
+The software is split into eight functional modules, four of which were already developed and four of which were developed by the sub-team. These modules are described in Table 1 below:
+\begin{table}[h]
+\begin{centering}
+\begin{tabular}{l|l}
+Module Name & Description                                                                    \\ \hline
+Names       & Maps variable names and string names to unique integers                        \\
+Scanner     & Translates sequence of characters in definition file into sequence of symbols. \\
+Parse       & Analyses syntactic and semantic correctness of scanned definition file.        \\
+Devices*    & Contains routines for creating, configuring and querying devices.              \\
+Network*    & Manages connections between devices and execution of the logic circuit.        \\
+Monitors*   & Records signal levels at designated monitor points for each simulation cycle.  \\
+Userint*    & Handles the text-based user interface.                                         \\
+Gui         & Handles the graphical user interface
+\end{tabular}
+\caption{Overview of eight functional modules within the Logic Simulator software. \textit{*indicates modules already fully developed.}}
+\end{centering}
+\end{table}
+
+A more detailed description of the functionality of each module is described in the subsequent sub sections. These modules are wrapped togther using a top level python program \textit{logsim.py} which is the program which should be run to start the software. Also, a ninth module was added by the development team, \textit{errors.py}, in order to manage error reporting through an object which is populated when an error occurs.
+
+The general workflow of the backend of the software is first four objects are created - Names, Devices, Network, Monitors. These objects store the circuit variables and contain all the information required to obtain the output signal for each defined monitoring point required by the GUI. The circuit definition file selected is then ran through the Scanner, which populates the Names object with unique IDs for each variable/string names. This Scanner object is then ran through the parser, alongside the Names, Devices, Network and Monitors objects, the file is checked for sytactic and semantic errors and if none arise, the circuit variables are loaded into each of the four objects as required. When the GUI or UI is asked to execute the circuit, or modify one of the circuit variables such as the state of a switch or the monitor points set, the interfaces make calls to each of the objects and communicate with the variables as needed. The figure below (Figure 1) shows graphically communications between each module required to run the software.
+
+\begin{figure}[h!]
+\begin{centering}
+\includegraphics[scale=0.5]{{"dependencies_graph"}.JPG}
+\caption{Graph showing the layout of modules in the Logic Simulator}
+\end{centering}
+\end{figure}
+
+\subsection{logsim.py}
+This is the top-file for the Logic Simulator. It parses the options and arguments specified by the user on the command line and runs the graphical user interface (GUI) or command-line interface accordingly. The user will run a command of the form \textit{python logsim.py [-c] [path\_to\_def\_file]} to start the program. The \textit{[-c]} flag indicates that the following definition file should be loaded and the command-line interface run. If the user does not use the \textit{[-c]} flag then this indicates that they wish to run the GUI and in this case, the path to a suitable definition file is an optional argument. If a file is given, then it will be parsed and if it is without error, the GUI will be pre-loaded with the contents of the definition file accordingly. If there is no file path argument given, then the GUI will be run without a file pre-loaded and the user is able to select a definition file from the interface.
+
+\subsection{gui.py}
+This module contains the the entire contents of the graphical user interface (GUI) object which is shown by logsim.py. The module consists of three classes: Gui, MyGLCanvas and My3DGLCanvas. The latter two classes handle the set-up and drawing operations in 2D and 3D respectively. The signals are drawn onto a canvas using PyOpenGL. The Gui class details the entire set up of the GUI and all event handlers in order to serve user inputs to the interface. The GUI is implemented in wxpython and enables the user to interact with the circuit.
+
+\subsection{userint.py}
+This module contains the code required to run the command-line interface. It has the exact same functionality as the GUI however the user interacts with the circuit through text inputs into the terminal. The commands allow the user to run or continue the simulation for a number of cycles, set switches, add or zap monitors, show help, or quit the program. The output signals are displayed as ASCII Art graphs in the terminal window.
+
+\subsection{scanner.py}
+Scanner reads the characters in the definition file and translates them into symbols that are usable by the parser. This populates the Names object which is passed as an argument upon creation of the scanner. It contains various methods to interact with the definition file which are later used when the Parser object is created and creates an Errors object with blank parameters to be stored within the Scanner object and accessed by the UI.
+
+\subsection{parse.py}
+This module analyses the syntactic and semantic correctness of the symbols received from the scanner and then builds the logic network by populating the objects monitors, network and devices and returning true. If the definition file is not successfully parsed then the syntactic and semantic errors are loaded into the Errors object to be displayed to the user and the parser returns false.
+
+\subsection{names.py}
+This module contains the class Names which maps variable names and string names to unique integers. It also contains a number of methods to query name strings, lookup unique ids and add new strings/variables.
+
+\subsection{monitors.py}
+This module contains functions for recording and displaying the signal state of outputs specified by their device and port IDs. This is populated by the parsing of the network and the gui and userint interact with it in order to find the signals they are to display/add and remove monitor points.
+
+\subsection{devices.py}
+The class Device stores the device properties for each device in the networks. Device properties include but are not limited to id, type, inputs, outputs, period, etc. The class Devices contains many functions for making devices and ports. It stores all the devices in a list which can be queried and device properties extracted.
+
+\subsection{network.py}
+The class Network contains many functions required for connecting devices together in the network, getting information about connections, and executing all the devices in the network. The GUI and command-line interface interact with this object when the user wishes to execute the network. All variables in the network update simulating the network undergoing a single clock cycle.
+
+\subsection{errors.py}
+An error object is initialised bby the Scanner with blank parameters but each is reassigned in the scanner and/or parser. They are populated at various points in the simulation, either by the parser in the case of syntactic/semantic errors, or by the network in the case of run-time errors. They can then be recalled by the GUI when attempting to display helpful error messages to the user.
+
+\section{Approach and Teamwork}
+
+\section{Software Development}
+\subsection{The GUI}
+\subsubsection{Layout}
+\subsubsection{File Selector Control}
+\subsubsection{Monitor Point and Switch Set-up}
+\subsubsection{Control Buttons}
+\subsubsection{OpenGL Canvas}
+\subsubsection{Miscellaneous}
+
+\subsection{Maintenance}
+\subsection{Overview}
+\subsubsection{Feedback after Initial Testing Round}
+\subsubsection{Internationalization}
+
+\section{Testing Procedures}
+
+\section{Conclusions and Improvements}
+
+\newpage
+\begin{appendices}
+\section{Example Circuit Definition Files, Diagrams and Results}
+\section{EBNF Descripton of the Logic Description Language}
+\section{Software User Guide}
+\section{Brief Description of File Contents}
+\end{appendices}
+\printbibliography
+\end{document}							%End of the document.

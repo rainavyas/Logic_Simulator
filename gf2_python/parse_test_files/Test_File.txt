@@ -6,9 +6,10 @@ clock2: CLOCK, period 10;
 clock3: CLOCK, period 10;
 switch1: SWITCH, initial 0;
 switch2: SWITCH, initial 1;
-nand: NAND, inputs 2;
+nand: NAND, inputs 3;
 xor: XOR;
 dtype: DTYPE;
+siggy: SIGGEN, sequence 0, 1, 0;
 }
 
 
@@ -24,6 +25,7 @@ dtype.Q = nand.I1;
 switch2 = nand.I2;
 nand = xor.I1;
 switch2 = xor.I2;
+siggy = nand.I3;
 }
 
 MONITOR{
@@ -33,6 +35,7 @@ switch1;
 xor;
 dtype.QBAR;
 dtype.Q;
+siggy;
 }
 
 # End the definition file.

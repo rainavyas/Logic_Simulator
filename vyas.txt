@@ -1,3 +1,261 @@
+commit ee87e5c3a1df834294e2d377a7461f2ac5c08126
+Merge: 3cb3152 77ce408
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 17:49:41 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 3cb3152b845d4530c775e047773e421c1ea2bd17
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 17:49:16 2019 +0100
+
+    Added new pytest for testing SIGGEN outputs are updated correctly
+
+commit 397c959040ad17b2a6db40f71af5878049f3dace
+Merge: 145cae6 0402e73
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 15:05:57 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 145cae61c7948b327fda34a925cd7e3d201235e3
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 15:05:02 2019 +0100
+
+    Top down modular design pic added
+
+commit ce3733eb606bdcbb7956f3261aa5a4dab874f2da
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 11:26:28 2019 +0100
+
+    Corrected syntax error in test file 2
+
+commit 047e8539bdb9e637dd7f2968d725726a9ba8e59b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 11:21:45 2019 +0100
+
+    Updated test2 circuit to match definition file with SIGGEN
+
+commit a9ac69baeb2640ba0349bcff7e222c80e20464d3
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 11:09:43 2019 +0100
+
+    Updated test file 2 syntax to include signal generator
+
+commit be6418279e7b760b26da02dbf2aa4efbbe8efa55
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 10:41:19 2019 +0100
+
+    Updated parser commenting to make it more useful
+
+commit 7a2d651f47ddd0b8dbce7a393e2ec27dc9f0d9ac
+Merge: 12891b7 f8b89d5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 10:20:36 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 12891b78f542982000374df7d7d8500b5ea9d987
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 10:18:31 2019 +0100
+
+    Added new test for SIGGEN data type
+
+commit c327e8c07ba305778ac076f57a101ae956b87804
+Merge: 2482a0f 0365398
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 09:31:02 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 2482a0f9cacc5bc37848428cfa0f17ef387bb43c
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 09:30:28 2019 +0100
+
+    Updated tests to comply with new make_device
+
+commit 74e926f435d9a07d0c1c52bbae8931275fd5b986
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 09:29:49 2019 +0100
+
+    Added check for invalid qualifiers
+
+commit f3155f95c461c1abd08a8315383860db26f635be
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 09:07:12 2019 +0100
+
+    Old system tests updated to comply with structure change in make_device method of devices module
+
+commit ba148b793cbe3c2c2ca95715acb5d3d397b004e5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Tue Jun 4 09:00:44 2019 +0100
+
+    Updated existing tests to deal with lst structure in devices make device method
+
+commit ddd1fda36375a4fdc73bee35538f2c7a9bb8b8a0
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 18:20:50 2019 +0100
+
+    Updated network pytests to deal with device_property lst struct in make_devices
+
+commit e36a2342b1bf68fc8006230338652b045cc1926d
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 18:17:05 2019 +0100
+
+    Updated monitors pytests to deal with device_property lst struct in make_device method
+
+commit c413f02ec39ef486ffbe3a6dd1f275e8db7ed72b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 18:13:47 2019 +0100
+
+    Updated devices pytests to comply with new list structure of device_property in make_device method
+
+commit 6561c65a07383d3f4ccb59cdb9173eca3fbc586e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 18:06:29 2019 +0100
+
+    Test swapped keyword effects
+
+commit ac7b294ea92b3e815845924bd074a25b87e63189
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 18:06:02 2019 +0100
+
+    Updated error msgs to be more specific
+
+commit 71e479d2444ca00b882018fcc48d7a5107f1e3fc
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 17:34:28 2019 +0100
+
+    Updated test file to test for invalid first sequence val SIGGEN
+
+commit 86596d5e4fb13f7838c436d6757b78265f12edc0
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 17:34:05 2019 +0100
+
+    Updated SIGGEN syntax check to ensure only 0 or 1 input for sequence
+
+commit 03a18e84315242e1a3a40e0cca722f2016899800
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 17:13:34 2019 +0100
+
+    Test file with qualifier error
+
+commit bcd169f5d1dc911c289555d363aeb30b56bc4f0e
+Merge: 59f8ea5 80774bb
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 17:09:46 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 59f8ea5240e4ec634d459108c724c3761dee10b5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 17:09:23 2019 +0100
+
+    Added calls to scanner, names, monitors, network to reset if failed
+
+commit 50a1e943b0ebdab090f43c793266bd8b0435a20b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 16:29:23 2019 +0100
+
+    Formatted EBNF
+
+commit d77ab14e9f6c415ead2f41661b1de8af9b2d2293
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 15:48:52 2019 +0100
+
+    Added docstrings for new SIGGEN methods
+
+commit 66f80a4b31af5cce6bc962d6f591aa85ab62dcf2
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 15:39:43 2019 +0100
+
+    Removed redundant calls to other modules and test print statements
+
+commit ca41378b7aa1888c13b0e789bfe2e325c123bb09
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 15:37:11 2019 +0100
+
+    Removed rough testing code
+
+commit 369896ba321798c15e00ad704a7ab406f13b24ff
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 15:36:04 2019 +0100
+
+    Added docstrings for new SIGGEN methods
+
+commit 73bf9aa7c781723dc4157f6b94be4c6b10f280fd
+Merge: 1261c6b d6919fe
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 15:19:05 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit 1261c6b66452af43fb6db1b8d997e0327fed7b60
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Mon Jun 3 15:18:46 2019 +0100
+
+    Corrected definition of SIGGEN in device type list
+
+commit 62a0d04c49b29bda8d0f71124d34b07075a13c08
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 12:50:57 2019 +0100
+
+    Edited test file to test valid Siggen sequence
+
+commit f34d0eac3202f3c63a624c621be53ff187505b0e
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 12:50:32 2019 +0100
+
+    Updated syntax check for SIGGEN sequence
+
+commit 872188df6275bb694f3efe2d7bf06935360153f2
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 12:50:05 2019 +0100
+
+    Added connectionccheck for SIGGEN
+
+commit a8373d4dc52031953d87000bf21f895eb73d7325
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 12:49:43 2019 +0100
+
+    Added method for making SIGGEN
+
+commit af6d5a064830f12a0f93ad2071aaecb19879ebca
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 10:39:02 2019 +0100
+
+    Created new error type for invalid number of qualifiers
+
+commit 10e7964fba9801df4b03328d6049b168ab244cc5
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 10:38:22 2019 +0100
+
+    Refactored to check for new SIGGEN syntax
+
+commit beca3cd7d71c95014eac3d74a72e785c3a3c2ba1
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 10:37:58 2019 +0100
+
+    Test file for siggen functionality
+
+commit 0b204b9ec867bdbd00b7a8c8597a4c79240fa192
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 09:47:17 2019 +0100
+
+    Updated scanner to look for sequence keyword and SIGGEN type
+
+commit 5895a8aacbf2b57d733c8ea3bd4723b2f8812d63
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Sun Jun 2 09:44:11 2019 +0100
+
+    Updated EBNF for SIGGEN
+
+commit dc6a081c866ae58b557d2955e80bf309a656f83b
+Author: rainavyas <sayvaniar@gmail.com>
+Date:   Fri May 31 02:23:41 2019 +0100
+
+    Added second interim report contents
+
 commit 91c6fed8a6c3386be71455eb4309402bd07316b7
 Author: rainavyas <sayvaniar@gmail.com>
 Date:   Thu May 30 14:31:21 2019 +0100

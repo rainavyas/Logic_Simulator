@@ -1,3 +1,101 @@
+commit 1fa30a5a53bd9d1165a08299ef08827358829d58
+Author: jontypage <jontypage@gmail.com>
+Date:   Wed Jun 5 16:40:06 2019 +0100
+
+    Removing pygettext.py
+
+commit 43d064bc124a33062d5b487ef4f833ca188a6153
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue Jun 4 16:27:32 2019 +0100
+
+    Removing redundant files
+
+commit c821fa9faa43be222e0f5c8d6ffccd18df25e7fc
+Merge: a6b6c10 397c959
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue Jun 4 16:26:24 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit a6b6c10498205f1a23fecaa5e3f21709599c6017
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue Jun 4 16:26:12 2019 +0100
+
+    Removing pycache for the 100000000 time
+
+commit a548705e2559c3e1d3e6810e7e1d5c38d191b7c2
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue Jun 4 16:25:53 2019 +0100
+
+    Language and everything
+
+commit 0402e73a3d90049302db851176509fa31f22464c
+Merge: 3bf59ea ce3733e
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue Jun 4 15:04:54 2019 +0100
+
+    Removing pycache
+
+commit 3bf59ea7e21e962082ca5575078db437d1e61b43
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue Jun 4 15:04:20 2019 +0100
+
+    Panning limit set
+
+commit 7481119535fd8545d6f69a1a805b2a2316a297a9
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue Jun 4 11:25:25 2019 +0100
+
+    Removing pycache
+
+commit 10a1bbd00e9a9b4596bce967baa5b9fa819dd325
+Author: jontypage <jontypage@gmail.com>
+Date:   Tue Jun 4 11:24:48 2019 +0100
+
+    Limiting panning in 2D
+
+commit e720797b1821593fe4e2dfdde4a8f17d13eea96b
+Author: jontypage <jontypage@gmail.com>
+Date:   Mon Jun 3 22:25:43 2019 +0100
+
+    French and Hindi fully supported
+
+commit d8820da673c41985e64c8358e696865f850a042a
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 31 13:10:13 2019 +0100
+
+    Removing pycache
+
+commit 7621d320d12dc52550c4d7221e188d6243cd00c0
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 31 13:10:01 2019 +0100
+
+    Setting up 3d canvas
+
+commit cae303752f80bb5b7f2c4b7bbd2e09bd52547042
+Author: jontypage <jontypage@gmail.com>
+Date:   Fri May 31 12:20:53 2019 +0100
+
+    Removing debug messages
+
+commit 4381ae8690f6bf9a30b301c57e78aa12aba86f66
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 16:02:08 2019 +0100
+
+    Moving more files
+
+commit 4c4f3ad7391eb2fcfd426abe6adf6429ebbc46c2
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:44:16 2019 +0100
+
+    Fixing James git log file
+
+commit c5c4fd6e279233a6e3e58dad5dbebc011a7d52a7
+Author: jontypage <jontypage@gmail.com>
+Date:   Thu May 30 15:41:55 2019 +0100
+
+    Adding git logs
+
 commit 00c502fc2eb38e4086f38fc8099fd0ecd51c2132
 Author: jontypage <jontypage@gmail.com>
 Date:   Thu May 30 15:38:37 2019 +0100

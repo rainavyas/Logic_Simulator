@@ -1,3 +1,65 @@
+commit 7815e4a0164ba9eaaec2b798fc4c18fa519b275f
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue Jun 4 22:46:16 2019 +0100
+
+    Added dependency on names.py.
+
+commit 77ce40840311c2bab7151057c1b1286bfa0eb202
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue Jun 4 16:42:54 2019 +0100
+
+    Added software layout for reports.
+
+commit f8b89d5521bdb7e5005d949c643f93553ce87404
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue Jun 4 09:58:44 2019 +0100
+
+    Added two additional parser test files and a number of additional parser tests.
+
+commit 036539847d8987cb8e0d02a2274bb70ce260f012
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Tue Jun 4 09:25:36 2019 +0100
+
+    Added another parser test file.
+
+commit 77003a2262fe9689cc0ecb1727cd93fef4bede62
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Mon Jun 3 17:40:42 2019 +0100
+
+    Changed test file.
+
+commit 80774bb73cad7be43f8b721fdbfffc22ea5794f6
+Merge: acb9e7e d2af598
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Mon Jun 3 17:02:42 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit acb9e7e20ae5e3f9f307a109d1e8cc2d0c2c66b1
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Mon Jun 3 17:02:37 2019 +0100
+
+    Altered the gui start view position (3D).
+
+commit e998f95dd6d8b2c1faf272e70aaf2a530872fcd9
+Merge: e72f58a 21eb148
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sun Jun 2 14:44:45 2019 +0100
+
+    Merge branch 'master' of https://github.com/rainavyas/Logic_Simulator
+
+commit e72f58ada6f99fe74c428f92b22b1a2ff215e24a
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Sun Jun 2 14:44:30 2019 +0100
+
+    Implemented 3D traces into the gui. Traces are rememberd upon switching views. Position reset added.
+
+commit 17b34fecaafebdd17984d387836c2b1989614d1d
+Author: James Crossley <jkc34@cam.ac.uk>
+Date:   Fri May 31 12:17:23 2019 +0100
+
+    Added 3D gui.
+
 commit bf96629e9bae4e74642516780090fa911416480e
 Merge: 13b47a8 690a535
 Author: James Crossley <jkc34@cam.ac.uk>

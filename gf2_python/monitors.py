@@ -12,7 +12,6 @@ import collections
 
 
 class Monitors:
-
     """Record and display output signals.
 
     This class contains functions for recording and displaying the signal state
@@ -180,7 +179,7 @@ class Monitors:
             print("\n", end="")
 
     def get_signals(self):
-        """Returns the signals and names of monitor points in a list."""
+        """Return the signals and names of monitor points in a list."""
         all_signals = []
         all_names = []
         for device_id, output_id in self.monitors_dictionary:

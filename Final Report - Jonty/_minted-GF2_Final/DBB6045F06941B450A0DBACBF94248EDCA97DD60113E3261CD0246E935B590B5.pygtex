@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{k}{def} \PYG{n+nf}{run\PYGZus{}network}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{cycles}\PYG{p}{):}
+        \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{cycles}\PYG{p}{):}
+            \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{network}\PYG{o}{.}\PYG{n}{execute\PYGZus{}network}\PYG{p}{():}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{monitors}\PYG{o}{.}\PYG{n}{record\PYGZus{}signals}\PYG{p}{()}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{canvas}\PYG{o}{.}\PYG{n}{render}\PYG{p}{(}\PYG{n}{\PYGZus{}}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Drawing signal\PYGZsq{}}\PYG{p}{),} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{monitors}\PYG{p}{)}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{text} \PYG{o}{=} \PYG{n}{\PYGZus{}}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Error! Network oscillating.\PYGZdq{}}\PYG{p}{)}
+                \PYG{k}{print}\PYG{p}{(}\PYG{n}{text}\PYG{p}{)}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{displayError}\PYG{p}{(}\PYG{n}{text}\PYG{p}{)}
+                \PYG{k}{return} \PYG{n+nb+bp}{False}
+        \PYG{k}{return} \PYG{n+nb+bp}{True}
+\end{Verbatim}

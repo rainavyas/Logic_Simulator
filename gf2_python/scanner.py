@@ -14,7 +14,6 @@ import sys
 
 
 class Symbol:
-
     """Encapsulate a symbol and store its properties.
 
     Parameters
@@ -39,7 +38,6 @@ class Symbol:
 
 
 class Scanner:
-
     """Read circuit definition file and translate the characters into symbols.
 
     Once supplied with the path to a valid definition file, the scanner
@@ -156,22 +154,19 @@ class Scanner:
         return num
 
     def advance(self):
-        """Read the next character from input_file and place it
-        in current_character.
+        """Read the next character from input_file.
+
+        Place it in current_character.
         """
         self.current_character = self.file.read(1)
 
     def skip_spaces(self):
-        """Calls advance as necessary until current_character is not whitsepace
-        """
+        """Call advance until current_character is not whitsepace."""
         while self.current_character.isspace():
             self.advance()
 
     def skip_comment(self):
-        """Skips single line comments (beginning with '#')
-        and closed-comments (of form /* */)
-        """
-
+        """Skip single line comments and closed-comments."""
         comment_symbol = Symbol()
 
         #  Skip single-line comments.
@@ -226,13 +221,11 @@ class Scanner:
         self.skip_spaces()
 
     def close_file(self):
-        """closes the current file open in the scanner."""
+        """Close the current file open in the scanner."""
         self.file.close()
 
     def location(self):
-        """Return the current line and position within the file.
-        """
-
+        """Return the current line and position within the file."""
         #  Store the current position.
         stored_position = self.file.tell()
 
@@ -272,10 +265,11 @@ class Scanner:
         return [current_line, current_position]
 
     def print_location(self, symbol, option=False):
-        """Print the line that the passed symbol is on and a caret on the line
-         below to indicate the final character of the symbol.
-        """
+        """Print the line that the passed symbol is on.
 
+        Print caret on the line below to indicate the final
+        character of the symbol.
+        """
         error_object = Error()  # Create an error object for population.
         stored_position = self.file.tell()  # Store the current position.
 
@@ -322,7 +316,6 @@ class Scanner:
 
         Break if 'END' reached.
         """
-
         #  Create symbol object and record the previous line and position.
         symbol = Symbol()
         symbol.prev_line = self.location()[0]

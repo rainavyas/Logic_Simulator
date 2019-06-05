@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{clearNetwork}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+      \PYG{c+c1}{\PYGZsh{} Clear monitored points from GUI}
+      \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{all\PYGZus{}mp\PYGZus{}names}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{):}
+          \PYG{n}{name} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{all\PYGZus{}mp\PYGZus{}names}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}sizer}\PYG{o}{.}\PYG{n}{Hide}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}sizer}\PYG{o}{.}\PYG{n}{Remove}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{number\PYGZus{}of\PYGZus{}mps} \PYG{o}{\PYGZhy{}=} \PYG{l+m+mi}{1}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Layout}\PYG{p}{()}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{all\PYGZus{}mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{remove}\PYG{p}{(}\PYG{n}{name}\PYG{p}{)}
+
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{Clear}\PYG{p}{()}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{Append}\PYG{p}{(}\PYG{n}{\PYGZus{}}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}SELECT\PYGZsq{}}\PYG{p}{))}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{SetSelection}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)}
+
+      \PYG{c+c1}{\PYGZsh{} Clear switches from GUI}
+      \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{loaded\PYGZus{}switches} \PYG{o+ow}{is} \PYG{n+nb+bp}{True}\PYG{p}{:}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{side\PYGZus{}sizer}\PYG{o}{.}\PYG{n}{Hide}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{side\PYGZus{}sizer}\PYG{o}{.}\PYG{n}{Remove}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Layout}\PYG{p}{()}
+          \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{loaded\PYGZus{}switches} \PYG{o}{=} \PYG{n+nb+bp}{False}
+
+      \PYG{c+c1}{\PYGZsh{} Clears canvas of previous signals}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{canvas}\PYG{o}{.}\PYG{n}{clear}\PYG{p}{()}
+\end{Verbatim}

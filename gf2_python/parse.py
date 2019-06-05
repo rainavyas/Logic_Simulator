@@ -17,7 +17,6 @@ from monitors import Monitors
 
 
 class Parser:
-
     """Parse the definition file and build the logic network.
 
     The parser deals with error handling. It analyses the syntactic and
@@ -95,7 +94,6 @@ class Parser:
 
     def parse_network(self):
         """Parse the circuit definition file."""
-
         # Get the first symbol from Scanner
         self.symbol = self.scanner.get_symbol()
 
@@ -121,8 +119,7 @@ class Parser:
             return False
 
     def error(self, error_ID, stopping_symbols, symbol_IDs=[]):
-        """ Display Error and recover to a useful parsing position"""
-
+        """Display Error and recover to a useful parsing position."""
         # Increment Error Counter
         self.error_count += 1
 
@@ -313,8 +310,7 @@ class Parser:
                         self.symbol = self.scanner.get_symbol()
 
     def devicelist(self):
-        """Parse the devices section"""
-
+        """Parse the devices section."""
         if (self.symbol.type == self.scanner.KEYWORD and
                 self.symbol.id == self.scanner.DEVICES_ID):
             self.symbol = self.scanner.get_symbol()
@@ -358,8 +354,7 @@ class Parser:
                         self.scanner.END_ID])
 
     def connectlist(self):
-        """Parse the connections section"""
-
+        """Parse the connections section."""
         if (self.symbol.type == self.scanner.KEYWORD and
                 self.symbol.id == self.scanner.CONNECT_ID):
             self.symbol = self.scanner.get_symbol()
@@ -412,8 +407,7 @@ class Parser:
                            [self.scanner.MONITOR_ID, self.scanner.END_ID])
 
     def monitorlist(self):
-        """Parse the monitoring section"""
-
+        """Parse the monitoring section."""
         if (self.symbol.type == self.scanner.KEYWORD and
                 self.symbol.id == self.scanner.MONITOR_ID):
             self.symbol = self.scanner.get_symbol()
@@ -452,8 +446,7 @@ class Parser:
                        [self.scanner.END_ID])
 
     def device(self):
-        """Parse the device syntax"""
-
+        """Parse the device syntax."""
         if (self.symbol.type == self.scanner.NAME):
             device_name = self.names.get_name_string(self.symbol.id)
             device_id = self.names.query(device_name)
@@ -664,10 +657,10 @@ class Parser:
                 self.num_input_pin += 2
 
     def logictype(self):
-        """Parse the type syntax
+        """Parse the type syntax.
 
-        Return the device type of the current device"""
-
+        Return the device type of the current device.
+        """
         if (self.symbol.type == self.scanner.LOGIC_TYPE):
             device_kind_string = self.names.get_name_string(self.symbol.id)
             device_kind = self.names.query(device_kind_string)
@@ -686,8 +679,7 @@ class Parser:
             return None
 
     def connection(self):
-        """Parse the connection syntax"""
-
+        """Parse the connection syntax."""
         if (self.symbol.type == self.scanner.NAME):
             device_name = self.names.get_name_string(self.symbol.id)
             first_device_id = self.names.query(device_name)
@@ -806,8 +798,7 @@ class Parser:
                                                     self.scanner.END_ID])
 
     def monitor_point(self):
-        """Parse the monitor_point syntax"""
-
+        """Parse the monitor_point syntax."""
         if (self.symbol.type == self.scanner.NAME):
             device_id = self.symbol.id
             self.symbol = self.scanner.get_symbol()

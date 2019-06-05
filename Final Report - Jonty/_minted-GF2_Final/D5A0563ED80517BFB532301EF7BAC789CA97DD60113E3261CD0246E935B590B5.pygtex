@@ -1,0 +1,33 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{render}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{text}\PYG{p}{,} \PYG{n}{monitors}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{):}
+      \PYG{c+c1}{\PYGZsh{} ... Load signals if monitors object given and render text}
+
+      \PYG{c+c1}{\PYGZsh{} Draw signals}
+      \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{current\PYGZus{}signal} \PYG{o}{!=} \PYG{p}{[]:}
+          \PYG{c+c1}{\PYGZsh{} Draw each signal}
+          \PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{current\PYGZus{}signal}\PYG{p}{)):}
+              \PYG{n}{GL}\PYG{o}{.}\PYG{n}{glColor3f}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{signal\PYGZus{}colours}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{p}{(}
+                  \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{signal\PYGZus{}colours}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]),} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{signal\PYGZus{}colours}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{])}
+              \PYG{n}{GL}\PYG{o}{.}\PYG{n}{glBegin}\PYG{p}{(}\PYG{n}{GL}\PYG{o}{.}\PYG{n}{GL\PYGZus{}LINE\PYGZus{}STRIP}\PYG{p}{)}
+              \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{current\PYGZus{}signal}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])):}
+                  \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{current\PYGZus{}signal}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{4}\PYG{p}{:}
+                      \PYG{n}{x} \PYG{o}{=} \PYG{p}{(}\PYG{n}{i} \PYG{o}{*} \PYG{l+m+mi}{20}\PYG{p}{)} \PYG{o}{+} \PYG{l+m+mi}{40}
+                      \PYG{n}{x\PYGZus{}next} \PYG{o}{=} \PYG{p}{(}\PYG{n}{i} \PYG{o}{*} \PYG{l+m+mi}{20}\PYG{p}{)} \PYG{o}{+} \PYG{l+m+mi}{60}
+                      \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{current\PYGZus{}signal}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+                          \PYG{n}{y} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{*}\PYG{p}{(}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{30}
+                      \PYG{k}{else}\PYG{p}{:}
+                          \PYG{n}{y} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{*}\PYG{p}{(}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{55}
+                      \PYG{n}{GL}\PYG{o}{.}\PYG{n}{glVertex2f}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+                      \PYG{n}{GL}\PYG{o}{.}\PYG{n}{glVertex2f}\PYG{p}{(}\PYG{n}{x\PYGZus{}next}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+              \PYG{n}{GL}\PYG{o}{.}\PYG{n}{glEnd}\PYG{p}{()}
+              \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{render\PYGZus{}text}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}0\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{75}\PYG{o}{*}\PYG{p}{(}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{30}\PYG{p}{)}
+              \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{render\PYGZus{}text}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}1\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{75}\PYG{o}{*}\PYG{p}{(}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{55}\PYG{p}{)}
+              \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{render\PYGZus{}text}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{current\PYGZus{}monitor\PYGZus{}points}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{p}{(}
+                  \PYG{l+m+mi}{75}\PYG{o}{*}\PYG{p}{(}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{10}\PYG{p}{))}
+              \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{render\PYGZus{}text}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{current\PYGZus{}monitor\PYGZus{}points}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{p}{(}
+                  \PYG{l+m+mi}{75}\PYG{o}{*}\PYG{p}{(}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{10}\PYG{p}{))}
+
+          \PYG{c+c1}{\PYGZsh{} ... Draw and label time axis in similar fashion}
+
+      \PYG{c+c1}{\PYGZsh{} ... Flushing pipline and swapping buffers etc.}
+\end{Verbatim}

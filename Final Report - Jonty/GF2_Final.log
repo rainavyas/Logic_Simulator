@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.3.3)  5 JUN 2019 00:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.3.3)  5 JUN 2019 16:06
 entering extended mode
 **./GF2_Final.tex
 (GF2_Final.tex
@@ -1255,15 +1255,15 @@ LaTeX Font Info:    ... okay on input line 15.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(89.62709pt, 418.25368pt, 89.6271pt)
-* v-part:(T,H,B)=(101.40665pt, 591.5302pt, 152.11pt)
+* h-part:(L,W,R)=(36.135pt, 525.23788pt, 36.135pt)
+* v-part:(T,H,B)=(36.135pt, 772.77686pt, 36.135pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=418.25368pt
-* \textheight=591.5302pt
-* \oddsidemargin=17.3571pt
-* \evensidemargin=17.3571pt
-* \topmargin=-7.86334pt
+* \textwidth=525.23788pt
+* \textheight=772.77686pt
+* \oddsidemargin=-36.135pt
+* \evensidemargin=-36.135pt
+* \topmargin=-73.135pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=10.0pt
@@ -1343,44 +1343,142 @@ Package pdftex.def Info: cambridge.png  used on input line 40.
  [1
 
 {C:/Users/jonty/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./cambridge
-.png>] [1]
-<"dependencies_graph".JPG, id=16, 805.20825pt x 541.72388pt>
+.png>]
+<"dependencies_graph".JPG, id=10, 805.20825pt x 541.72388pt>
 File: "dependencies_graph".JPG Graphic file (type jpg)
 <use "dependencies_graph".JPG>
-Package pdftex.def Info: "dependencies_graph".JPG  used on input line 94.
+Package pdftex.def Info: "dependencies_graph".JPG  used on input line 95.
 (pdftex.def)             Requested size: 402.60313pt x 270.86127pt.
- [2 <./dependencies_graph.JPG>]
-Overfull \hbox (6.97392pt too wide) in paragraph at lines 103--104
-\OT1/cmr/m/n/10 shown by logsim.py. The mod-ule con-sists of three classes: Gui
-, MyGLCan-vas and My3DGLCanvas.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<"top-down design".PNG, id=11, 537.80925pt x 426.393pt>
+File: "top-down design".PNG Graphic file (type png)
+<use "top-down design".PNG>
+Package pdftex.def Info: "top-down design".PNG  used on input line 107.
+(pdftex.def)             Requested size: 161.34401pt x 127.91888pt.
+<"Gantt_chart".PNG, id=12, 725.71124pt x 427.5975pt>
+File: "Gantt_chart".PNG Graphic file (type png)
+<use "Gantt_chart".PNG>
+Package pdftex.def Info: "Gantt_chart".PNG  used on input line 112.
+(pdftex.def)             Requested size: 217.71504pt x 128.28023pt.
+
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 105--116
+[]$[]$ $[]$
  []
 
-[3] [4] [5] [6] (GF2_Final.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--116
+
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[1] [2 <./dependencies_graph.JPG> <./top-down design.PNG> <./Gantt_chart.PNG>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 135.
+
+
+("C:\Users\jonty\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 135.
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/default-pyg-prefix.pygstyle)
+(_minted-GF2_Final/default.pygstyle)
+(_minted-GF2_Final/A0B9694C1D5450A5C864777F4B38859DCA97DD60113E3261CD0246E935B5
+90B5.pygtex
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 2.
+)
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/A88302B11DC710CE6BF2937730F56818CA97DD60113E3261CD0246E935B5
+90B5.pygtex [3])
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/884DA48FC9C67808B1C99318138EA8EACA97DD60113E3261CD0246E935B5
+90B5.pygtex)
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/9176BEE81DA973F90AC2AAF9AD4A7E1DCA97DD60113E3261CD0246E935B5
+90B5.pygtex [4])
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/865FF2A9B46DBDE255D4FCE59F86DC3BCA97DD60113E3261CD0246E935B5
+90B5.pygtex)
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/A33026FCCFECB7C7AE8451495C736248CA97DD60113E3261CD0246E935B5
+90B5.pygtex [5])
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/DBB6045F06941B450A0DBACBF94248EDCA97DD60113E3261CD0246E935B5
+90B5.pygtex)
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/FF12DEC4566CF9056B08303643ACEFD2CA97DD60113E3261CD0246E935B5
+90B5.pygtex [6])
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/5B0943467A39A37652D3AA76D9D720E0CA97DD60113E3261CD0246E935B5
+90B5.pygtex)
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/44535695C7611CAD53974054DEB58F79CA97DD60113E3261CD0246E935B5
+90B5.pygtex [7])
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/78772936C29DFF8C113D056CA12A51F5CA97DD60113E3261CD0246E935B5
+90B5.pygtex)
+\openout5 = `GF2_Final.pyg'.
+
+
+(_minted-GF2_Final/D3D2EBB36D7AF211BD5B3A7C1010C8B1CA97DD60113E3261CD0246E935B5
+90B5.pygtex [8]) [9] [10] [11] (GF2_Final.aux)
+runsystem(del GF2_Final.pyg)...executed.
+
 Package logreq Info: Writing requests to 'GF2_Final.run.xml'.
 \openout1 = `GF2_Final.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 22454 strings out of 493303
- 432562 string characters out of 3129785
- 719093 words of memory out of 3000000
- 25776 multiletter control sequences out of 15000+200000
- 541680 words of font info for 61 fonts, out of 3000000 for 9000
+ 22743 strings out of 493303
+ 441203 string characters out of 3129785
+ 722113 words of memory out of 3000000
+ 26013 multiletter control sequences out of 15000+200000
+ 541848 words of font info for 62 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,9n,45p,10495b,1176s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,15n,45p,10495b,1177s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/jonty/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx10.pfb><C:/Users/jonty/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmbx12.pfb><C:/Users/jonty/AppData/Local/Programs/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/jonty/AppData/Local/Program
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/jonty/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/jon
-ty/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><
-C:/Users/jonty/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmti10.pfb><C:/Users/jonty/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmtt10.pfb>
-Output written on GF2_Final.pdf (7 pages, 541595 bytes).
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/Users/jonty/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/j
+onty/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb
+><C:/Users/jonty/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmr17.pfb><C:/Users/jonty/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb><C:/Users/jonty/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/jonty/AppData/Local/Programs/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on GF2_Final.pdf (12 pages, 701693 bytes).
 PDF statistics:
- 62 PDF objects out of 1000 (max. 8388607)
+ 89 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

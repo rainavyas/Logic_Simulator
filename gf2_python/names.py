@@ -10,7 +10,6 @@ Names - maps variable names and string names to unique integers.
 
 
 class Names:
-
     """Map variable names and string names to unique integers.
 
     This class deals with storing grammatical keywords and user-defined words,
@@ -58,7 +57,6 @@ class Names:
 
         If the name string is not present in the names list, return None.
         """
-
         if not type(name_string) is str:
             raise TypeError("Expected name_string to be a string")
 
@@ -71,7 +69,6 @@ class Names:
 
         If the name string is not present in the names list, add it.
         """
-
         IDs = []
 
         if not type(name_string_list) is list:
@@ -93,7 +90,6 @@ class Names:
 
         If the name_id is not an index in the names list, return None.
         """
-
         if not type(name_id) is int:
             raise TypeError("Expected name_id to be an integer")
 

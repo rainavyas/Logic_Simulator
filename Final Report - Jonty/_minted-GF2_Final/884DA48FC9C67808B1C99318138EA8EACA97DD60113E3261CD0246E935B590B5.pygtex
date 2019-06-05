@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{c+c1}{\PYGZsh{} ... displaySyntaxErrors(self)}
+  \PYG{n}{font} \PYG{o}{=} \PYG{n}{error\PYGZus{}message}\PYG{o}{.}\PYG{n}{GetFont}\PYG{p}{()}
+  \PYG{n}{dc} \PYG{o}{=} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{ScreenDC}\PYG{p}{()}
+  \PYG{n}{dc}\PYG{o}{.}\PYG{n}{SetFont}\PYG{p}{(}\PYG{n}{font}\PYG{p}{)}
+  \PYG{n}{caret\PYGZus{}string} \PYG{o}{=} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{error}\PYG{o}{.}\PYG{n}{caret\PYGZus{}pos}\PYG{p}{)}
+  \PYG{n}{sub\PYGZus{}string} \PYG{o}{=} \PYG{n}{error}\PYG{o}{.}\PYG{n}{line}\PYG{p}{[:}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{caret\PYGZus{}string}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}
+  \PYG{n}{w}\PYG{p}{,} \PYG{n}{h} \PYG{o}{=} \PYG{n}{dc}\PYG{o}{.}\PYG{n}{GetTextExtent}\PYG{p}{(}\PYG{n}{sub\PYGZus{}string}\PYG{p}{)}
+  \PYG{n}{space\PYGZus{}w}\PYG{p}{,} \PYG{n}{space\PYGZus{}h} \PYG{o}{=} \PYG{n}{dc}\PYG{o}{.}\PYG{n}{GetTextExtent}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{p}{)}
+  \PYG{n}{error\PYGZus{}string} \PYG{o}{+=} \PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{*}\PYG{n+nb}{round}\PYG{p}{(}\PYG{n}{w}\PYG{o}{/}\PYG{n}{space\PYGZus{}w}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}\PYGZca{}\PYGZsq{}}
+\end{Verbatim}

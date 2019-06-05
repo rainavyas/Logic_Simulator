@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{c+c1}{\PYGZsh{} ... wx.App created}
+  \PYG{c+c1}{\PYGZsh{} Internationalisation}
+  \PYG{n}{builtins}\PYG{o}{.}\PYG{n}{\PYGZus{}} \PYG{o}{=} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{GetTranslation}
+  \PYG{n}{locale} \PYG{o}{=} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{Locale}\PYG{p}{()}
+  \PYG{n}{locale}\PYG{o}{.}\PYG{n}{Init}\PYG{p}{(}\PYG{n}{wx}\PYG{o}{.}\PYG{n}{LANGUAGE\PYGZus{}DEFAULT}\PYG{p}{)}
+  \PYG{n}{locale}\PYG{o}{.}\PYG{n}{AddCatalogLookupPathPrefix}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}./locale\PYGZsq{}}\PYG{p}{)}
+  \PYG{n}{locale}\PYG{o}{.}\PYG{n}{AddCatalog}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}logicsimapp\PYGZsq{}}\PYG{p}{)}
+  \PYG{c+c1}{\PYGZsh{} ... GUI created and shown}
+\end{Verbatim}

@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{if} \PYG{n}{event}\PYG{o}{.}\PYG{n}{Dragging}\PYG{p}{():}
+        \PYG{n}{size} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{GetClientSize}\PYG{p}{()}
+        \PYG{n}{intended\PYGZus{}move\PYGZus{}x} \PYG{o}{=} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pan\PYGZus{}x} \PYG{o}{+} \PYG{n}{event}\PYG{o}{.}\PYG{n}{GetX}\PYG{p}{()} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}mouse\PYGZus{}x}\PYG{p}{)}
+        \PYG{n}{intended\PYGZus{}move\PYGZus{}y} \PYG{o}{=} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pan\PYGZus{}y} \PYG{o}{\PYGZhy{}} \PYG{n}{event}\PYG{o}{.}\PYG{n}{GetY}\PYG{p}{()} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}mouse\PYGZus{}y}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{intended\PYGZus{}move\PYGZus{}x} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{n}{intended\PYGZus{}move\PYGZus{}x} \PYG{o}{\PYGZgt{}} \PYG{n+nb}{min}\PYG{p}{(}
+                \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{size}\PYG{o}{.}\PYG{n}{width}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{max\PYGZus{}x}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zoom}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pan\PYGZus{}x} \PYG{o}{+=} \PYG{n}{event}\PYG{o}{.}\PYG{n}{GetX}\PYG{p}{()} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}mouse\PYGZus{}x}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}mouse\PYGZus{}x} \PYG{o}{=} \PYG{n}{event}\PYG{o}{.}\PYG{n}{GetX}\PYG{p}{()}
+        \PYG{k}{if} \PYG{n}{intended\PYGZus{}move\PYGZus{}y} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{n}{intended\PYGZus{}move\PYGZus{}y} \PYG{o}{\PYGZgt{}} \PYG{n+nb}{min}\PYG{p}{(}
+                \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{size}\PYG{o}{.}\PYG{n}{height}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{max\PYGZus{}y}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zoom}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pan\PYGZus{}y} \PYG{o}{\PYGZhy{}=} \PYG{n}{event}\PYG{o}{.}\PYG{n}{GetY}\PYG{p}{()} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}mouse\PYGZus{}y}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}mouse\PYGZus{}y} \PYG{o}{=} \PYG{n}{event}\PYG{o}{.}\PYG{n}{GetY}\PYG{p}{()}
+        \PYG{k}{if} \PYG{n}{intended\PYGZus{}move\PYGZus{}x} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pan\PYGZus{}x} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{k}{if} \PYG{n}{intended\PYGZus{}move\PYGZus{}y} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pan\PYGZus{}y} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{k}{if} \PYG{n}{intended\PYGZus{}move\PYGZus{}x} \PYG{o}{\PYGZlt{}} \PYG{n+nb}{min}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{size}\PYG{o}{.}\PYG{n}{width}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{max\PYGZus{}x}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zoom}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pan\PYGZus{}x} \PYG{o}{=} \PYG{n+nb}{min}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{size}\PYG{o}{.}\PYG{n}{width}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{max\PYGZus{}x}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zoom}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{intended\PYGZus{}move\PYGZus{}y} \PYG{o}{\PYGZlt{}} \PYG{n+nb}{min}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{size}\PYG{o}{.}\PYG{n}{height}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{max\PYGZus{}y}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zoom}\PYG{p}{):}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{pan\PYGZus{}y} \PYG{o}{=} \PYG{n+nb}{min}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{size}\PYG{o}{.}\PYG{n}{height}\PYG{o}{\PYGZhy{}}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{max\PYGZus{}y}\PYG{o}{*}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zoom}\PYG{p}{)}
+\end{Verbatim}

@@ -32,7 +32,7 @@ class Error:
     """
 
     def __init__(self, msg="", line_num="", line="", caret_pos=""):
-
+        """Initialise error object with blank parameters."""
         self.msg = msg
         self.line_num = line_num
         self.line = line

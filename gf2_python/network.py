@@ -9,7 +9,6 @@ Network - builds and executes the network.
 
 
 class Network:
-
     """Build and execute the network.
 
     This class contains many functions required for connecting devices together
@@ -341,7 +340,6 @@ class Network:
 
         Return True if successful.
         """
-
         device = self.devices.get_device(device_id)
         output_signal = device.outputs[None]  # output ID is None
 
@@ -381,9 +379,7 @@ class Network:
             device.clock_counter += 1
 
     def update_siggens(self):
-        """If it is time to do so, set signal generator signals to RISING
-           or FALLING.
-           """
+        """Set signal generator signals to RISING or FALLING."""
         siggen_devices = self.devices.find_devices(self.devices.SIGGEN)
         for device_id in siggen_devices:
             device = self.devices.get_device(device_id)

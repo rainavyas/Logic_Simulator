@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{k}{def} \PYG{n+nf}{checkFile}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{event}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{} ... creates names, network, monitors, devices, names and scanner objects}
+        \PYG{c+c1}{\PYGZsh{} Check network definition file is correctly configured}
+        \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{parser}\PYG{o}{.}\PYG{n}{parse\PYGZus{}network}\PYG{p}{():}
+            \PYG{c+c1}{\PYGZsh{} Clear old network, load new and reset file picker colour}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{top\PYGZus{}panel}\PYG{o}{.}\PYG{n}{SetBackgroundColour}\PYG{p}{(}\PYG{n}{wx}\PYG{o}{.}\PYG{n}{NullColour}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{clearNetwork}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{loadNetwork}\PYG{p}{()}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} Clear old network, display error message and change colour}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{clearNetwork}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{displaySyntaxErrors}\PYG{p}{()}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{top\PYGZus{}panel}\PYG{o}{.}\PYG{n}{SetBackgroundColour}\PYG{p}{(}\PYG{n}{wx}\PYG{o}{.}\PYG{n}{Colour}\PYG{p}{(}\PYG{l+m+mi}{255}\PYG{p}{,} \PYG{l+m+mi}{130}\PYG{p}{,} \PYG{l+m+mi}{130}\PYG{p}{))}
+\end{Verbatim}

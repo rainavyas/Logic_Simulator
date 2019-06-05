@@ -145,6 +145,7 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 self.render_text(self.current_monitor_points[j], 10, (
                     75*(j+1)+10))
 
+            # Measure maximuum dimensions of signal for setting panning limits
             self.max_x = (len(self.current_signal[0])*20) + 60
             self.max_y = ((len(self.current_signal)+1)*75) + 55
 
@@ -251,14 +252,14 @@ class MyGLCanvas(wxcanvas.GLCanvas):
                 GLUT.glutBitmapCharacter(font, ord(character))
 
     def reset(self):
-        """Resets the viewframe to original position"""
+        """Reset the viewframe to original position."""
         GL.glLoadIdentity()
         self.pan_x = 0
         self.pan_y = 0
         self.zoom = 1
 
     def clear(self):
-        """Clears the canvas and resets position"""
+        """Clear the canvas and resets position."""
         self.reset()
         self.current_signal = []
         self.current_monitor_points = []
@@ -396,7 +397,6 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
 
     def render(self, text, monitors=None):
         """Handle all 3D drawing operations."""
-
         if monitors is not None:
             self.current_signal, self.current_monitor_points = (
                 monitors.get_signals())
@@ -571,7 +571,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
         GL.glEnable(GL.GL_LIGHTING)
 
     def reset(self):
-        """Resets the viewframe to original position"""
+        """Reset the viewframe to original position."""
         self.pan_x = 0
         self.pan_y = 0
         self.zoom = 1
@@ -581,7 +581,7 @@ class My3DGLCanvas(wxcanvas.GLCanvas):
         GL.glTranslatef(0.0, 0.0, -self.depth_offset)
 
     def clear(self):
-        """Clears the canvas and resets position"""
+        """Clear the canvas and resets position."""
         self.reset()
         self.current_signal = []
         self.current_monitor_points = []
@@ -965,7 +965,7 @@ class Gui(wx.Frame):
             self.top_panel.SetBackgroundColour(wx.Colour(255, 130, 130))
 
     def loadNetwork(self):
-        """Loads switches and monitoring points from file into GUI."""
+        """Load switches and monitoring points from file into GUI."""
         # Find list of monitored and unmonitored signals
         signal_list = self.monitors.get_signal_names()
         monitored_signal_list = signal_list[0]
@@ -1055,7 +1055,7 @@ class Gui(wx.Frame):
         self.loaded_network = True
 
     def clearNetwork(self):
-        """Clears the switches and monitoring points from the GUI."""
+        """Clear the switches and monitoring points from the GUI."""
         # Clear monitored points from GUI
         for i in range(len(self.all_mp_names)-1, -1, -1):
             name = self.all_mp_names[i]
@@ -1085,7 +1085,7 @@ class Gui(wx.Frame):
         self.loaded_network = False
 
     def displaySyntaxErrors(self):
-        """Displays message dialog containing nature of syntax error."""
+        """Display message dialog containing nature of syntax error."""
         # Create message dialog
         error_message = wx.MessageDialog(
             self, '',
@@ -1116,7 +1116,7 @@ class Gui(wx.Frame):
         self.file_picker.SetPath('')
 
     def displayError(self, text):
-        """Displays message dialog containing nature of runtime error."""
+        """Display message dialog containing nature of runtime error."""
         # Create message dialog with error string
         error_message = wx.MessageDialog(
             self, text, caption=_('RUNTIME ERROR'),
@@ -1125,7 +1125,7 @@ class Gui(wx.Frame):
         error_message.Destroy()
 
     def switchCanvas(self, event):
-        """Switches the OpenGL from 2D to 3D or vice-versa."""
+        """Switch the OpenGL from 2D to 3D or vice-versa."""
         button = event.GetEventObject()
         # Destroy 3D canvas and replace with 2D canvas
         if button.GetLabel() == _('Switch to 2D Traces'):

@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+  \PYG{k}{def} \PYG{n+nf}{onAddMP}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{event}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{} Finds selected monitor points and adds to monitor object}
+        \PYG{n}{index} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{GetSelection}\PYG{p}{()}
+        \PYG{n}{mp\PYGZus{}name} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{GetString}\PYG{p}{(}\PYG{n}{index}\PYG{p}{)}
+
+        \PYG{c+c1}{\PYGZsh{} ... Performs some checks on the selection}
+
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{monitors}\PYG{o}{.}\PYG{n}{make\PYGZus{}monitor}\PYG{p}{(}\PYG{n}{device}\PYG{p}{,} \PYG{n}{port}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{cycles\PYGZus{}completed}\PYG{p}{)}
+
+        \PYG{c+c1}{\PYGZsh{} Removes monitor point from drop\PYGZhy{}down list}
+        \PYG{n}{reset\PYGZus{}index} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{FindString}\PYG{p}{(}\PYG{n}{\PYGZus{}}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}SELECT\PYGZsq{}}\PYG{p}{))}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{SetSelection}\PYG{p}{(}\PYG{n}{reset\PYGZus{}index}\PYG{p}{)}
+
+        \PYG{c+c1}{\PYGZsh{} Adds monitor point and remove button to GUI}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{number\PYGZus{}of\PYGZus{}mps} \PYG{o}{+=} \PYG{l+m+mi}{1}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{all\PYGZus{}mp\PYGZus{}names}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{mp\PYGZus{}name}\PYG{p}{)}
+        \PYG{n}{new\PYGZus{}button} \PYG{o}{=} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{Button}\PYG{p}{(}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}panel}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{n}{\PYGZus{}}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Remove\PYGZsq{}}\PYG{p}{),} \PYG{n}{name}\PYG{o}{=}\PYG{n}{mp\PYGZus{}name}\PYG{p}{)}
+        \PYG{n}{new\PYGZus{}sizer} \PYG{o}{=} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{BoxSizer}\PYG{p}{(}\PYG{n}{wx}\PYG{o}{.}\PYG{n}{HORIZONTAL}\PYG{p}{)}
+        \PYG{n}{new\PYGZus{}sizer}\PYG{o}{.}\PYG{n}{Add}\PYG{p}{(}\PYG{n}{wx}\PYG{o}{.}\PYG{n}{StaticText}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}panel}\PYG{p}{,} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{ID\PYGZus{}ANY}\PYG{p}{,} \PYG{n}{mp\PYGZus{}name}\PYG{p}{),}
+                      \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{ALIGN\PYGZus{}CENTRE}\PYG{p}{)}
+        \PYG{n}{new\PYGZus{}sizer}\PYG{o}{.}\PYG{n}{Add}\PYG{p}{(}\PYG{n}{new\PYGZus{}button}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{LEFT} \PYG{o}{|} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{RIGHT} \PYG{o}{|} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{TOP}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+        \PYG{n}{new\PYGZus{}button}\PYG{o}{.}\PYG{n}{Bind}\PYG{p}{(}\PYG{n}{wx}\PYG{o}{.}\PYG{n}{EVT\PYGZus{}BUTTON}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{onRemoveMP}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mp\PYGZus{}sizer}\PYG{o}{.}\PYG{n}{Add}\PYG{p}{(}\PYG{n}{new\PYGZus{}sizer}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{wx}\PYG{o}{.}\PYG{n}{RIGHT}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Layout}\PYG{p}{()}
+\end{Verbatim}

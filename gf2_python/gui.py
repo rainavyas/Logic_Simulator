@@ -1071,8 +1071,8 @@ class Gui(wx.Frame):
 
         # Clear switches from GUI
         if self.loaded_switches is True:
-            self.side_sizer.Hide(3)
-            self.side_sizer.Remove(3)
+            self.side_sizer.Hide(4)
+            self.side_sizer.Remove(4)
             self.Layout()
             self.loaded_switches = False
 

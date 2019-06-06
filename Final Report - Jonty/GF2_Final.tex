@@ -72,7 +72,7 @@ The software is split into eight functional modules, four of which were already 
 \begin{table}[h]
 \begin{centering}
 \begin{tabular}{l|l}
-Module Name & Description                                                                    \\ \hline
+\textbf{Module Name} & \textbf{Description}                                                                    \\ \hline
 Names       & Maps variable names and string names to unique integers                        \\
 Scanner     & Translates sequence of characters in definition file into sequence of symbols. \\
 Parse       & Analyses syntactic and semantic correctness of scanned definition file.        \\
@@ -144,7 +144,13 @@ The GUI was implemented using the wxPython toolkit which is a free and publicaly
 \subsubsection{Layout}
 The GUIs frame is split into four different panels - The file control panel, the main panel, the monitor points panel and the switches panel. The panels are outlined clearly in Figure 4. The GUI also consists of a number of widgets including buttons, toggle buttons, file picker controls, spin controls, choice boxes and static text. The location of each panel and their constituent widgets are defined using wx.BoxSizer objects and the frame has been made robust to window resizing and maximisation/minimisation using the wx.EXPAND parameter within these Sizer objects and setting a minimum client size for the window.
 
-%ADD FIGURE SHOWING GUI HERE
+\begin{figure}[h!]
+\begin{centering}
+\includegraphics[scale=0.7]{{"panel_locations"}.png}
+\caption{Graph showing the layout of panels in the Logic Simulator.}
+\end{centering}
+\end{figure}
+
 \subsubsection{File Selector Control}
 The file selector control allows the user to select a circuit definition file to be loaded into the Logic Simulator software. In the event of a file being chosen which contains a syntactic/semantic error, an error message giving the details of the error is displayed to the user in the form of a wx.MessageDialog. Following this, the file is not loaded into the software but the background colour of the top panel is changed to red indicating to the user that the file chosen cannot be loaded by the software. There are two methods in the GUI class related to the file selector control and these are \textit{checkFile, loadNetwork, clearNetwork} and \textit{displaySyntaxErrors}. \textit{checkFile} is the event handler for the event that the user changes the file selection of the wx.FilePickerCtrl widget. The general structure for this event handler is:
 \begin{minted}{python}
@@ -201,8 +207,16 @@ Finally, if the file is not successfully parsed, then the Errors object is loade
   space_w, space_h = dc.GetTextExtent(' ')
   error_string += ' '*round(w/space_w) + '^'
 \end{minted}
-Figure 5 shows an example file dialog and the subsequent events which occur if the user selects an invalid fie.
-%ADD FILE ERROR PICTURE
+Figure 5 shows the file dialog and the subsequent events which occur if the user selects an invalid fie.
+\begin{figure}[h!]
+\begin{centering}
+\begin{tabular}{c c}
+  \includegraphics[scale=0.25]{{"file_error"}.png} & \includegraphics[scale=0.25]{{"file_error_GUI"}.png}\\
+  Syntax/Semantic Error Message & Red File Control Panel\\
+\end{tabular}
+\caption{Example of Syntax Error message after loading invalid file.}
+\end{centering}
+\end{figure}
 
 \subsubsection{Monitor Point Controls}
 The monitor point control panel consists of two different sections - the control bar which allows the user to add a new control point from a wx.Choice selection and a click of a wx.Button, and the ScrolledPanel which displays the currently monitored points in the network alongside a remove button allowing the user to remove a control point. Figure 6 shows how the monitor point control area appears graphically. At first, the monitor points from the file are loaded into the monitor point control area through \textit{loadNetwork} and can be removed through \textit{clearNetwork} however all interaction performed by the user is performed through two event handlers - \textit{onAddMP} and \textit{onRemoveMP}. When the network is loaded, all possible points in the network which are not currently being monitored are loaded as choices in the wx.Choice widget. When the user selects a new monitoring point and clicks add, the event handler \textit{onAddMP} is triggered:
@@ -417,19 +431,22 @@ def test_unique_error_codes_raises_exceptions(new_names):
 All other unit tests follow a similar pattern and all tests can be performing using the comment "pytest -v" from the terminal in the main software directory. The approach of White Box testing was used to write the pytest files since, although the author of the pytest files was deliberately different to that of the module, the pytests were written with the structure of the underlying code in mind such that every possible error was raised and correctly identified.
 \subsection{Testing the GUI}
 Since formal unit testing of the GUI is not feasible, to test robustness, the team came up with a number of black box tests in which it is tested that a specific input gives to correct expected output. These tests are detailed in the Table 2.
-\begin{table}[h]
-  \begin{tabular}{l|l}
-  \textbf{Test}                                                                                         & \textbf{Expected result}                                                                                                                                           \\ \hline
-  Valid File is loaded                                                                                  & \begin{tabular}[c]{@{}l@{}}GUI loads the file and displays the stated monitoring points traces\\ (default in 3D with option to change to 2D).\end{tabular}         \\
-  Invalid File loaded                                                                                   & Dialogue Box appears reporting the specific error.                                                                                                                 \\
-  Toggling between 3D and 2D views                                                                      & Signal traces flips between the two views.                                                                                                                         \\
-  Monitoring points added and removed                                                                   & \begin{tabular}[c]{@{}l@{}}Monitoring points and signal traces update appropriately. If many\\ monitoring points are added a scrollbar appears.\end{tabular}       \\
-  User enters a large number of cycles                                                                  & \begin{tabular}[c]{@{}l@{}}Range is limited to 0-100 and the control buttons RUN and\\ CONTINUE display the cycles for the selected number of cycles.\end{tabular} \\
-  User selects the EXIT button                                                                          & The program closes without any errors in the terminal.                                                                                                             \\
-  \begin{tabular}[c]{@{}l@{}}User sets the language to Hindi or\\ French\end{tabular}                   & The GUI loads with the correct translations of all buttons                                                                                                         \\
-  \begin{tabular}[c]{@{}l@{}}User attempts panning of the signal\\ traces into white space\end{tabular} & GUI prevents panning into complete white space.
-  \end{tabular}
-\caption{Example Black Box tests for GUI.}
+\begin{table}[]
+\begin{tabular}{l|l}
+\textbf{Test}                                                                                                                    & \textbf{Expected result}                                                                                                                                                \\ \hline
+Valid File is loaded                                                                                                             & \begin{tabular}[c]{@{}l@{}}GUI loads the file and displays the stated monitoring points and switches\\ (canvas default in 3D with option to change to 2D).\end{tabular} \\ \hline
+Invalid File loaded through GUI                                                                                                  & Dialogue Box appears reporting the specific semantic/syntactic error.                                                                                                   \\ \hline
+\begin{tabular}[c]{@{}l@{}}Invalid File loaded through command\\ line\end{tabular}                                               & \begin{tabular}[c]{@{}l@{}}Syntactic/Semantic error message is printed to terminal and GUI does\\ not open.\end{tabular}                                                \\ \hline
+Toggling between 3D and 2D views                                                                                                 & Signal traces flips between the two views.                                                                                                                              \\ \hline
+Monitoring points added and removed                                                                                              & \begin{tabular}[c]{@{}l@{}}Monitoring points and signal traces update appropriately. If many\\ monitoring points are added a scrollbar appears.\end{tabular}            \\ \hline
+\begin{tabular}[c]{@{}l@{}}Circuit definition file loaded with\\ large number of switches\end{tabular}                           & Scroll bar appears on switch panel and all switches are displayed.                                                                                                      \\ \hline
+User enters a large number of cycles                                                                                             & \begin{tabular}[c]{@{}l@{}}Range is limited to 0-100 and the control buttons RUN and\\ CONTINUE display the cycles for the selected number of cycles.\end{tabular}      \\ \hline
+User selects the EXIT button                                                                                                     & The program closes without any errors in the terminal.                                                                                                                  \\ \hline
+\begin{tabular}[c]{@{}l@{}}User sets the language environment \\ variable to Hindi or French\end{tabular}                        & The GUI loads with the correct translations of all strings.                                                                                                             \\ \hline
+\begin{tabular}[c]{@{}l@{}}User attempts panning of the signal\\ traces into white space\end{tabular}                            & GUI prevents panning into complete white space.                                                                                                                         \\ \hline
+\begin{tabular}[c]{@{}l@{}}User loads a file and then clicks the\\ continue button before clicking the\\ run button\end{tabular} & GUI displays error message and no signal is drawn.                                                                                                                      \\ \hline
+\begin{tabular}[c]{@{}l@{}}User resizes the screen to as small\\ as possible\end{tabular}                                        & GUI does not allow resizing beyond a certain size.
+\end{tabular}
 \end{table}
 
 

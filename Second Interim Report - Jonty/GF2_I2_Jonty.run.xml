@@ -44,11 +44,11 @@
   <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>GF2_Final.aux</file>
-      <file>GF2_Final-blx.bib</file>
+      <file>GF2_I2_Jonty.aux</file>
+      <file>GF2_I2_Jonty-blx.bib</file>
     </provides>
     <requires type="dynamic">
-      <file>GF2_Final.bbl</file>
+      <file>GF2_I2_Jonty.bbl</file>
     </requires>
     <requires type="static">
       <file>blx-dm.def</file>
@@ -67,23 +67,22 @@
     <cmdline>
       <binary>bibtex</binary>
       <option>-min-crossrefs 2</option>
-      <infile>GF2_Final</infile>
+      <infile>GF2_I2_Jonty</infile>
     </cmdline>
     <input>
-      <file>GF2_Final.aux</file>
+      <file>GF2_I2_Jonty.aux</file>
     </input>
     <output>
-      <file>GF2_Final.bbl</file>
+      <file>GF2_I2_Jonty.bbl</file>
     </output>
     <provides type="dynamic">
-      <file>GF2_Final.bbl</file>
+      <file>GF2_I2_Jonty.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>GF2_Final.aux</file>
-      <file>GF2_Final-blx.bib</file>
+      <file>GF2_I2_Jonty.aux</file>
+      <file>GF2_I2_Jonty-blx.bib</file>
     </requires>
     <requires type="editable">
-      <file>bibliography.bib</file>
     </requires>
     <requires type="static">
       <file>biblatex.bst</file>
